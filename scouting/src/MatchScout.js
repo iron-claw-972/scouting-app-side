@@ -1,48 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import {
   Header,
   Button,
-  Checkbox,
   Form,
   Container,
   Modal,
+  Message,
+  Label,
+  Placeholder,
 } from "semantic-ui-react";
 
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
-const options = [
-  { key: "r", text: "Red", value: "red" },
-  { key: "b", text: "Blue", value: "blue" },
-];
 const MatchScout = () => {
-  const [eventKey, setEventKey] = useState(null);
-  const [matchKey, setMatchKey] = useState(null);
-  const [teamName, setTeamName] = useState(null);
-  const [teamNumber, setTeamNumber] = useState(null);
-  const [color, setColor] = useState(null);
+  const [eventKey, setEventKey] = useState("");
+  const [matchKey, setMatchKey] = useState("");
+  const [teamName, setTeamName] = useState("");
+  const [teamNumber, setTeamNumber] = useState("");
+  const [color, setColor] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showLookupError, setShowLookupError] = useState(false);
+
+  const resetForm = () => {
+    setEventKey("");
+    setMatchKey("");
+    setTeamName("");
+    setColor("");
+  };
+
+  useEffect(() => {
+    setShowSuccess(false);
+    setShowError(false);
+    setShowLookupError(false);
+  }, [eventKey, matchKey, teamNumber]);
 
   const validate = () => {
-    if (
-      eventKey == null ||
-      matchKey == null ||
-      teamNumber == null ||
-      teamName == null ||
-      color == null
-    ) {
+    const requiredFields = [eventKey, matchKey];
+    if (requiredFields.some((f) => f == "")) {
       setShowModal(true);
       return false;
     }
     return true;
   };
 
+  const lookupTeam = async () => {
+    const db = getFirestore();
+    const teamsRef = collection(db, "teams");
+    const q = query(teamsRef, where("teamNumber", "==", teamNumber));
+    try {
+      const qs = await getDocs(q);
+      if (qs.size > 0) {
+        qs.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          setTeamName(doc.data().teamName);
+          setColor(doc.data().color);
+        });
+      } else {
+        setShowLookupError(true);
+        resetForm();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const save = async () => {
     if (!validate()) return;
     const db = getFirestore();
     try {
-      const docRef = await addDoc(collection(db, "teams"), {
+      const docRef = await addDoc(collection(db, "match"), {
         eventKey,
         matchKey,
         teamName,
@@ -50,53 +87,82 @@ const MatchScout = () => {
         color,
       });
       console.log("Document written with ID: ", docRef.id);
+      setShowSuccess(true);
+      setTimeout(resetForm, 1500);
     } catch (e) {
       console.error("Error adding document: ", e);
+      setShowError(true);
     }
   };
+
   return (
     <Container>
       <Header as="h1">Scout a match</Header>
+
+      <Message attached header="Add Match data" />
       <Form>
-        <Form.Field>
-          <label>Event Key</label>
-          <input
-            placeholder="Event Key"
-            value={eventKey}
-            onChange={(e) => setEventKey(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Match Key</label>
-          <input
-            placeholder="Match Key"
-            value={matchKey}
-            onChange={(e) => setMatchKey(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Team Name</label>
-          <input
-            placeholder="Team Name"
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Team Number</label>
-          <input
-            placeholder="Team Number"
-            value={teamNumber}
-            onChange={(e) => setTeamNumber(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Select
-          options={options}
-          placeholder="Alliance Color"
-          value={color}
-          onChange={(e, data) => setColor(data.value)}
-        />
-        <Button type="submit" onClick={save}>
+        <Form.Group>
+          <Form.Field>
+            <label>Team Number</label>
+            <input
+              placeholder="Team Number"
+              value={teamNumber}
+              onChange={(e) => setTeamNumber(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field style={{ alignSelf: "flex-end" }}>
+            <Button color="blue" onClick={lookupTeam}>
+              Lookup Team by number
+            </Button>
+          </Form.Field>
+        </Form.Group>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Team Name</label>
+            {teamName && <Label>{teamName}</Label>}
+            {teamName.length == 0 && (
+              <Placeholder>
+                <Placeholder.Paragraph>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder.Paragraph>
+              </Placeholder>
+            )}
+          </Form.Field>
+          <Form.Field>
+            <label>Alliance Color</label>
+            {teamName && <Label>{color}</Label>}
+            {teamName.length == 0 && (
+              <Placeholder>
+                <Placeholder.Paragraph>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder.Paragraph>
+              </Placeholder>
+            )}
+          </Form.Field>
+        </Form.Group>
+
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Event Key</label>
+            <input
+              placeholder="Event Key"
+              value={eventKey}
+              onChange={(e) => setEventKey(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Match Key</label>
+            <input
+              placeholder="Match Key"
+              value={matchKey}
+              onChange={(e) => setMatchKey(e.target.value)}
+            />
+          </Form.Field>
+        </Form.Group>
+
+        <Button type="submit" color="green" onClick={save}>
           Submit
         </Button>
       </Form>
@@ -114,6 +180,14 @@ const MatchScout = () => {
           </Button>
         </Modal.Actions>
       </Modal>
+      {showSuccess && <Message success header="Data saved successfully" />}
+      {showError && <Message negative header="Unable to save record" />}
+      {showLookupError && (
+        <Message
+          negative
+          header="Team number not found, please add team first"
+        />
+      )}
     </Container>
   );
 };
