@@ -5,7 +5,7 @@ import Home from "./Home";
 import MatchScout from "./MatchScout";
 import PitScout from "./PitScout";
 import TeamPages from "./TeamPages";
-import PitDisplay from "./PitScout";
+import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
 
 const App = () => {

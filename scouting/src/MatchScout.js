@@ -21,12 +21,21 @@ import {
   getDocs,
 } from "firebase/firestore";
 
+import {
+  colorOptions,
+  driveTrainOptions,
+  cvOptions,
+  autoOptions,
+  yesNoOptions,
+} from "./AllOptions";
+
 const MatchScout = () => {
   const [eventKey, setEventKey] = useState("");
   const [matchKey, setMatchKey] = useState("");
   const [teamName, setTeamName] = useState("");
   const [teamNumber, setTeamNumber] = useState("");
   const [color, setColor] = useState("");
+
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -47,7 +56,7 @@ const MatchScout = () => {
 
   const validate = () => {
     const requiredFields = [eventKey, matchKey];
-    if (requiredFields.some((f) => f == "")) {
+    if (requiredFields.some((f) => f === "")) {
       setShowModal(true);
       return false;
     }
@@ -64,7 +73,6 @@ const MatchScout = () => {
         qs.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           setTeamName(doc.data().teamName);
-          setColor(doc.data().color);
         });
       } else {
         setShowLookupError(true);
@@ -120,7 +128,7 @@ const MatchScout = () => {
           <Form.Field>
             <label>Team Name</label>
             {teamName && <Label>{teamName}</Label>}
-            {teamName.length == 0 && (
+            {teamName.length === 0 && (
               <Placeholder>
                 <Placeholder.Paragraph>
                   <Placeholder.Line />
@@ -130,16 +138,13 @@ const MatchScout = () => {
             )}
           </Form.Field>
           <Form.Field>
-            <label>Alliance Color</label>
-            {teamName && <Label>{color}</Label>}
-            {teamName.length == 0 && (
-              <Placeholder>
-                <Placeholder.Paragraph>
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                </Placeholder.Paragraph>
-              </Placeholder>
-            )}
+            <label style={{ color: "red" }}>Alliance Color *</label>
+            <Form.Select
+              options={colorOptions}
+              placeholder="Alliance Color (required)"
+              value={color}
+              onChange={(e, data) => setColor(data.value)}
+            />
           </Form.Field>
         </Form.Group>
 
@@ -166,7 +171,7 @@ const MatchScout = () => {
           Submit
         </Button>
       </Form>
-      <div style={{ marginTop: 20 }}>
+      <div style={{ marginTop: 20, marginBottom: 30 }}>
         <Link to="/"> Back to Home</Link>
       </div>
       <Modal open={showModal} onClose={() => setShowModal(false)}>

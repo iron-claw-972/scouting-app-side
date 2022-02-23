@@ -73,8 +73,8 @@ const PitScout = () => {
   ]);
 
   const validate = () => {
-    const requiredFields = [teamNumber, color, shooter, climb];
-    if (requiredFields.some((f) => f == "")) {
+    const requiredFields = [teamNumber];
+    if (requiredFields.some((f) => f === "")) {
       setShowModal(true);
       return false;
     }
@@ -107,9 +107,8 @@ const PitScout = () => {
       setShowError(true);
     }
   };
-  let show = false;
   return (
-    <Container>
+    <Container fluid>
       <Header as="h1">Scout a Team</Header>
 
       <Message attached header="Add or Edit a Team's data" />
@@ -117,7 +116,7 @@ const PitScout = () => {
         <Form.Group widths="equal">
           <Form.Field>
             <label>Team Name</label>
-            <input
+            <Form.Input
               placeholder="Team Name"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
@@ -129,15 +128,6 @@ const PitScout = () => {
               placeholder="Team Number"
               value={teamNumber}
               onChange={(e) => setTeamNumber(e.target.value)}
-            />
-          </Form.Field>{" "}
-          <Form.Field>
-            <label style={{ color: "red" }}>Alliance Color *</label>
-            <Form.Select
-              options={colorOptions}
-              placeholder="Alliance Color (required)"
-              value={color}
-              onChange={(e, data) => setColor(data.value)}
             />
           </Form.Field>
         </Form.Group>
@@ -196,12 +186,12 @@ const PitScout = () => {
               value={auto}
               onChange={(e, data) => setAuto(data.value)}
             />
-          </Form.Field>{" "}
+          </Form.Field>
         </Form.Group>
 
         <Form.Group>
           <Form.Field>
-            <label style={{ color: "red" }}>Has high Shooter *</label>
+            <label>Has high Shooter *</label>
             <Form.Select
               options={yesNoOptions}
               placeholder="Has high shooter"
@@ -210,7 +200,7 @@ const PitScout = () => {
             />
           </Form.Field>
           <Form.Field>
-            <label style={{ color: "red" }}>Has high climber *</label>
+            <label>Has high climber *</label>
             <Form.Select
               options={yesNoOptions}
               placeholder="Has high climber"
@@ -235,7 +225,7 @@ const PitScout = () => {
       <div style={{ marginTop: 20, marginBottom: 20 }}>
         <Link to="/"> Back to Home</Link>
       </div>
-      <Modal open={showModal} onClose={() => setShowModal(false)}>
+      <Modal size="small" open={showModal} onClose={() => setShowModal(false)}>
         <Modal.Header>Some fields are blank</Modal.Header>
         <Modal.Content>
           <p>Please check some required fields with (*) are not entered</p>
@@ -246,8 +236,8 @@ const PitScout = () => {
           </Button>
         </Modal.Actions>
       </Modal>
-      {showSuccess && <Message success header="data saved successfully" />}
-      {showError && <Message negative header="unable to save record" />}
+      {showSuccess && <Message success header="Data saved successfully" />}
+      {showError && <Message negative header="Unable to save record" />}
     </Container>
   );
 };
