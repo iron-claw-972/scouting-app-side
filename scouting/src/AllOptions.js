@@ -71,6 +71,7 @@ const autoOptions = [
 const yesNoOptions = [
   { key: 1, text: "yes", value: "yes" },
   { key: 2, text: "no", value: "no" },
+  { key: 3, text: "maybe", value: "maybe" },
 ];
 
 export {

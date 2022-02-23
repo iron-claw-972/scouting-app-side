@@ -8,9 +8,10 @@ import {
   Container,
   Modal,
   Message,
+  Dropdown,
 } from "semantic-ui-react";
 
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 
 import {
   colorOptions,
@@ -82,12 +83,12 @@ const PitScout = () => {
     return true;
   };
 
-  const save = async () => {
-    if (!validate()) return;
+  const lookupTeamIfExists = async () => {
     const db = getFirestore();
-    try {
-      const docRef = await addDoc(collection(db, "teams"), {
-        teamNumber,
+    const docRef = doc(db, "teams", teamNumber);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const {
         teamName,
         color,
         weight,
@@ -96,10 +97,55 @@ const PitScout = () => {
         driveTrain,
         programmingLanguage,
         cvCapability,
-        highShooter: shooter,
-        highClimber: climb,
+        shooter,
+        climb,
         auto,
-      });
+      } = docSnap.data();
+      setTeamName(teamName || "");
+      setColor(color || "");
+      setWeight(weight || "");
+      setHeight(height || "");
+      setLength(length || "");
+      setDriveTrain(driveTrain || "");
+      setProgrammingLanguage(programmingLanguage || "");
+      setCvCapability(cvCapability || "");
+      setShooter(shooter || "");
+      setClimb(climb || "");
+      setAuto(auto || "");
+    }
+  };
+
+  const truncateEmptyProperties = (obj) => {
+    const keysToKeep = Object.keys(obj).filter((key) => {
+      return obj[key].length > 0;
+    });
+    const newObj = {};
+    keysToKeep.forEach((key) => {
+      newObj[key] = obj[key];
+    });
+    return newObj;
+  };
+
+  const save = async () => {
+    if (!validate()) return;
+    const db = getFirestore();
+    const dataToSave = truncateEmptyProperties({
+      teamNumber,
+      teamName,
+      color,
+      weight,
+      height,
+      length,
+      driveTrain,
+      programmingLanguage,
+      cvCapability,
+      shooter,
+      climb,
+      auto,
+    });
+    try {
+      const docRef = doc(db, "teams", teamNumber);
+      await setDoc(docRef, dataToSave, { merge: true });
       console.log("Document written with ID: ", docRef.id);
       setShowSuccess(true);
       setTimeout(resetForm, 1500);
@@ -116,19 +162,20 @@ const PitScout = () => {
       <Form style={{ marginTop: 10 }}>
         <Form.Group widths="equal">
           <Form.Field>
-            <label>Team Name</label>
-            <Form.Input
-              placeholder="Team Name"
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
-            />
-          </Form.Field>
-          <Form.Field>
             <label style={{ color: "red" }}>Team Number *</label>
             <input
               placeholder="Team Number"
               value={teamNumber}
               onChange={(e) => setTeamNumber(e.target.value)}
+              onBlur={lookupTeamIfExists}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Team Name</label>
+            <Form.Input
+              placeholder="Team Name"
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
             />
           </Form.Field>
         </Form.Group>
@@ -161,27 +208,42 @@ const PitScout = () => {
         </Form.Group>
 
         <Form.Group widths="equal">
-          <Form.Field>
+          <Form.Field
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+            }}
+          >
             <label>Drive Train</label>
-            <Form.Select
+            <Dropdown
               options={driveTrainOptions}
               placeholder="Drive Train"
               value={driveTrain}
               onChange={(e, data) => setDriveTrain(data.value)}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+            }}
+          >
             <label>CV Capabilities</label>
-            <Form.Select
+            <Dropdown
               options={cvOptions}
               placeholder="CV Capabilities"
               value={cvCapability}
               onChange={(e, data) => setCvCapability(data.value)}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+            }}
+          >
             <label>Auto Capabilities</label>
-            <Form.Select
+            <Dropdown
               options={autoOptions}
               placeholder="Auto Capabilities"
               value={auto}
@@ -190,19 +252,29 @@ const PitScout = () => {
           </Form.Field>
         </Form.Group>
 
-        <Form.Group>
-          <Form.Field>
-            <label>Has high Shooter *</label>
-            <Form.Select
+        <Form.Group widths="equal">
+          <Form.Field
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+            }}
+          >
+            <label>Has high Shooter</label>
+            <Dropdown
               options={yesNoOptions}
               placeholder="Has high shooter"
               value={shooter}
               onChange={(e, data) => setShooter(data.value)}
             />
           </Form.Field>
-          <Form.Field>
-            <label>Has high climber *</label>
-            <Form.Select
+          <Form.Field
+            style={{
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+            }}
+          >
+            <label>Has high climber</label>
+            <Dropdown
               options={yesNoOptions}
               placeholder="Has high climber"
               value={climb}
@@ -218,10 +290,15 @@ const PitScout = () => {
             onChange={(e) => setProgrammingLanguage(e.target.value)}
           />
         </Form.Field>
-
-        <Button type="submit" onClick={save}>
-          Submit
-        </Button>
+        <Form.Group>
+          <Button color="green" type="submit" onClick={save}>
+            Submit / Save
+          </Button>
+          <div style={{ width: 50 }} />
+          <Button color="red" type="reset" onClick={lookupTeamIfExists}>
+            Undo edits
+          </Button>
+        </Form.Group>
       </Form>
       <div style={{ marginTop: 20, marginBottom: 20 }}>
         <Link to="/"> Back to Home</Link>
