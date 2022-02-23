@@ -13,7 +13,8 @@
     "semantic-ui-react": "^2.1.2",
     "web-vitals": "^2.1.4",
     "firebase": "^9.4.1",
-    "react-router-dom": "6"
+    "react-router-dom": "6",
+    "react-pdf": "^5.7.1"
   },
   "scripts": {
     "start": "./init.sh && react-scripts start",

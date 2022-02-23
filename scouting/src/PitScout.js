@@ -108,7 +108,7 @@ const PitScout = () => {
     }
   };
   return (
-    <Container fluid>
+    <Container>
       <Header as="h1">Scout a Team</Header>
 
       <Message attached header="Add or Edit a Team's data" />
