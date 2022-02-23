@@ -32,6 +32,7 @@ const PitScout = () => {
   const [cvCapability, setCvCapability] = useState("");
   const [shooter, setShooter] = useState("");
   const [climb, setClimb] = useState("");
+  const [worlds, setWorlds] = useState(false);
   const [auto, setAuto] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -109,7 +110,7 @@ const PitScout = () => {
   };
   return (
     <Container>
-      <Header as="h1">Scout a Team</Header>
+      <Header as="h1">Scout or prescout a Team</Header>
 
       <Message attached header="Add or Edit a Team's data" />
       <Form style={{ marginTop: 10 }}>
