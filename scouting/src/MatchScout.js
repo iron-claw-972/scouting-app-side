@@ -16,9 +16,8 @@ import {
   getFirestore,
   collection,
   addDoc,
-  query,
-  where,
-  getDocs,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 
 import {
@@ -65,21 +64,18 @@ const MatchScout = () => {
 
   const lookupTeam = async () => {
     const db = getFirestore();
-    const teamsRef = collection(db, "teams");
-    const q = query(teamsRef, where("teamNumber", "==", teamNumber));
+    const docRef = doc(db, "teams", teamNumber);
     try {
-      const qs = await getDocs(q);
-      if (qs.size > 0) {
-        qs.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          setTeamName(doc.data().teamName);
-        });
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setTeamName(docSnap.data().teamName);
       } else {
         setShowLookupError(true);
         resetForm();
       }
     } catch (e) {
       console.error(e);
+      setShowLookupError(true);
     }
   };
 
@@ -188,10 +184,12 @@ const MatchScout = () => {
       {showSuccess && <Message success header="Data saved successfully" />}
       {showError && <Message negative header="Unable to save record" />}
       {showLookupError && (
-        <Message
-          negative
-          header="Team number not found, please add team first"
-        />
+        <Link to="/pitscout">
+          <Message
+            negative
+            header="Team number not found, please add team first - Click Here"
+          />
+        </Link>
       )}
     </Container>
   );
