@@ -35,6 +35,7 @@ const PitScout = () => {
   const [climb, setClimb] = useState("");
   const [worlds, setWorlds] = useState(false);
   const [auto, setAuto] = useState("");
+  const [pf, setPf] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -54,6 +55,8 @@ const PitScout = () => {
     setClimb("");
     setShooter("");
     setAuto("");
+    setWorlds("");
+    setPf();
   };
 
   useEffect(() => {
@@ -72,6 +75,8 @@ const PitScout = () => {
     shooter,
     climb,
     auto,
+    worlds,
+    pf,
   ]);
 
   const validate = () => {
@@ -100,6 +105,8 @@ const PitScout = () => {
         shooter,
         climb,
         auto,
+        worlds,
+        pf,
       } = docSnap.data();
       setTeamName(teamName || "");
       setColor(color || "");
@@ -112,6 +119,9 @@ const PitScout = () => {
       setShooter(shooter || "");
       setClimb(climb || "");
       setAuto(auto || "");
+      setPf(pf || "");
+    } else {
+      resetForm();
     }
   };
 
@@ -142,6 +152,8 @@ const PitScout = () => {
       shooter,
       climb,
       auto,
+      worlds,
+      pf,
     });
     try {
       const docRef = doc(db, "teams", teamNumber);
@@ -179,7 +191,6 @@ const PitScout = () => {
             />
           </Form.Field>
         </Form.Group>
-
         <Form.Group widths="equal">
           <Form.Field>
             <label>Weight (lb)</label>
@@ -206,7 +217,6 @@ const PitScout = () => {
             />
           </Form.Field>{" "}
         </Form.Group>
-
         <Form.Group widths="equal">
           <Form.Field
             style={{
@@ -251,7 +261,6 @@ const PitScout = () => {
             />
           </Form.Field>
         </Form.Group>
-
         <Form.Group widths="equal">
           <Form.Field
             style={{
@@ -288,6 +297,28 @@ const PitScout = () => {
             placeholder="Programming Language"
             value={programmingLanguage}
             onChange={(e) => setProgrammingLanguage(e.target.value)}
+          />
+        </Form.Field>
+        <Form.Field
+          style={{
+            border: "1px solid rgba(0, 0, 0, 0.1)",
+            borderRadius: "5px",
+          }}
+        >
+          <label>Been to Worlds?</label>
+          <Dropdown
+            options={yesNoOptions}
+            placeholder=""
+            value={worlds}
+            onChange={(e, data) => setWorlds(data.value)}
+          />
+        </Form.Field>{" "}
+        <Form.Field>
+          <label>Past focuses</label>
+          <input
+            placeholder="Past focuses"
+            value={pf}
+            onChange={(e) => setPf(e.target.value)}
           />
         </Form.Field>
         <Form.Group>
