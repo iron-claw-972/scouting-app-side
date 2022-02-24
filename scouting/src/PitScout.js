@@ -9,6 +9,7 @@ import {
   Modal,
   Message,
   Dropdown,
+  TextArea,
 } from "semantic-ui-react";
 
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
@@ -33,9 +34,9 @@ const PitScout = () => {
   const [cvCapability, setCvCapability] = useState("");
   const [shooter, setShooter] = useState("");
   const [climb, setClimb] = useState("");
-  const [worlds, setWorlds] = useState(false);
+  const [worlds, setWorlds] = useState("");
   const [auto, setAuto] = useState("");
-  const [pf, setPf] = useState("");
+  const [pastFocuses, setPastFocuses] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -56,7 +57,7 @@ const PitScout = () => {
     setShooter("");
     setAuto("");
     setWorlds("");
-    setPf();
+    setPastFocuses("");
   };
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const PitScout = () => {
     climb,
     auto,
     worlds,
-    pf,
+    pastFocuses,
   ]);
 
   const validate = () => {
@@ -106,7 +107,7 @@ const PitScout = () => {
         climb,
         auto,
         worlds,
-        pf,
+        pastFocuses,
       } = docSnap.data();
       setTeamName(teamName || "");
       setColor(color || "");
@@ -119,7 +120,8 @@ const PitScout = () => {
       setShooter(shooter || "");
       setClimb(climb || "");
       setAuto(auto || "");
-      setPf(pf || "");
+      setWorlds(worlds || "");
+      setPastFocuses(pastFocuses || "");
     } else {
       resetForm();
     }
@@ -153,7 +155,7 @@ const PitScout = () => {
       climb,
       auto,
       worlds,
-      pf,
+      pastFocuses,
     });
     try {
       const docRef = doc(db, "teams", teamNumber);
@@ -314,11 +316,11 @@ const PitScout = () => {
           />
         </Form.Field>{" "}
         <Form.Field>
-          <label>Past focuses</label>
-          <input
-            placeholder="Past focuses"
-            value={pf}
-            onChange={(e) => setPf(e.target.value)}
+          <label>Past Focuses</label>
+          <TextArea
+            placeholder="Past Focuses"
+            value={pastFocuses}
+            onChange={(e) => setPastFocuses(e.target.value)}
           />
         </Form.Field>
         <Form.Group>
