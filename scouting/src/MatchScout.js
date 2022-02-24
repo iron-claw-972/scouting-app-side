@@ -10,6 +10,7 @@ import {
   Message,
   Label,
   Placeholder,
+  Divider,
 } from "semantic-ui-react";
 
 import {
@@ -29,10 +30,13 @@ import {
 } from "./AllOptions";
 
 const MatchScout = () => {
+  const [teamNumber, setTeamNumber] = useState("");
+  const [teamName, setTeamName] = useState("");
+  const [climb, setClimb] = useState("");
+  const [shooter, setShooter] = useState("");
+
   const [eventKey, setEventKey] = useState("");
   const [matchKey, setMatchKey] = useState("");
-  const [teamName, setTeamName] = useState("");
-  const [teamNumber, setTeamNumber] = useState("");
   const [color, setColor] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -45,6 +49,8 @@ const MatchScout = () => {
     setMatchKey("");
     setTeamName("");
     setColor("");
+    setClimb("");
+    setShooter("");
   };
 
   useEffect(() => {
@@ -68,7 +74,10 @@ const MatchScout = () => {
     try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setTeamName(docSnap.data().teamName);
+        const { teamName, climb, shooter } = docSnap.data();
+        setTeamName(teamName);
+        setClimb(climb || "");
+        setShooter(shooter || "");
       } else {
         setShowLookupError(true);
         resetForm();
@@ -134,16 +143,33 @@ const MatchScout = () => {
             )}
           </Form.Field>
           <Form.Field>
-            <label style={{ color: "red" }}>Alliance Color *</label>
-            <Form.Select
-              options={colorOptions}
-              placeholder="Alliance Color (required)"
-              value={color}
-              onChange={(e, data) => setColor(data.value)}
-            />
+            <label>High Shooter</label>
+            {shooter && <Label>{shooter}</Label>}
+            {teamName.length === 0 && (
+              <Placeholder>
+                <Placeholder.Paragraph>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder.Paragraph>
+              </Placeholder>
+            )}
+          </Form.Field>
+          <Form.Field>
+            <label>High Climber</label>
+            {climb && <Label>{climb}</Label>}
+            {teamName.length === 0 && (
+              <Placeholder>
+                <Placeholder.Paragraph>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder.Paragraph>
+              </Placeholder>
+            )}
           </Form.Field>
         </Form.Group>
-
+        <Divider horizontal>
+          <Header as="h4">Add Match data below</Header>
+        </Divider>
         <Form.Group widths="equal">
           <Form.Field>
             <label>Event Key</label>
@@ -159,6 +185,15 @@ const MatchScout = () => {
               placeholder="Match Key"
               value={matchKey}
               onChange={(e) => setMatchKey(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ color: "red" }}>Alliance Color *</label>
+            <Form.Select
+              options={colorOptions}
+              placeholder="Alliance Color (required)"
+              value={color}
+              onChange={(e, data) => setColor(data.value)}
             />
           </Form.Field>
         </Form.Group>
