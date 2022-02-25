@@ -5,7 +5,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 import { Grid, Label, List, LabelDetail } from "semantic-ui-react";
 
-const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
+const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
   const {
     teamNumber = "",
     teamName = "",
@@ -21,6 +21,10 @@ const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
     weight = "",
     worlds = "",
   } = teamData;
+
+  const TextHelper = (props) => (
+    <span style={{ fontSize: 16, color: textcolor }}>{props.children}</span>
+  );
   return (
     <List.Item key={teamNumber}>
       <Grid
@@ -35,12 +39,12 @@ const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
       >
         <Grid.Row columns={2} textAlign="center" verticalAlign="bottom">
           <Grid.Column>
-            <Label tag size="huge" color={labelcolor}>
+            <Label size="huge" color={labelcolor}>
               {teamNumber}
             </Label>
           </Grid.Column>
           <Grid.Column>
-            <Label color={labelcolor} size="large">
+            <Label color={labelcolor} size="big">
               <LabelDetail>{teamName}</LabelDetail>
             </Label>
           </Grid.Column>
@@ -51,28 +55,26 @@ const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
             <Label horizontal color={labelcolor}>
               Auto?:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{auto}</span>
+            <TextHelper>{auto}</TextHelper>
           </Grid.Column>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Can climb:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{climb}</span>
+            <TextHelper>{climb}</TextHelper>
           </Grid.Column>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Shoot high?:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{shooter}</span>
+            <TextHelper>{shooter}</TextHelper>
           </Grid.Column>
 
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               DriveTrain:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>
-              {driveTrain}
-            </span>
+            <TextHelper>{driveTrain}</TextHelper>
           </Grid.Column>
         </Grid.Row>
 
@@ -81,27 +83,25 @@ const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
             <Label horizontal color={labelcolor}>
               CV:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>
-              {cvCapability}
-            </span>
+            <TextHelper>{cvCapability}</TextHelper>
           </Grid.Column>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Height:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{height}</span>
+            <TextHelper>{height}</TextHelper>
           </Grid.Column>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Length:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{length}</span>
+            <TextHelper>{length}</TextHelper>
           </Grid.Column>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Weight:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{weight}</span>
+            <TextHelper>{weight}</TextHelper>
           </Grid.Column>
         </Grid.Row>
 
@@ -110,20 +110,16 @@ const TeamCard = ({ bgcolor, labelcolor, teamData }) => {
             <Label horizontal color={labelcolor}>
               Lang:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>
-              {programmingLanguage}
-            </span>
+            <TextHelper>{programmingLanguage}</TextHelper>
           </Grid.Column>
           <Grid.Column width={3}>
             <Label horizontal color={labelcolor}>
               World?:
             </Label>
-            <span style={{ fontSize: 18, color: labelcolor }}>{worlds}</span>
+            <TextHelper>{worlds}</TextHelper>
           </Grid.Column>
           <Grid.Column width={10}>
-            <span style={{ fontSize: 18, color: labelcolor }}>
-              {pastFocuses}
-            </span>
+            <TextHelper>{pastFocuses}</TextHelper>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -147,16 +143,17 @@ const TeamPages = () => {
     return teamData.map((teamRow, index) => {
       let labelcolor, bgcolor;
       if (index % 2 == 0) {
-        labelcolor = "blue";
-        bgcolor = "#ced8f2";
+        labelcolor = "black";
+        bgcolor = "white";
       } else {
-        labelcolor = "brown";
-        bgcolor = "#ffffe0";
+        labelcolor = "orange";
+        bgcolor = "white";
       }
       return (
         <TeamCard
           bgcolor={bgcolor}
           labelcolor={labelcolor}
+          textcolor={"black"}
           teamData={teamRow}
         />
       );

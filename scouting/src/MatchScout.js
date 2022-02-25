@@ -11,6 +11,7 @@ import {
   Label,
   Placeholder,
   Divider,
+  TextArea,
 } from "semantic-ui-react";
 
 import {
@@ -32,8 +33,15 @@ import {
 const MatchScout = () => {
   const [teamNumber, setTeamNumber] = useState("");
   const [teamName, setTeamName] = useState("");
-  const [climb, setClimb] = useState("");
-  const [shooter, setShooter] = useState("");
+  const [AutoLH, setAutoLH] = useState(0);
+  const [AutoUH, setAutoUH] = useState(0);
+  const [AutoC, setAutoC] = useState("");
+  const [TeleopLH, setTeleopLH] = useState(0);
+  const [TeleopUH, setTeleopUH] = useState(0);
+  const [TeleopC, setTeleopC] = useState("");
+  const [Hangar, setHangar] = useState("");
+  const [ClimbTime, setClimbTime] = useState(0);
+  const [EndgameC, setEndgameC] = useState("");
 
   const [eventKey, setEventKey] = useState("");
   const [matchKey, setMatchKey] = useState("");
@@ -47,10 +55,17 @@ const MatchScout = () => {
   const resetForm = () => {
     setEventKey("");
     setMatchKey("");
+    setAutoLH(0);
+    setAutoUH(0);
+    setAutoC("");
+    setTeleopLH(0);
+    setTeleopUH(0);
+    setTeleopC("");
+    setHangar("");
+    setClimbTime(0);
+    setEndgameC("");
     setTeamName("");
     setColor("");
-    setClimb("");
-    setShooter("");
   };
 
   useEffect(() => {
@@ -74,10 +89,17 @@ const MatchScout = () => {
     try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const { teamName, climb, shooter } = docSnap.data();
+        const { teamName, climb, AutoLH, AutoUH, AutoC } = docSnap.data();
         setTeamName(teamName);
-        setClimb(climb || "");
-        setShooter(shooter || "");
+        setAutoLH(AutoLH || 0);
+        setAutoUH(AutoUH || 0);
+        setAutoC(AutoC || "");
+        setTeleopLH(TeleopLH || 0);
+        setTeleopUH(TeleopUH || 0);
+        setTeleopC(TeleopC || "");
+        setHangar(Hangar || 0);
+        setClimbTime(ClimbTime || 0);
+        setEndgameC(EndgameC || "");
       } else {
         setShowLookupError(true);
         resetForm();
@@ -93,6 +115,15 @@ const MatchScout = () => {
     const db = getFirestore();
     try {
       const docRef = await addDoc(collection(db, "match"), {
+        AutoLH,
+        AutoUH,
+        AutoC,
+        TeleopLH,
+        TeleopUH,
+        TeleopC,
+        Hangar,
+        ClimbTime,
+        EndgameC,
         eventKey,
         matchKey,
         teamName,
@@ -142,34 +173,88 @@ const MatchScout = () => {
               </Placeholder>
             )}
           </Form.Field>
-          <Form.Field>
-            <label>High Shooter</label>
-            {shooter && <Label>{shooter}</Label>}
-            {teamName.length === 0 && (
-              <Placeholder>
-                <Placeholder.Paragraph>
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                </Placeholder.Paragraph>
-              </Placeholder>
-            )}
-          </Form.Field>
-          <Form.Field>
-            <label>High Climber</label>
-            {climb && <Label>{climb}</Label>}
-            {teamName.length === 0 && (
-              <Placeholder>
-                <Placeholder.Paragraph>
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                </Placeholder.Paragraph>
-              </Placeholder>
-            )}
-          </Form.Field>
         </Form.Group>
         <Divider horizontal>
           <Header as="h4">Add Match data below</Header>
         </Divider>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Auto Low Hub</label>
+            <input
+              placeholder="Auto LH"
+              value={AutoLH}
+              onChange={(e) => setAutoLH(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Auto Upper Hub</label>
+            <input
+              placeholder="Auto UH"
+              value={AutoUH}
+              onChange={(e) => setAutoUH(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Auto Comments</label>
+            <TextArea
+              placeholder="Auto Comments"
+              value={AutoC}
+              onChange={(e) => setAutoC(e.target.value)}
+            />
+          </Form.Field>
+        </Form.Group>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Teleop Low Hub</label>
+            <input
+              placeholder="Teleop LH"
+              value={TeleopLH}
+              onChange={(e) => setTeleopLH(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Teleop Upper Hub</label>
+            <input
+              placeholder="Teleop UH"
+              value={TeleopUH}
+              onChange={(e) => setTeleopUH(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Teleop Comments</label>
+            <TextArea
+              placeholder="Teleop Comments"
+              value={TeleopC}
+              onChange={(e) => setTeleopC(e.target.value)}
+            />
+          </Form.Field>
+        </Form.Group>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Hangar Points</label>
+            <TextArea
+              placeholder="Hangar"
+              value={Hangar}
+              onChange={(e) => setHangar(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Climb time</label>
+            <input
+              placeholder="Climb Time"
+              value={ClimbTime}
+              onChange={(e) => setClimbTime(e.target.value)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Endgame Comments</label>
+            <TextArea
+              placeholder="Endgame Comments"
+              value={TeleopC}
+              onChange={(e) => setEndgameC(e.target.value)}
+            />
+          </Form.Field>
+        </Form.Group>
         <Form.Group widths="equal">
           <Form.Field>
             <label>Event Key</label>
