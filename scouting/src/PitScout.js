@@ -42,9 +42,10 @@ const PitScout = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const resetForm = () => {
+  // by default resets everything, but can leave team number if needed
+  const resetForm = (exceptTeamNumber = false) => {
     setTeamName("");
-    setTeamNumber("");
+    if (!exceptTeamNumber) setTeamNumber("");
     setColor("");
     setWeight("");
     setHeight("");
@@ -123,7 +124,7 @@ const PitScout = () => {
       setWorlds(worlds || "");
       setPastFocuses(pastFocuses || "");
     } else {
-      resetForm();
+      if (teamName.length > 0) resetForm(true);
     }
   };
 
