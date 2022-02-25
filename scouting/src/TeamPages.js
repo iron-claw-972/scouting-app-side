@@ -140,7 +140,6 @@ const TeamPages = () => {
     querySnapshot.forEach((doc) => {
       teamDataArr.push(doc.data());
     });
-    console.log(teamDataArr);
     setTeamData(teamDataArr);
   }, []);
 
@@ -164,27 +163,6 @@ const TeamPages = () => {
     });
   };
 
-  const teamData1 = [
-    {
-      teamNumber: "10",
-      teamName: "The best team NorthEast",
-      auto: "can move",
-      climb: "yes",
-      cvCapability: "no",
-      driveTrain: "2W",
-      height: "124",
-      length: "32",
-      pastFocuses: "has been doing well in auto mode",
-      programmingLanguage: "Java",
-      shooter: "yes",
-      weight: "25",
-      worlds: "yes",
-    },
-    {
-      teamNumber: "11",
-      teamName: "The best team from South",
-    },
-  ];
   return (
     <List style={{ margin: "10px", padding: "10px" }}>{returnTeamCards()}</List>
   );
