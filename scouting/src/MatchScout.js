@@ -43,8 +43,6 @@ const MatchScout = () => {
   const [ClimbTime, setClimbTime] = useState(0);
   const [EndgameC, setEndgameC] = useState("");
 
-  const [eventKey, setEventKey] = useState("");
-  const [matchKey, setMatchKey] = useState("");
   const [color, setColor] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -53,8 +51,6 @@ const MatchScout = () => {
   const [showLookupError, setShowLookupError] = useState(false);
 
   const resetForm = () => {
-    setEventKey("");
-    setMatchKey("");
     setAutoLH(0);
     setAutoUH(0);
     setAutoC("");
@@ -72,10 +68,10 @@ const MatchScout = () => {
     setShowSuccess(false);
     setShowError(false);
     setShowLookupError(false);
-  }, [eventKey, matchKey, teamNumber]);
+  }, [teamNumber]);
 
   const validate = () => {
-    const requiredFields = [eventKey, matchKey];
+    const requiredFields = [];
     if (requiredFields.some((f) => f === "")) {
       setShowModal(true);
       return false;
@@ -124,8 +120,7 @@ const MatchScout = () => {
         Hangar,
         ClimbTime,
         EndgameC,
-        eventKey,
-        matchKey,
+
         teamName,
         teamNumber,
         color,
@@ -256,22 +251,6 @@ const MatchScout = () => {
           </Form.Field>
         </Form.Group>
         <Form.Group widths="equal">
-          <Form.Field>
-            <label>Event Key</label>
-            <input
-              placeholder="Event Key"
-              value={eventKey}
-              onChange={(e) => setEventKey(e.target.value)}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Match Key</label>
-            <input
-              placeholder="Match Key"
-              value={matchKey}
-              onChange={(e) => setMatchKey(e.target.value)}
-            />
-          </Form.Field>
           <Form.Field>
             <label style={{ color: "red" }}>Alliance Color *</label>
             <Form.Select

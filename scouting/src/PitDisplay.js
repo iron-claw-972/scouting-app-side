@@ -1,7 +1,3 @@
-import ClimbSpecs from "./ClimbSpecs";
-import DriveSpecs from "./DriveSpecs";
-import ShooterSpecs from "./ShooterSpecs";
-import Sponsors from "./Sponsors";
 import Textbox from "./Textbox";
 import PdfViewer from "./PdfViewer";
 import SpecTable from "./SpecTable";
@@ -48,7 +44,6 @@ export default function PitDisplay(props) {
         headerName="Drive Subsytem Specs"
         specData={driveSpecs}
       />
-
       <Textbox category={autoHeading} text={autoCapabilities}></Textbox>
       <PdfViewer />
       <Textbox category={"About Us"} text={teamHist}></Textbox>

@@ -30,12 +30,9 @@ const PitScout = () => {
   const [height, setHeight] = useState("");
   const [length, setLength] = useState("");
   const [driveTrain, setDriveTrain] = useState("");
-  const [programmingLanguage, setProgrammingLanguage] = useState("");
   const [cvCapability, setCvCapability] = useState("");
   const [shooter, setShooter] = useState("");
-  const [climb, setClimb] = useState("");
   const [worlds, setWorlds] = useState("");
-  const [auto, setAuto] = useState("");
   const [pastFocuses, setPastFocuses] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -51,12 +48,8 @@ const PitScout = () => {
     setHeight("");
     setLength("");
     setDriveTrain("");
-    setProgrammingLanguage("");
     setCvCapability("");
     setShowError("");
-    setClimb("");
-    setShooter("");
-    setAuto("");
     setWorlds("");
     setPastFocuses("");
   };
@@ -72,11 +65,7 @@ const PitScout = () => {
     height,
     length,
     driveTrain,
-    programmingLanguage,
     cvCapability,
-    shooter,
-    climb,
-    auto,
     worlds,
     pastFocuses,
   ]);
@@ -102,11 +91,7 @@ const PitScout = () => {
         height,
         length,
         driveTrain,
-        programmingLanguage,
         cvCapability,
-        shooter,
-        climb,
-        auto,
         worlds,
         pastFocuses,
       } = docSnap.data();
@@ -116,11 +101,7 @@ const PitScout = () => {
       setHeight(height || "");
       setLength(length || "");
       setDriveTrain(driveTrain || "");
-      setProgrammingLanguage(programmingLanguage || "");
       setCvCapability(cvCapability || "");
-      setShooter(shooter || "");
-      setClimb(climb || "");
-      setAuto(auto || "");
       setWorlds(worlds || "");
       setPastFocuses(pastFocuses || "");
     } else {
@@ -150,11 +131,7 @@ const PitScout = () => {
       height,
       length,
       driveTrain,
-      programmingLanguage,
       cvCapability,
-      shooter,
-      climb,
-      auto,
       worlds,
       pastFocuses,
     });
@@ -249,59 +226,7 @@ const PitScout = () => {
               onChange={(e, data) => setCvCapability(data.value)}
             />
           </Form.Field>
-          <Form.Field
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-            }}
-          >
-            <label>Auto Capabilities</label>
-            <Dropdown
-              options={autoOptions}
-              placeholder="Auto Capabilities"
-              value={auto}
-              onChange={(e, data) => setAuto(data.value)}
-            />
-          </Form.Field>
         </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Field
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-            }}
-          >
-            <label>Has high Shooter</label>
-            <Dropdown
-              options={yesNoOptions}
-              placeholder="Has high shooter"
-              value={shooter}
-              onChange={(e, data) => setShooter(data.value)}
-            />
-          </Form.Field>
-          <Form.Field
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-            }}
-          >
-            <label>Has high climber</label>
-            <Dropdown
-              options={yesNoOptions}
-              placeholder="Has high climber"
-              value={climb}
-              onChange={(e, data) => setClimb(data.value)}
-            />
-          </Form.Field>{" "}
-        </Form.Group>
-        <Form.Field>
-          <label>Programming Language</label>
-          <input
-            placeholder="Programming Language"
-            value={programmingLanguage}
-            onChange={(e) => setProgrammingLanguage(e.target.value)}
-          />
-        </Form.Field>
         <Form.Field
           style={{
             border: "1px solid rgba(0, 0, 0, 0.1)",

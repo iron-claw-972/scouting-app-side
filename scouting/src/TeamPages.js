@@ -1,23 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import SpecTable from "./SpecTable";
 
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
-import { Grid, Label, List, LabelDetail } from "semantic-ui-react";
+import { Grid, Label, List, LabelDetail, Table } from "semantic-ui-react";
 
 const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
+  const dummyData = [
+    [
+      "auto LH",
+      "auto UH",
+      "teleop LH",
+      "teleop UH",
+      "Climb Time",
+      "Hangar",
+      "Auto Comments",
+      "Teleop Comments",
+      "Endgame Comments",
+    ],
+    [
+      2,
+      0,
+      5,
+      0,
+      20,
+      "Traverse",
+      "good",
+      "decent",
+      "literally insane literally insaneliterally insaneliterally insaneliterally insaneliterally insaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insane",
+    ],
+  ];
   const {
     teamNumber = "",
     teamName = "",
-    auto = "",
-    climb = "",
     cvCapability = "",
     driveTrain = "",
     height = "",
     length = "",
     pastFocuses = "",
-    programmingLanguage = "",
-    shooter = "",
     weight = "",
     worlds = "",
   } = teamData;
@@ -50,41 +71,22 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row columns={4} divided>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Auto?:
-            </Label>
-            <TextHelper>{auto}</TextHelper>
-          </Grid.Column>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Can climb:
-            </Label>
-            <TextHelper>{climb}</TextHelper>
-          </Grid.Column>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Shoot high?:
-            </Label>
-            <TextHelper>{shooter}</TextHelper>
-          </Grid.Column>
-
+        <Grid.Row columns={2} divided>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               DriveTrain:
             </Label>
             <TextHelper>{driveTrain}</TextHelper>
           </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row columns={4} divided>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               CV:
             </Label>
             <TextHelper>{cvCapability}</TextHelper>
           </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={3} divided>
           <Grid.Column>
             <Label horizontal color={labelcolor}>
               Height:
@@ -106,13 +108,7 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
         </Grid.Row>
 
         <Grid.Row divided>
-          <Grid.Column width={3}>
-            <Label horizontal color={labelcolor}>
-              Lang:
-            </Label>
-            <TextHelper>{programmingLanguage}</TextHelper>
-          </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={6}>
             <Label horizontal color={labelcolor}>
               World?:
             </Label>
@@ -121,6 +117,10 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
           <Grid.Column width={10}>
             <TextHelper>{pastFocuses}</TextHelper>
           </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row divided>
+          <SpecTable columns={6} headerName="matchData" specData={dummyData} />
         </Grid.Row>
       </Grid>
     </List.Item>
