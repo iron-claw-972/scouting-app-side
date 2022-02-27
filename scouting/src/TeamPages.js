@@ -151,6 +151,14 @@ const TeamPages = () => {
     setTeamData(teamDataArr);
   }, []);
 
+  useEffect(async () => {
+    const db = getFirestore();
+    const querySnapshot = await getDocs(collection(db, "match"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+    });
+  }, []);
+
   const returnTeamCards = () => {
     return teamData.map((teamRow, index) => {
       let labelcolor, bgcolor;

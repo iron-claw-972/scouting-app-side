@@ -9,6 +9,7 @@ import {
   addDoc,
   doc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 
 const ScanMatchScoutDataQR = (props) => {
@@ -16,14 +17,10 @@ const ScanMatchScoutDataQR = (props) => {
 
   const save = async () => {
     const db = getFirestore();
-    addDoc(collection(db, "match"), JSON.parse(data))
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        //setTimeout(resetForm, 1500);
-      })
-      .catch((e) => {
-        console.error("Error adding document: ", e);
-      });
+    const matchData = JSON.parse(data);
+    const { docRefId } = matchData;
+    const docRef = doc(db, "match", docRefId);
+    setDoc(docRef, matchData, { merge: true });
   };
 
   useEffect(save, [data]);
