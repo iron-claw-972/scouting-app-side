@@ -57,7 +57,7 @@ const Home = () => (
       <Link to="/datadisplay" style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Fun"
+            header="Credits and Notes"
             description="Rest here, my tired scouter"
           />
         </Card>
