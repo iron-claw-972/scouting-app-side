@@ -8,6 +8,7 @@ import TeamPages from "./TeamPages";
 import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
 
+//setting up main page
 const App = () => {
   return (
     <div>

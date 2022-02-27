@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-// import pdf worker as a url, see `next.config.js` and `pdf-worker.js`
 
 import { Button, Grid } from "semantic-ui-react";
+
+//this over here is what lets us view the Tech Binder as a pdf
+//simply replace the pdf in the <Document> tag with this year's Tech Binder
 
 const PdfViewer = () => {
   const [numPages, setNumPages] = useState(null);
@@ -12,6 +14,8 @@ const PdfViewer = () => {
     setNumPages(nextNumPages);
   }
 
+  //getting the pdf worker, necessary with library
+  //THIS STILL WORKS WITH NO WIFI
   pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   function onUpClick() {
     if (pageNum < numPages) {
@@ -25,6 +29,7 @@ const PdfViewer = () => {
     }
   }
 
+  //pdf navigation buttons
   const NavButtons = () => {
     return (
       <Grid columns={2} style={{ margin: "10px" }}>
@@ -39,6 +44,8 @@ const PdfViewer = () => {
       </Grid>
     );
   };
+
+  //Find the <Document> tag, replace with this year's pdf
   return (
     <div>
       <NavButtons />

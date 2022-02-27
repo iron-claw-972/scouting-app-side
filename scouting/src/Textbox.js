@@ -1,3 +1,6 @@
+//This is a simple component where you can display text
+//Use as needed.
+
 export default function Textbox(props) {
   return (
     <div

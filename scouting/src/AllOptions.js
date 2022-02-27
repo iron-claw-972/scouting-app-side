@@ -1,3 +1,12 @@
+//When working with forms, we are going to have dropdown menus
+//For simplicity and modularity, all possible values for dropdown menus
+//...are stored here.
+//As a rule of thumb, if its not an objective fact about a robot, don't make a dropdown
+//For example:
+//"Drivetrain type" is good, its part of their robot
+//"Can score" is not, we have to see the robot in action for that
+//I've broken my own rules below, those menus aren't used in the final scouting forms
+
 const colorOptions = [
   {
     key: "r",

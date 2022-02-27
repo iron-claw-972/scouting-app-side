@@ -6,30 +6,14 @@ import { Header } from "semantic-ui-react";
 import styles from "./Home.module.css";
 
 export default function PitDisplay(props) {
-  const autoHeading = "Auto Capabilities";
-  const autoCapabilities =
-    "Deposit preloaded ball, intake 1-2 more balls, and deposit them.";
+  //history of the team
   const teamHist =
     "Iron Claw is an FRC team that operates through the Robotics Class at Los Gatos High School. It was founded with a strong belief in the importance of student leadership.";
 
-  const climbSpecs = [
-    ["spec1", "spec 1 details"],
-    ["spec2", "spec 2 details"],
-  ];
-
-  const cargoSpecs = [
-    ["spec1", "more specs", "spec 1 details"],
-    ["spec2", "more specs", "spec 2 details"],
-  ];
-
-  const driveSpecs = [
-    ["spec1", "spec 1 details"],
-    ["spec2", "spec 2 details"],
-  ];
-
+  //see the files of the components for explanation
   return (
     <div>
-      <Header as="h1">Iron Claw 972-Publicity Board</Header>
+      <h1>Iron Claw 972-Publicity Board</h1>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
@@ -38,6 +22,7 @@ export default function PitDisplay(props) {
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
 
       <PdfViewer />
+
       <img
         className={styles.sponsorImage}
         src={require("./sponsorLogos/newMilleniumFoundation.png")}

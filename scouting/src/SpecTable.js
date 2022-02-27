@@ -1,6 +1,8 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 
+//a table component. You can use this for any type of table.
+//It takes in an array of arrays, and uses the values to make a table
 const returnTableRows = (specData) => {
   return specData.map((row) => {
     return <Table.Row>{returnTableCells(row)}</Table.Row>;
@@ -21,6 +23,7 @@ const returnTableCells = (row) => {
        ...
    ]
 */
+
 const SpecTable = ({ numColumns, headerName, specData }) => (
   <Table collapsing celled striped style={{ margin: "10px", maxWidth: "80%" }}>
     <Table.Header>

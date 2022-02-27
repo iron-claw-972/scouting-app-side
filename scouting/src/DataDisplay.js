@@ -1,6 +1,9 @@
-//This isnt data display
-//Thats for nerds
-import Textbox from "./Textbox";
+//This isnt a data display
+//In other words, this file is inaccurately named
+//Change it if you want.
+//Use this to preserve the legacy of the brave programmers who dared to
+//...venture into the land of the webpage, far from the familiar lands
+//...of WPI Lib and their robot-programming comrades.
 
 export default function DataDisplay() {
   return (
@@ -26,6 +29,12 @@ export default function DataDisplay() {
         year.
       </h5>
       <h4 style={{ textAlign: "center" }}>Water Game confirmed :)</h4>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
     </div>
   );
 }

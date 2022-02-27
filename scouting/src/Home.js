@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Header, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+//The main page
 const Home = () => (
   <Container fluid>
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>

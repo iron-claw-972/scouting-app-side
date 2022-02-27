@@ -7,6 +7,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { Grid, Label, List, LabelDetail, Table } from "semantic-ui-react";
 import Textbox from "./Textbox";
 
+//It's going to be blank if there's no data
 const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
   const dummyData = [
     ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
@@ -27,8 +28,6 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     pastFocuses = "",
     weight = "",
     worlds = "",
-    matchData = [[]],
-    hangarData = [[]],
   } = teamData;
 
   const TextHelper = (props) => (
@@ -144,9 +143,18 @@ const TeamPages = () => {
   useEffect(async () => {
     const db = getFirestore();
     const querySnapshot = await getDocs(collection(db, "teams"));
+    const matchSnapshot = await getDocs(collection(db, "match"));
     const teamDataArr = [];
     querySnapshot.forEach((doc) => {
+      const docData = doc.data();
       teamDataArr.push(doc.data());
+      let matchDataArr = [];
+      matchSnapshot.forEach((i) => {
+        if (i.data().teamNumber == docData.teamNumber) {
+          matchDataArr.push(i.data());
+        }
+      });
+      teamDataArr[].push(matchDataArr);
     });
     setTeamData(teamDataArr);
   }, []);
