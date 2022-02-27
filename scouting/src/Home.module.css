@@ -2,6 +2,12 @@
   padding: 2 2rem;
 }
 
+.sponsorImage {
+  height: 8vh;
+  margin-left: 2vw;
+  filter: brightness(0);
+}
+
 .main {
   min-height: 100vh;
   padding: 1rem 0;

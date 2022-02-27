@@ -5,32 +5,18 @@ import SpecTable from "./SpecTable";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 import { Grid, Label, List, LabelDetail, Table } from "semantic-ui-react";
+import Textbox from "./Textbox";
 
 const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
   const dummyData = [
-    [
-      "auto LH",
-      "auto UH",
-      "teleop LH",
-      "teleop UH",
-      "Climb Time",
-      "Hangar",
-      "Auto Comments",
-      "Teleop Comments",
-      "Endgame Comments",
-    ],
-    [
-      2,
-      0,
-      5,
-      0,
-      20,
-      "Traverse",
-      "good",
-      "decent",
-      "literally insane literally insaneliterally insaneliterally insaneliterally insaneliterally insaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insaneinsaneliterally insane",
-    ],
+    ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
+    [2, 0, 5, 0, 20],
   ];
+  const dummyHangar = [
+    ["Traverse", "High", "Medium", "low", "None"],
+    [0, 8, 1, 0, 1],
+  ];
+
   const {
     teamNumber = "",
     teamName = "",
@@ -41,6 +27,8 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     pastFocuses = "",
     weight = "",
     worlds = "",
+    matchData = [[]],
+    hangarData = [[]],
   } = teamData;
 
   const TextHelper = (props) => (
@@ -120,7 +108,31 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
         </Grid.Row>
 
         <Grid.Row divided>
-          <SpecTable columns={6} headerName="matchData" specData={dummyData} />
+          <Grid.Column width={7}>
+            <SpecTable
+              columns={6}
+              headerName="match averages"
+              specData={dummyData}
+            />
+          </Grid.Column>
+          <Grid.Column width={7}>
+            <SpecTable columns={5} headerName="Hangar" specData={dummyHangar} />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Textbox category={"Auto comments"}></Textbox>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Textbox category={"Teleop comments"}></Textbox>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Textbox category={"Endgame comments"}></Textbox>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </List.Item>

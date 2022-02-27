@@ -3,6 +3,7 @@ import PdfViewer from "./PdfViewer";
 import SpecTable from "./SpecTable";
 
 import { Header } from "semantic-ui-react";
+import styles from "./Home.module.css";
 
 export default function PitDisplay(props) {
   const autoHeading = "Auto Capabilities";
@@ -28,24 +29,75 @@ export default function PitDisplay(props) {
 
   return (
     <div>
-      <Header as="h1">Publicity Board</Header>
-      <SpecTable
-        numColumns={2}
-        headerName="Climb Subsytem Specs"
-        specData={climbSpecs}
-      />
-      <SpecTable
-        numColumns={3}
-        headerName="Cargo Subsytem Specs"
-        specData={cargoSpecs}
-      />
-      <SpecTable
-        numColumns={2}
-        headerName="Drive Subsytem Specs"
-        specData={driveSpecs}
-      />
-      <Textbox category={autoHeading} text={autoCapabilities}></Textbox>
+      <Header as="h1">Iron Claw 972-Publicity Board</Header>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+
       <PdfViewer />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/newMilleniumFoundation.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/aeronet.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/google.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/campusInsuranceService.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/facilitron.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/baeSystems.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/rotaryClubLosGatos.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/qualcomm.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/lockheedMartin.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/brRacing.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/atlas.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/intuitiveSurgical.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/texasInstruments.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/tempCFO.png")}
+      />
+      <img
+        className={styles.sponsorImage}
+        src={require("./sponsorLogos/NowForeverStudios.png")}
+      />
       <Textbox category={"About Us"} text={teamHist}></Textbox>
     </div>
   );
