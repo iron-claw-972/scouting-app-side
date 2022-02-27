@@ -17,17 +17,18 @@ const ScanPitScoutDataQR = (props) => {
 
   const save = async () => {
     const db = getFirestore();
-    const matchData = JSON.parse(data);
-    const { docRefId } = matchData;
+    const pitData = JSON.parse(data);
+    const { docRefId } = pitData;
     const docRef = doc(db, "teams", docRefId);
-    setDoc(docRef, matchData, { merge: true });
+    setDoc(docRef, pitData, { merge: true });
   };
 
   useEffect(save, [data]);
 
   return (
     <Container>
-      <Header as="h1">
+      <Header as="h1">Scan the Pit Data</Header>
+      <Header as="h2">
         Hold the QR code for the Pit Data until you see SUCCESS below. Step
         closer.
       </Header>

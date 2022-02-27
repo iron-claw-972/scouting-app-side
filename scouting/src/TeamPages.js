@@ -9,7 +9,6 @@ import Textbox from "./Textbox";
 
 //It's going to be blank if there's no data
 const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
-  console.log(teamData);
   const {
     teamNumber = "",
     teamName = "",

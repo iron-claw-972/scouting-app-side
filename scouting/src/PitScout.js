@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import QRCode from "react-qr-code";
+import { v4 as uuidv4 } from "uuid";
 import {
   Header,
   Button,
@@ -11,7 +12,6 @@ import {
   Dropdown,
   TextArea,
 } from "semantic-ui-react";
-
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 
 import {
@@ -82,13 +82,14 @@ const PitScout = () => {
     cvCapability,
     worlds,
     pastFocuses,
+    docRefId,
   };
   useEffect(() => {
     if (docRefId === "initRef") return;
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "teams");
-    setDoc(teamNumber, pitData, { merge: true })
+    const docRef = doc(db, "teams", docRefId);
+    setDoc(docRef, pitData, { merge: true })
       .then(() => {
         setShowSuccess(true);
         //setTimeout(resetForm, 1500);
@@ -151,29 +152,7 @@ const PitScout = () => {
 
   const save = async () => {
     if (!validate()) return;
-    const db = getFirestore();
-    const dataToSave = truncateEmptyProperties({
-      teamNumber,
-      teamName,
-      color,
-      weight,
-      height,
-      length,
-      driveTrain,
-      cvCapability,
-      worlds,
-      pastFocuses,
-    });
-    try {
-      const docRef = doc(db, "teams", teamNumber);
-      await setDoc(docRef, dataToSave, { merge: true });
-      console.log("Document written with ID: ", docRef.id);
-      setShowSuccess(true);
-      setTimeout(resetForm, 1500);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      setShowError(true);
-    }
+    setDocRefId(uuidv4());
   };
   return (
     <Container>
@@ -304,6 +283,15 @@ const PitScout = () => {
       </Modal>
       {showSuccess && <Message success header="Data saved successfully" />}
       {showError && <Message negative header="Unable to save record" />}
+      <Modal
+        open={showQrCode}
+        size="fullscreen"
+        onClose={() => setShowQrCode(false)}
+      >
+        <Modal.Content>
+          <QRCode value={JSON.stringify(pitData)} />
+        </Modal.Content>
+      </Modal>
     </Container>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Header, Container } from "semantic-ui-react";
+import { Card, Header, Container, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 //The main page
@@ -8,9 +8,14 @@ const Home = () => (
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
       Scouting App 2022
     </Header>
-    <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
+    <Card.Group
+      centered
+      stackable
+      textAlign="center"
+      style={{ margin: "10px" }}
+    >
       <Link to="/matchscout" style={{ margin: 10 }}>
-        <Card>
+        <Card color="orange">
           <Card.Content>
             <Card.Header>Match Scout</Card.Header>
             <Card.Description>
@@ -21,14 +26,18 @@ const Home = () => (
       </Link>
 
       <Link to="/pitscout" style={{ margin: 10 }}>
-        <Card>
+        <Card color="orange">
           <Card.Content>
             <Card.Header content="Pit Scout" />
             <Card.Description content="Collect data on a robot's specs in the pit" />
           </Card.Content>
         </Card>
       </Link>
+    </Card.Group>
 
+    <Divider section />
+
+    <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
       <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
         <Card>
           <Card.Content>

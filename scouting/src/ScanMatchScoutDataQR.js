@@ -27,7 +27,8 @@ const ScanMatchScoutDataQR = (props) => {
 
   return (
     <Container>
-      <Header as="h1">
+      <Header as="h1">Scan the Match Data</Header>
+      <Header as="h2">
         Hold the QR code for the Match Data until you see SUCCESS below. Step
         closer.
       </Header>
