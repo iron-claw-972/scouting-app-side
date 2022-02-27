@@ -28,22 +28,9 @@ export default function PitDisplay(props) {
 
   return (
     <div>
-      <Header as="h1">Publicity Board</Header>
-      <SpecTable
-        numColumns={2}
-        headerName="Climb Subsytem Specs"
-        specData={climbSpecs}
-      />
-      <SpecTable
-        numColumns={3}
-        headerName="Cargo Subsytem Specs"
-        specData={cargoSpecs}
-      />
-      <SpecTable
-        numColumns={2}
-        headerName="Drive Subsytem Specs"
-        specData={driveSpecs}
-      />
+      <Header as="h1">Iron Claw 972-Publicity Board</Header>
+      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
+
       <Textbox category={autoHeading} text={autoCapabilities}></Textbox>
       <PdfViewer />
       <Textbox category={"About Us"} text={teamHist}></Textbox>
