@@ -10,14 +10,16 @@ import DataDisplay from "./DataDisplay";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="matchscout" element={<MatchScout />} />
-      <Route path="pitscout" element={<PitScout />} />
-      <Route path="teampages" element={<TeamPages />} />
-      <Route path="pitdisplay" element={<PitDisplay />} />
-      <Route path="datadisplay" element={<DataDisplay />} />
-    </Routes>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="matchscout" element={<MatchScout />} />
+        <Route path="pitscout" element={<PitScout />} />
+        <Route path="teampages" element={<TeamPages />} />
+        <Route path="pitdisplay" element={<PitDisplay />} />
+        <Route path="datadisplay" element={<DataDisplay />} />
+      </Routes>
+    </div>
   );
 };
 
