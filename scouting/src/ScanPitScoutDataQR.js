@@ -12,7 +12,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 
-const ScanMatchScoutDataQR = (props) => {
+const ScanPitScoutDataQR = (props) => {
   const [data, setData] = useState("");
 
   const save = async () => {
@@ -51,4 +51,4 @@ const ScanMatchScoutDataQR = (props) => {
   );
 };
 
-export default ScanMatchScoutDataQR;
+export default ScanPitScoutDataQR;

@@ -38,6 +38,8 @@ const PitScout = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showQrCode, setShowQrCode] = useState(false);
+  const [docRefId, setDocRefId] = useState("initRef");
 
   // by default resets everything, but can leave team number if needed
   const resetForm = (exceptTeamNumber = false) => {
@@ -69,6 +71,33 @@ const PitScout = () => {
     worlds,
     pastFocuses,
   ]);
+  const pitData = {
+    teamNumber,
+    teamName,
+    color,
+    weight,
+    height,
+    length,
+    driveTrain,
+    cvCapability,
+    worlds,
+    pastFocuses,
+  };
+  useEffect(() => {
+    if (docRefId === "initRef") return;
+    setShowQrCode(true);
+    const db = getFirestore();
+    const docRef = doc(db, "teams");
+    setDoc(teamNumber, pitData, { merge: true })
+      .then(() => {
+        setShowSuccess(true);
+        //setTimeout(resetForm, 1500);
+      })
+      .catch((e) => {
+        console.error("Error adding document: ", e);
+        setShowError(true);
+      });
+  }, [docRefId]);
 
   const validate = () => {
     const requiredFields = [teamNumber];
