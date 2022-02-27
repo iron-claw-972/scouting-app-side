@@ -7,20 +7,20 @@ import PitScout from "./PitScout";
 import TeamPages from "./TeamPages";
 import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
+import ScanMatchScoutDataQR from "./ScanMatchScoutDataQR";
 
 //setting up main page
 const App = () => {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="matchscout" element={<MatchScout />} />
-        <Route path="pitscout" element={<PitScout />} />
-        <Route path="teampages" element={<TeamPages />} />
-        <Route path="pitdisplay" element={<PitDisplay />} />
-        <Route path="datadisplay" element={<DataDisplay />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="matchscout" element={<MatchScout />} />
+      <Route path="pitscout" element={<PitScout />} />
+      <Route path="teampages" element={<TeamPages />} />
+      <Route path="pitdisplay" element={<PitDisplay />} />
+      <Route path="datadisplay" element={<DataDisplay />} />
+      <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
+    </Routes>
   );
 };
 
