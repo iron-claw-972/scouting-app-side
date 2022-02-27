@@ -28,6 +28,15 @@ const Home = () => (
         </Card>
       </Link>
 
+      <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
+        <Card>
+          <Card.Content>
+            <Card.Header content="Scan Match data" />
+            <Card.Description content="Scan the QR code for Match Data" />
+          </Card.Content>
+        </Card>
+      </Link>
+
       <Link to="/teampages" style={{ margin: 10 }}>
         <Card>
           <Card.Content

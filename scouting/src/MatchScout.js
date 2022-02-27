@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import QRCode from "react-qr-code";
+
 import {
   Header,
   Button,
@@ -49,6 +51,22 @@ const MatchScout = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showLookupError, setShowLookupError] = useState(false);
+  const [showQrCode, setShowQrCode] = useState(false);
+
+  const matchData = {
+    AutoLH,
+    AutoUH,
+    AutoC,
+    TeleopLH,
+    TeleopUH,
+    TeleopC,
+    Hangar,
+    ClimbTime,
+    EndgameC,
+    teamName,
+    teamNumber,
+    color,
+  };
 
   const resetForm = () => {
     setAutoLH(0);
@@ -109,29 +127,18 @@ const MatchScout = () => {
   const save = async () => {
     if (!validate()) return;
     const db = getFirestore();
-    try {
-      const docRef = await addDoc(collection(db, "match"), {
-        AutoLH,
-        AutoUH,
-        AutoC,
-        TeleopLH,
-        TeleopUH,
-        TeleopC,
-        Hangar,
-        ClimbTime,
-        EndgameC,
 
-        teamName,
-        teamNumber,
-        color,
+    addDoc(collection(db, "match"), matchData)
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+        setShowSuccess(true);
+        //setTimeout(resetForm, 1500);
+      })
+      .catch((e) => {
+        console.error("Error adding document: ", e);
+        setShowError(true);
       });
-      console.log("Document written with ID: ", docRef.id);
-      setShowSuccess(true);
-      setTimeout(resetForm, 1500);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      setShowError(true);
-    }
+    setShowQrCode(true);
   };
 
   return (
@@ -245,7 +252,7 @@ const MatchScout = () => {
             <label>Endgame Comments</label>
             <TextArea
               placeholder="Endgame Comments"
-              value={TeleopC}
+              value={EndgameC}
               onChange={(e) => setEndgameC(e.target.value)}
             />
           </Form.Field>
@@ -262,9 +269,23 @@ const MatchScout = () => {
           </Form.Field>
         </Form.Group>
 
-        <Button type="submit" color="green" onClick={save}>
-          Submit
-        </Button>
+        <Form.Group widths="equal">
+          <Button type="submit" color="green" onClick={save}>
+            Submit
+          </Button>
+          <Button
+            type="submit"
+            color="blue"
+            onClick={() => {
+              setShowQrCode(true);
+            }}
+          >
+            Show QR again
+          </Button>
+          <Button type="submit" color="red" onClick={resetForm}>
+            Clear Form
+          </Button>
+        </Form.Group>
       </Form>
       <div style={{ marginTop: 20, marginBottom: 30 }}>
         <Link to="/"> Back to Home</Link>
@@ -290,6 +311,18 @@ const MatchScout = () => {
           />
         </Link>
       )}
+
+      <Modal open={showQrCode} onClose={() => setShowQrCode(false)}>
+        <Modal.Header>QR Code</Modal.Header>
+        <Modal.Content>
+          <QRCode value={JSON.stringify(matchData)} style={{ margin: 10 }} />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button positive onClick={() => setShowQrCode(false)}>
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </Container>
   );
 };

@@ -7,6 +7,7 @@ import PitScout from "./PitScout";
 import TeamPages from "./TeamPages";
 import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
+import ScanMatchScoutDataQR from "./ScanMatchScoutDataQR";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <Route path="teampages" element={<TeamPages />} />
       <Route path="pitdisplay" element={<PitDisplay />} />
       <Route path="datadisplay" element={<DataDisplay />} />
+      <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
     </Routes>
   );
 };
