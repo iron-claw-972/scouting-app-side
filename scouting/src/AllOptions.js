@@ -83,10 +83,19 @@ const yesNoOptions = [
   { key: 3, text: "maybe", value: "maybe" },
 ];
 
+const hangarOptions = [
+  { key: 1, text: "Traverse", value: "Medium" },
+  { key: 2, text: "High", value: "Medium" },
+  { key: 3, text: "Medium", value: "Medium" },
+  { key: 4, text: "Low", value: "Low" },
+  { key: 5, text: "None", value: "None" },
+];
+
 export {
   colorOptions,
   driveTrainOptions,
   cvOptions,
   autoOptions,
   yesNoOptions,
+  hangarOptions,
 };

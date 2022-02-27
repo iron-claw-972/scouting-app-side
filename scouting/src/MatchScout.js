@@ -16,7 +16,7 @@ import {
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-import { colorOptions } from "./AllOptions";
+import { colorOptions, hangarOptions } from "./AllOptions";
 
 const MatchScout = () => {
   const [teamNumber, setTeamNumber] = useState("");
@@ -103,6 +103,7 @@ const MatchScout = () => {
   return (
     <Container>
       <Header as="h1">Scout a match</Header>
+      <Header as="h4">careful... you might miss something</Header>
 
       <Message attached header="Add Match data" />
       <Form>
@@ -175,11 +176,12 @@ const MatchScout = () => {
         </Form.Group>
         <Form.Group widths="equal">
           <Form.Field>
-            <label>Hangar Points</label>
-            <TextArea
+            <label>Hangar</label>
+            <Form.Select
+              options={hangarOptions}
               placeholder="Hangar"
               value={Hangar}
-              onChange={(e) => setHangar(e.target.value)}
+              onChange={(e, data) => setHangar(data.value)}
             />
           </Form.Field>
           <Form.Field>

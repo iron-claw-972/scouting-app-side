@@ -2,7 +2,7 @@ import Textbox from "./Textbox";
 import PdfViewer from "./PdfViewer";
 import SpecTable from "./SpecTable";
 
-import { Header } from "semantic-ui-react";
+import { Divider, Header } from "semantic-ui-react";
 import styles from "./Home.module.css";
 
 export default function PitDisplay(props) {
@@ -13,10 +13,8 @@ export default function PitDisplay(props) {
   //see the files of the components for explanation
   return (
     <div>
+      <Divider />
       <h1>Iron Claw 972-Publicity Board</h1>
-      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
-      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
-      <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>

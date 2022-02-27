@@ -157,6 +157,7 @@ const PitScout = () => {
   return (
     <Container>
       <Header as="h1">Scout or prescout a Team</Header>
+      <Header as="h4">In the enemy lair...</Header>
 
       <Message attached header="Add or Edit a Team's data" />
       <Form style={{ marginTop: 10 }}>

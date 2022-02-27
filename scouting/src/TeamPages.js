@@ -30,116 +30,119 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     <span style={{ fontSize: 16, color: textcolor }}>{props.children}</span>
   );
   return (
-    <List.Item key={teamNumber}>
-      <Grid
-        divided="vertically"
-        stackable
-        style={{
-          background: bgcolor,
-          border: "2px solid rgba(0, 0, 0, 0.5)",
-          borderRadius: "5px",
-          margin: "5px",
-        }}
-      >
-        <Grid.Row columns={2} textAlign="center" verticalAlign="bottom">
-          <Grid.Column>
-            <Label size="huge" color={labelcolor}>
-              {teamNumber}
-            </Label>
-          </Grid.Column>
-          <Grid.Column>
-            <Label color={labelcolor} size="big">
-              <LabelDetail>{teamName}</LabelDetail>
-            </Label>
-          </Grid.Column>
-        </Grid.Row>
+    <div>
+      <h4>They say that data is the new oil. Unlimited ... power!</h4>
+      <List.Item key={teamNumber}>
+        <Grid
+          divided="vertically"
+          stackable
+          style={{
+            background: bgcolor,
+            border: "2px solid rgba(0, 0, 0, 0.5)",
+            borderRadius: "5px",
+            margin: "5px",
+          }}
+        >
+          <Grid.Row columns={2} textAlign="center" verticalAlign="bottom">
+            <Grid.Column>
+              <Label size="huge" color={labelcolor}>
+                {teamNumber}
+              </Label>
+            </Grid.Column>
+            <Grid.Column>
+              <Label color={labelcolor} size="big">
+                <LabelDetail>{teamName}</LabelDetail>
+              </Label>
+            </Grid.Column>
+          </Grid.Row>
 
-        <Grid.Row columns={2} divided>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              DriveTrain:
-            </Label>
-            <TextHelper>{driveTrain}</TextHelper>
-          </Grid.Column>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              CV:
-            </Label>
-            <TextHelper>{cvCapability}</TextHelper>
-          </Grid.Column>
-        </Grid.Row>
+          <Grid.Row columns={2} divided>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                DriveTrain:
+              </Label>
+              <TextHelper>{driveTrain}</TextHelper>
+            </Grid.Column>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                CV:
+              </Label>
+              <TextHelper>{cvCapability}</TextHelper>
+            </Grid.Column>
+          </Grid.Row>
 
-        <Grid.Row columns={3} divided>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Height:
-            </Label>
-            <TextHelper>{height}</TextHelper>
-          </Grid.Column>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Length:
-            </Label>
-            <TextHelper>{length}</TextHelper>
-          </Grid.Column>
-          <Grid.Column>
-            <Label horizontal color={labelcolor}>
-              Weight:
-            </Label>
-            <TextHelper>{weight}</TextHelper>
-          </Grid.Column>
-        </Grid.Row>
+          <Grid.Row columns={3} divided>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                Height:
+              </Label>
+              <TextHelper>{height}</TextHelper>
+            </Grid.Column>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                Length:
+              </Label>
+              <TextHelper>{length}</TextHelper>
+            </Grid.Column>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                Weight:
+              </Label>
+              <TextHelper>{weight}</TextHelper>
+            </Grid.Column>
+          </Grid.Row>
 
-        <Grid.Row divided>
-          <Grid.Column width={6}>
-            <Label horizontal color={labelcolor}>
-              World?:
-            </Label>
-            <TextHelper>{worlds}</TextHelper>
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <TextHelper>{pastFocuses}</TextHelper>
-          </Grid.Column>
-        </Grid.Row>
+          <Grid.Row divided>
+            <Grid.Column width={6}>
+              <Label horizontal color={labelcolor}>
+                World?:
+              </Label>
+              <TextHelper>{worlds}</TextHelper>
+            </Grid.Column>
+            <Grid.Column width={10}>
+              <TextHelper>{pastFocuses}</TextHelper>
+            </Grid.Column>
+          </Grid.Row>
 
-        <Grid.Row divided>
-          <Grid.Column width={7}>
-            <SpecTable
-              columns={5}
-              headerName="match averages"
-              specData={matchAvg}
-            />
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <SpecTable columns={5} headerName="Hangar" specData={hangar} />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Textbox
-              category={"Auto comments"}
-              text={commentAuto.join(",   ")}
-            ></Textbox>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Textbox
-              category={"Teleop comments"}
-              text={commentTele.join(",   ")}
-            ></Textbox>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <Textbox
-              category={"Endgame comments"}
-              text={commentEnd.join(",   ")}
-            ></Textbox>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </List.Item>
+          <Grid.Row divided>
+            <Grid.Column width={7}>
+              <SpecTable
+                columns={5}
+                headerName="match averages"
+                specData={matchAvg}
+              />
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <SpecTable columns={5} headerName="Hangar" specData={hangar} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Textbox
+                category={"Auto comments"}
+                text={commentAuto.join(",   ")}
+              ></Textbox>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Textbox
+                category={"Teleop comments"}
+                text={commentTele.join(",   ")}
+              ></Textbox>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Textbox
+                category={"Endgame comments"}
+                text={commentEnd.join(",   ")}
+              ></Textbox>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </List.Item>
+    </div>
   );
 };
 

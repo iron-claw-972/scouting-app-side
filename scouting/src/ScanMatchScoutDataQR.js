@@ -32,6 +32,7 @@ const ScanMatchScoutDataQR = (props) => {
         Hold the QR code for the Match Data until you see SUCCESS below. Step
         closer.
       </Header>
+      <Header as="h4">You look great, scouter! Got any beauty tips?</Header>
       {data.length == 0 && (
         <QrReader
           onResult={(result, error) => {

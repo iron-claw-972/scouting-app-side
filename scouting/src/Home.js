@@ -8,6 +8,9 @@ const Home = () => (
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
       Scouting App 2022
     </Header>
+    <Header textAlign="center" as="h3">
+      "Through scouting, our nation achieves greatness" - Georgeham Lincolnton
+    </Header>
     <Card.Group
       centered
       stackable
@@ -77,7 +80,7 @@ const Home = () => (
         <Card>
           <Card.Content
             header="Credits and Notes"
-            description="Rest here, my tired scouter"
+            description="Rest here, oh scouter dear to my heart!"
           />
         </Card>
       </Link>
