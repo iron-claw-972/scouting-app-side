@@ -11,7 +11,7 @@ const returnTableRows = (specData) => {
 
 const returnTableCells = (row) => {
   return row.map((e) => {
-    return <Table.Cell>{e}</Table.Cell>;
+    return <Table.Cell key={e.teamNumber}>{e}</Table.Cell>;
   });
 };
 
@@ -24,16 +24,25 @@ const returnTableCells = (row) => {
    ]
 */
 
-const SpecTable = ({ numColumns, headerName, specData }) => (
-  <Table collapsing celled striped style={{ margin: "10px", maxWidth: "80%" }}>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell colSpan={numColumns}>{headerName}</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
+const SpecTable = ({ numColumns, headerName, specData }) => {
+  return (
+    <Table
+      collapsing
+      celled
+      striped
+      style={{ margin: "10px", maxWidth: "80%" }}
+    >
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell key={0} colSpan={numColumns}>
+            {headerName}
+          </Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-    <Table.Body>{returnTableRows(specData)}</Table.Body>
-  </Table>
-);
+      <Table.Body>{returnTableRows(specData)}</Table.Body>
+    </Table>
+  );
+};
 
 export default SpecTable;

@@ -9,15 +9,7 @@ import Textbox from "./Textbox";
 
 //It's going to be blank if there's no data
 const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
-  const dummyData = [
-    ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
-    [2, 0, 5, 0, 20],
-  ];
-  const dummyHangar = [
-    ["Traverse", "High", "Medium", "low", "None"],
-    [0, 8, 1, 0, 1],
-  ];
-
+  console.log(teamData);
   const {
     teamNumber = "",
     teamName = "",
@@ -28,6 +20,11 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     pastFocuses = "",
     weight = "",
     worlds = "",
+    hangar = [[0, 0, 0, 0, 0]],
+    matchAvg = [[0, 0, 0, 0, 0]],
+    commentAuto = [""],
+    commentTele = [""],
+    commentEnd = [""],
   } = teamData;
 
   const TextHelper = (props) => (
@@ -109,28 +106,37 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
         <Grid.Row divided>
           <Grid.Column width={7}>
             <SpecTable
-              columns={6}
+              columns={5}
               headerName="match averages"
-              specData={dummyData}
+              specData={matchAvg}
             />
           </Grid.Column>
           <Grid.Column width={7}>
-            <SpecTable columns={5} headerName="Hangar" specData={dummyHangar} />
+            <SpecTable columns={5} headerName="Hangar" specData={hangar} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Textbox category={"Auto comments"}></Textbox>
+            <Textbox
+              category={"Auto comments"}
+              text={commentAuto.join(",   ")}
+            ></Textbox>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Textbox category={"Teleop comments"}></Textbox>
+            <Textbox
+              category={"Teleop comments"}
+              text={commentTele.join(",   ")}
+            ></Textbox>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Textbox category={"Endgame comments"}></Textbox>
+            <Textbox
+              category={"Endgame comments"}
+              text={commentEnd.join(",   ")}
+            ></Textbox>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -140,32 +146,132 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
 
 const TeamPages = () => {
   const [teamData, setTeamData] = useState([]);
-  useEffect(async () => {
-    const db = getFirestore();
-    const querySnapshot = await getDocs(collection(db, "teams"));
-    const matchSnapshot = await getDocs(collection(db, "match"));
-    const teamDataArr = [];
-    querySnapshot.forEach((doc) => {
-      const docData = doc.data();
-      teamDataArr.push(doc.data());
-      let matchDataArr = [];
-      matchSnapshot.forEach((i) => {
-        if (i.data().teamNumber == docData.teamNumber) {
-          matchDataArr.push(i.data());
-        }
-      });
-      teamDataArr[].push(matchDataArr);
-    });
-    setTeamData(teamDataArr);
-  }, []);
 
   useEffect(async () => {
+    const matchDataArr = [];
+    const teamDataArr = [];
+    const mergedDataArr = [];
+
     const db = getFirestore();
-    const querySnapshot = await getDocs(collection(db, "match"));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data());
+    const teamSnapshot = await getDocs(collection(db, "teams"));
+    const matchSnapshot = await getDocs(collection(db, "match"));
+
+    matchSnapshot.forEach((match) => {
+      matchDataArr.push(match.data());
     });
+    teamSnapshot.forEach((team) => {
+      teamDataArr.push(team.data());
+    });
+
+    for (let i = 0; i < teamDataArr.length; i++) {
+      let filteredTeamMatchData = matchDataArr.filter((md) => {
+        return md.teamNumber == teamDataArr[i].teamNumber;
+      });
+      let hang = [
+        ["Traverse", "High", "Medium", "Low", "None"],
+        [0, 0, 0, 0, 0],
+      ];
+      let matchavg = [
+        ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
+        [0, 0, 0, 0, 0],
+      ];
+      var totMatch = 0;
+      var autoC = [];
+      var teleopC = [];
+      var endgameC = [];
+      filteredTeamMatchData.forEach((j) => {
+        totMatch = totMatch + 1;
+        if (j.Hangar == "Traverse") {
+          hang[1][0] += 1;
+        } else if (j.Hangar == "High") {
+          hang[1][1] += 1;
+        } else if (j.Hangar == "Medium") {
+          hang[1][2] += 1;
+        } else if (j.Hangar == "Low") {
+          hang[1][3] += 1;
+        } else {
+          hang[1][4] += 1;
+        }
+        matchavg[1][0] += parseInt(j.AutoLH);
+        matchavg[1][1] += parseInt(j.AutoUH);
+        matchavg[1][2] += parseInt(j.TeleopLH);
+        matchavg[1][3] += parseInt(j.TeleopUH);
+        matchavg[1][4] += parseInt(j.ClimbTime);
+
+        autoC.push(j.AutoC);
+        teleopC.push(j.TeleopC);
+        endgameC.push(j.EndgameC);
+      });
+      if (totMatch > 0) {
+        for (let k = 0; k < matchavg[1].length; k++) {
+          matchavg[1][k] = matchavg[1][k] / totMatch;
+        }
+      }
+
+      // calculate averages
+      // create nested arrays
+      // shove this all into one object
+      // merge this object with teamDataArr[i]
+      const newMatchAvgObj = {
+        hangar: hang,
+        matchAvg: matchavg,
+        commentAuto: autoC,
+        commentTele: teleopC,
+        commentEnd: endgameC,
+      };
+
+      mergedDataArr.push({ ...teamDataArr[i], ...newMatchAvgObj });
+    }
+    console.log(mergedDataArr);
+    setTeamData(mergedDataArr);
   }, []);
+
+  const dummyMatchDataArr = [
+    {
+      teamNumber: "123",
+      teamName: "Some team",
+      cvCapability: "no",
+      driveTrain: "2W",
+      height: "12",
+      length: "15",
+      pastFocuses: "this was good in past",
+      weight: "20",
+      worlds: "yes",
+      hangar: [
+        ["Traverse", "High", "Medium", "low", "None"],
+        [0, 2, 1, 1, 0],
+      ],
+      matchAvg: [
+        ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
+        [1, 2, 4, 2, 25],
+      ],
+      commentAuto: ["blah1", "blah2", "blah1", "blah2"],
+      commentTele: ["clah1", "clah2", "clah1", "clah2"],
+      commentEnd: ["elah1", "elah2", "elah1", "elah2"],
+    },
+    {
+      teamNumber: "210",
+      teamName: "Some other team",
+      cvCapability: "no",
+      driveTrain: "2W",
+      height: "12",
+      length: "15",
+      pastFocuses: "this was good in past",
+      weight: "20",
+      worlds: "yes",
+      hangar: [
+        ["Traverse", "High", "Medium", "low", "None"],
+        [0, 2, 1, 1, 0],
+      ],
+      matchAvg: [
+        ["auto LH", "auto UH", "teleop LH", "teleop UH", "Climb Time"],
+        [1, 2, 4, 2, 25],
+      ],
+      commentAuto: ["blae1", "blae2", "blae1", "blae2"],
+      commentTele: ["clae1", "clae2", "clae1", "clae2"],
+      commentEnd: ["elae1", "elae2", "elae1", "elae2"],
+    },
+  ];
 
   const returnTeamCards = () => {
     return teamData.map((teamRow, index) => {
@@ -179,6 +285,7 @@ const TeamPages = () => {
       }
       return (
         <TeamCard
+          key={index}
           bgcolor={bgcolor}
           labelcolor={labelcolor}
           textcolor={"black"}
