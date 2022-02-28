@@ -269,7 +269,9 @@ const PitScout = () => {
           <Button color="green" type="submit" onClick={save}>
             Submit / Save
           </Button>
-          <div style={{ width: 50 }} />
+        </Form.Group>
+        <div style={{ marginTop: "30px", marginBottom: "10px" }} />
+        <Form.Group>
           <Button color="red" type="reset" onClick={lookupTeamIfExists}>
             Undo edits
           </Button>
