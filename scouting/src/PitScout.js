@@ -12,7 +12,15 @@ import {
   Dropdown,
   TextArea,
 } from "semantic-ui-react";
-import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 import {
   colorOptions,
@@ -41,10 +49,9 @@ const PitScout = () => {
   const [showQrCode, setShowQrCode] = useState(false);
   const [docRefId, setDocRefId] = useState("initRef");
 
-  // by default resets everything, but can leave team number if needed
-  const resetForm = (exceptTeamNumber = false) => {
+  // by default resets everything, except team number
+  const resetForm = () => {
     setTeamName("");
-    if (!exceptTeamNumber) setTeamNumber("");
     setColor("");
     setWeight("");
     setHeight("");
@@ -111,9 +118,11 @@ const PitScout = () => {
 
   const lookupTeamIfExists = async () => {
     const db = getFirestore();
-    const docRef = doc(db, "teams", teamNumber);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    const teamsRef = collection(db, "teams");
+    const q = query(teamsRef, where("teamNumber", "==", teamNumber));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
       const {
         teamName,
         color,
@@ -124,7 +133,7 @@ const PitScout = () => {
         cvCapability,
         worlds,
         pastFocuses,
-      } = docSnap.data();
+      } = doc.data();
       setTeamName(teamName || "");
       setColor(color || "");
       setWeight(weight || "");
@@ -134,9 +143,7 @@ const PitScout = () => {
       setCvCapability(cvCapability || "");
       setWorlds(worlds || "");
       setPastFocuses(pastFocuses || "");
-    } else {
-      if (teamName.length > 0) resetForm(true);
-    }
+    });
   };
 
   const truncateEmptyProperties = (obj) => {
@@ -265,6 +272,9 @@ const PitScout = () => {
           <div style={{ width: 50 }} />
           <Button color="red" type="reset" onClick={lookupTeamIfExists}>
             Undo edits
+          </Button>
+          <Button type="submit" color="red" onClick={resetForm}>
+            Clear Form
           </Button>
         </Form.Group>
       </Form>
