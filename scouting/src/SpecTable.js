@@ -1,3 +1,6 @@
+//HI RICHIE
+//THIS IS MY TABLE COMPONENT
+
 import React from "react";
 import { Table } from "semantic-ui-react";
 

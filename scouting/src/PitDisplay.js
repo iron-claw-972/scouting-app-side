@@ -14,7 +14,9 @@ export default function PitDisplay(props) {
   return (
     <div>
       <Divider />
-      <h1>Iron Claw 972-Publicity Board</h1>
+      <Header as="h1" textAlign="center">
+        Iron Claw 972 Publicity Board
+      </Header>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>
       <img src="Screen-Shot-2019-02-15-at-3.24.47-PM-1.png"></img>

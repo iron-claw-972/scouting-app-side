@@ -1,4 +1,4 @@
-//This is a simple component where you can display text
+//This is a simple component where you can display text in a box
 //Use as needed.
 
 export default function Textbox(props) {

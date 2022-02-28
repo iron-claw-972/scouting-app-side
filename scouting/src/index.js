@@ -6,6 +6,8 @@ import "./index.css";
 import App from "./App";
 import "semantic-ui-css/semantic.min.css";
 
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+
 import firebaseConfig from "./firebaseconfig.js";
 import { initializeApp } from "firebase/app";
 import {
@@ -42,3 +44,4 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+serviceWorkerRegistration.register();
