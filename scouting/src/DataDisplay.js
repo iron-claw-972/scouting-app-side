@@ -1,9 +1,10 @@
-//This isnt a data display
-//In other words, this file is inaccurately named
-//Change it if you want.
-//Use this to preserve the legacy of the brave programmers who dared to
-//...venture into the land of the webpage, far from the familiar lands
-//...of WPI Lib and their robot-programming comrades.
+/*This isnt even a data display
+Its credits and notes
+In other words, this file is inaccurately named
+Change it if you want.
+Use this to preserve the legacy of the brave programmers who dared to
+...venture into the land of the webpage, far from the familiar lands
+...of WPI Lib and their robot-programming comrades.*/
 
 export default function DataDisplay() {
   return (

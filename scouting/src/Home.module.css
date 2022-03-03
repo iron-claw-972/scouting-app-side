@@ -1,3 +1,9 @@
+/*
+When not using inline styling, we use good ol' CSS!
+Because this is React.js, we import this file
+and use className = {styles.<insert-style-name>} in the tag
+*/
+
 .container {
   padding: 2 2rem;
 }

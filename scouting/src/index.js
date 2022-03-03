@@ -16,10 +16,17 @@ import {
   CACHE_SIZE_UNLIMITED,
 } from "firebase/firestore";
 
+//This lets us use our Firebase databaes
 const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, {
   cacheSizeBytes: CACHE_SIZE_UNLIMITED,
 });
+
+/*
+In the event there is no wifi at the competition
+We will store data locally, and have it sync as soon as there is wifi
+Pretty sweet, huh?
+*/
 enableIndexedDbPersistence(db).catch((err) => {
   if (err.code == "failed-precondition") {
     // Multiple tabs open, persistence can only be enabled
@@ -36,6 +43,7 @@ enableIndexedDbPersistence(db).catch((err) => {
   }
 });
 
+//Rendering the App (see App.js)
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

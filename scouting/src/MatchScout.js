@@ -18,7 +18,18 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { colorOptions, hangarOptions } from "./AllOptions";
 
+//This stuff gets meaty
+
 const MatchScout = () => {
+  /*
+  We create these state variables
+  In summary, state in React.js allows components to re-render when a variable is changed.
+  
+  These variables work like this, using teamNumber as an example
+  The line below this comment creates teamNumber and creates a function to set its value -- setTeamNumber
+  setTeamNumber can be called at any time to change teamNumber
+  It also sets the initial value of teamNumber to "", by using useState()
+  */
   const [teamNumber, setTeamNumber] = useState("");
   const [teamName, setTeamName] = useState("");
   const [AutoLH, setAutoLH] = useState(0);
@@ -38,8 +49,12 @@ const MatchScout = () => {
   const [showError, setShowError] = useState(false);
   const [showLookupError, setShowLookupError] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
+
+  //docRef is a unique id that we will store the match under
+  //we will use the default value "initRef", and set the id later.
   const [docRefId, setDocRefId] = useState("initRef");
 
+  //We put all the variables declared previously into an array, this is our full match data
   const matchData = {
     AutoLH,
     AutoUH,
@@ -56,6 +71,7 @@ const MatchScout = () => {
     docRefId,
   };
 
+  //This function sets everything back to the default values
   const resetForm = () => {
     setAutoLH(0);
     setAutoUH(0);
@@ -70,15 +86,21 @@ const MatchScout = () => {
     setColor("");
   };
 
+  //This gets called on page load and whenever docRefId changes
+  //You can see docRefId in an array at the bottom
+  //Anything in that array being changed triggers this function.
   useEffect(() => {
+    //Checks if we're trying to save a match
     if (docRefId === "initRef") return;
+
+    //Shows qr code for non-wifi data transfer
+    //And then saves into the database
     setShowQrCode(true);
     const db = getFirestore();
     const docRef = doc(db, "match", docRefId);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
-        //setTimeout(resetForm, 1500);
       })
       .catch((e) => {
         console.error("Error adding document: ", e);
@@ -86,6 +108,9 @@ const MatchScout = () => {
       });
   }, [docRefId]);
 
+  //This function has an array called requiredFields
+  //And it checks whether they've been filled out
+  //It's empty now, but could be useful in coming years
   const validate = () => {
     const requiredFields = [];
     if (requiredFields.some((f) => f === "")) {
@@ -95,11 +120,21 @@ const MatchScout = () => {
     return true;
   };
 
+  //This saves the data in the form
+  //setDocRefId is using a library that generates a unique ID
+  //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
     setDocRefId(uuidv4());
   };
 
+  /*Search these tags on semantic ui website for info
+  Eventually, I'll make these modular and easier to make
+
+  Near the bottom of return() we use a library to generate a qr code containing
+  all the form data once you submit it
+  This is necessary if we want to transfer data without wifi or with sketchy comp wifi
+  */
   return (
     <Container>
       <Header as="h1">Scout a match</Header>

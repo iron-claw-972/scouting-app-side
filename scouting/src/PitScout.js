@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { v4 as uuidv4 } from "uuid";
+
+//Like match scout, this is very meaty
 import {
   Header,
   Button,
@@ -31,6 +33,15 @@ import {
 } from "./AllOptions";
 
 const PitScout = () => {
+  /*
+  We create these state variables
+  In summary, state in React.js allows components to re-render when a variable is changed.
+  
+  These variables work like this, using teamNumber as an example
+  The line below this comment creates teamNumber and creates a function to set its value -- setTeamNumber
+  setTeamNumber can be called at any time to change teamNumber
+  It also sets the initial value of teamNumber to "", by using useState()
+  */
   const [teamName, setTeamName] = useState("");
   const [teamNumber, setTeamNumber] = useState("");
   const [color, setColor] = useState("");
@@ -47,9 +58,12 @@ const PitScout = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
+
+  //docRef is a unique id that we will store the match under
+  //we will use the default value "initRef", and set the id later.
   const [docRefId, setDocRefId] = useState("initRef");
 
-  // by default resets everything, except team number
+  //This function sets everything back to the default values
   const resetForm = () => {
     setTeamName("");
     setColor("");
@@ -63,6 +77,10 @@ const PitScout = () => {
     setPastFocuses("");
   };
 
+  /*Whenever anything in the array in this function is changed, this function gets called.
+  //This basically stops the form from showing suCceSS! or fAilLuRe after the poor scouter
+  is fixing their mistake
+  */
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
@@ -78,6 +96,9 @@ const PitScout = () => {
     worlds,
     pastFocuses,
   ]);
+
+  //We put all the variables declared previously into an array, this is our full team data
+
   const pitData = {
     teamNumber,
     teamName,
@@ -92,6 +113,7 @@ const PitScout = () => {
     docRefId,
   };
   useEffect(() => {
+    //checks if the form was submitted (if a unique id was made)
     if (docRefId === "initRef") return;
     setShowQrCode(true);
     const db = getFirestore();
@@ -107,6 +129,7 @@ const PitScout = () => {
       });
   }, [docRefId]);
 
+  //checks if we at least filled out team number
   const validate = () => {
     const requiredFields = [teamNumber];
     if (requiredFields.some((f) => f === "")) {
@@ -116,6 +139,7 @@ const PitScout = () => {
     return true;
   };
 
+  //This is the function for autofill if you've already filled out part of the form
   const lookupTeamIfExists = async () => {
     const db = getFirestore();
     const teamsRef = collection(db, "teams");
@@ -146,6 +170,8 @@ const PitScout = () => {
     });
   };
 
+  //handling empty form fields on submit
+  //after all, the whole form will be hard to fill out
   const truncateEmptyProperties = (obj) => {
     const keysToKeep = Object.keys(obj).filter((key) => {
       return obj[key].length > 0;
@@ -157,14 +183,27 @@ const PitScout = () => {
     return newObj;
   };
 
+  //This saves the data in the form
+  //setDocRefId is using a library that generates a unique ID
+  //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
     setDocRefId(uuidv4());
   };
+
+  /*Search these tags on semantic ui website for info
+  Eventually, I'll make these modular and easier to make
+
+  Near the bottom of return() we use a library to generate a qr code containing
+  all the form data once you submit it
+  This is necessary if we want to transfer data without wifi or with sketchy comp wifi
+  */
   return (
     <Container>
       <Header as="h1">Scout or prescout a Team</Header>
-      <Header as="h4">In the enemy lair...</Header>
+      <Header as="h4">
+        You don't need to fill out everything, especially the last two
+      </Header>
 
       <Message attached header="Add or Edit a Team's data" />
       <Form style={{ marginTop: 10 }}>
@@ -205,7 +244,7 @@ const PitScout = () => {
             />
           </Form.Field>
           <Form.Field>
-            <label>Length</label>
+            <label>Frame Perimeter</label>
             <input
               placeholder="Length"
               value={length}
@@ -258,9 +297,9 @@ const PitScout = () => {
           />
         </Form.Field>{" "}
         <Form.Field>
-          <label>Past Focuses</label>
+          <label>Max Height</label>
           <TextArea
-            placeholder="Past Focuses"
+            placeholder="Max Height"
             value={pastFocuses}
             onChange={(e) => setPastFocuses(e.target.value)}
           />

@@ -1,10 +1,9 @@
-//HI RICHIE
-//THIS IS MY TABLE COMPONENT
+//This is our handmade (handcoded?) table component
 
 import React from "react";
 import { Table } from "semantic-ui-react";
 
-//a table component. You can use this for any type of table.
+//a table component.
 //It takes in an array of arrays, and uses the values to make a table
 const returnTableRows = (specData) => {
   return specData.map((row) => {
@@ -27,6 +26,7 @@ const returnTableCells = (row) => {
    ]
 */
 
+//This built of the Table component form semantic ui
 const SpecTable = ({ numColumns, headerName, specData }) => {
   return (
     <Table

@@ -11,6 +11,7 @@ import ScanMatchScoutDataQR from "./ScanMatchScoutDataQR";
 import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
 
 //setting up main page
+//The element= causes all the content of the pages to show
 const App = () => {
   return (
     <Routes>

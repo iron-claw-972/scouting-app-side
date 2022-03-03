@@ -2,7 +2,10 @@ import React from "react";
 import { Card, Header, Container, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-//The main page
+/*The main page
+Pretty intuitive thanks to semantic-ui-react, which gives most of the
+tags I've used below.
+*/
 const Home = () => (
   <Container fluid>
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>

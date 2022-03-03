@@ -10,7 +10,7 @@ export default function PitDisplay(props) {
   const teamHist =
     "Iron Claw is an FRC team that operates through the Robotics Class at Los Gatos High School. It was founded with a strong belief in the importance of student leadership.";
 
-  //see the files of the components for explanation
+  //see the PdfViewer.js and Textbox.js files for explanation
   return (
     <div>
       <Divider />

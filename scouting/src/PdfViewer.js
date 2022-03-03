@@ -14,9 +14,14 @@ const PdfViewer = () => {
     setNumPages(nextNumPages);
   }
 
-  //getting the pdf worker, necessary with library
-  //THIS STILL WORKS WITH NO WIFI
+  /*getting the pdf worker, necessary with library
+  THIS SHOULD STILL WORK WITH NO WIFI
+  IN THE EVENT THAT THE PDF DOESNT LOAD
+  YOU WILL NEED TO CONNECT TO WIFI OR DATA FOR 5 SECONDS
+  TO DOWNLOAD THIS WORKER*/
   pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+  //flicking through pages
   function onUpClick() {
     if (pageNum < numPages) {
       setPageNum(pageNum + 1);
@@ -29,7 +34,7 @@ const PdfViewer = () => {
     }
   }
 
-  //pdf navigation buttons
+  //rendering navigation buttons
   const NavButtons = () => {
     return (
       <Grid columns={2} style={{ margin: "10px" }}>
@@ -49,7 +54,10 @@ const PdfViewer = () => {
   return (
     <div>
       <NavButtons />
-      <Document file="TechBinder.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+      <Document
+        file="2022 Diet Tech Binder.pdf"
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
         <Page
           pageNumber={pageNum}
           renderAnnotationLayer={false}
