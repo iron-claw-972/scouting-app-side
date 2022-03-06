@@ -37,16 +37,24 @@ const PdfViewer = () => {
   //rendering navigation buttons
   const NavButtons = () => {
     return (
-      <Grid columns={2} style={{ margin: "10px" }}>
-        <Grid.Row>
-          <Grid.Column>
-            <Button onClick={onDownClick}>Previous</Button>
-          </Grid.Column>
-          <Grid.Column>
-            <Button onClick={onUpClick}>Next</Button>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Grid columns={2} style={{ margin: "10px" }}>
+          <Grid.Row>
+            <Grid.Column>
+              <Button onClick={onDownClick}>Previous</Button>
+            </Grid.Column>
+            <Grid.Column>
+              <Button onClick={onUpClick}>Next</Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     );
   };
 
@@ -54,16 +62,25 @@ const PdfViewer = () => {
   return (
     <div>
       <NavButtons />
-      <Document
-        file="2022 Diet Tech Binder.pdf"
-        onLoadSuccess={onDocumentLoadSuccess}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Page
-          pageNumber={pageNum}
-          renderAnnotationLayer={false}
-          renderTextLayer={false}
-        />
-      </Document>
+        <Document
+          file="2022 Diet Tech Binder.pdf"
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <Page
+            pageNumber={pageNum}
+            renderAnnotationLayer={false}
+            renderTextLayer={false}
+          />
+        </Document>
+      </div>
       <NavButtons />
     </div>
   );

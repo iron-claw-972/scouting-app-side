@@ -8,6 +8,11 @@ and use className = {styles.<insert-style-name>} in the tag
   padding: 2 2rem;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .sponsorImage {
   height: 5vh;
   margin-left: 2vw;
