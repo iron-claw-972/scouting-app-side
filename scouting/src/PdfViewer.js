@@ -71,7 +71,7 @@ const PdfViewer = () => {
         }}
       >
         <Document
-          file="2022 Diet Tech Binder.pdf"
+          file="2022 Diet Tech Binder (2).pdf"
           onLoadSuccess={onDocumentLoadSuccess}
         >
           <Page
