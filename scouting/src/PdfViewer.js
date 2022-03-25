@@ -71,13 +71,14 @@ const PdfViewer = () => {
         }}
       >
         <Document
-          file="2022 Diet Tech Binder (2).pdf"
+          file="2022DietTechBinder.pdf"
           onLoadSuccess={onDocumentLoadSuccess}
         >
           <Page
             pageNumber={pageNum}
             renderAnnotationLayer={false}
             renderTextLayer={false}
+            width={1000}
           />
         </Document>
       </div>
