@@ -87,6 +87,13 @@ const Home = () => (
           />
         </Card>
       </Link>
+
+      <Card href={"https://www.thebluealliance.com/event/2022casj#rankings"}>
+        <Card.Content
+          header="Live Rankings"
+          description="You can also see OPR on The Blue Alliance"
+        />
+      </Card>
     </Card.Group>
   </Container>
 );
