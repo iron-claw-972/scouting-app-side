@@ -12,6 +12,8 @@ import {
   Modal,
   Message,
   TextArea,
+  Divider,
+  Icon,
 } from "semantic-ui-react";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
@@ -51,6 +53,8 @@ const MatchScout = () => {
   const [showError, setShowError] = useState(false);
   const [showLookupError, setShowLookupError] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
+
+  const [timerRunning, setTimerRunning] = useState(false);
 
   //docRef is a unique id that we will store the match under
   //we will use the default value "initRef", and set the id later.
@@ -120,6 +124,20 @@ const MatchScout = () => {
     resetForm();
   }, [docRefId]);
 
+  let climbInterval = null;
+  useEffect(() => {
+    if (timerRunning) {
+      if (!climbInterval)
+        climbInterval = setInterval(
+          () => setClimbTime((ClimbTime) => ClimbTime + 1),
+          1000
+        );
+    } else {
+      clearInterval(climbInterval);
+    }
+    return () => clearInterval(climbInterval);
+  }, [timerRunning]);
+
   //This function has an array called requiredFields
   //And it checks whether they've been filled out
   //It's empty now, but could be useful in coming years
@@ -148,37 +166,59 @@ const MatchScout = () => {
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
   */
 
-  function autoLHUp() {
+  const autoLHUp = () => {
     setAutoLH(AutoLH + 1);
-  }
+  };
 
-  function autoLHDown() {
+  const autoLHDown = () => {
+    if (AutoLH === 0) return;
     setAutoLH(AutoLH - 1);
-  }
+  };
 
-  function autoUHUp() {
+  const autoUHUp = () => {
     setAutoUH(AutoUH + 1);
-  }
+  };
 
-  function autoUHDown() {
+  const autoUHDown = () => {
+    if (AutoUH === 0) return;
     setAutoUH(AutoUH - 1);
-  }
+  };
 
-  function teleLHUp() {
+  const teleLHUp = () => {
     setTeleopLH(TeleopLH + 1);
-  }
+  };
 
-  function teleLHDown() {
+  const teleLHDown = () => {
+    if (TeleopLH === 0) return;
     setTeleopLH(TeleopLH - 1);
-  }
+  };
 
-  function teleUHUp() {
+  const teleUHUp = () => {
     setTeleopUH(TeleopUH + 1);
-  }
+  };
 
-  function teleUHDown() {
+  const teleUHDown = () => {
+    if (TeleopUH === 0) return;
     setTeleopUH(TeleopUH - 1);
-  }
+  };
+
+  const UpDownButtons = ({ upFun, downFun }) => {
+    return (
+      <Form.Group style={{ flexDirection: "column" }}>
+        <Form.Field style={{ alignSelf: "center", margin: 5 }}>
+          <Button size="mini" onClick={upFun}>
+            <Icon name="chevron up" size="small" />
+          </Button>
+        </Form.Field>
+        <Form.Field style={{ alignSelf: "center" }}>
+          <Button size="mini" onClick={downFun}>
+            <Icon name="chevron down" size="small" />
+          </Button>
+        </Form.Field>
+      </Form.Group>
+    );
+  };
+
   return (
     <Container>
       <Header as="h1">Scout a match</Header>
@@ -215,63 +255,29 @@ const MatchScout = () => {
             />
           </Form.Field>
         </Form.Group>
-
-        <Form.Group>
-          <Form.Field width={3}>
+        <Form.Group style={{ marginTop: 15 }}>
+          <Form.Field>
             <label>Auto Low Hub</label>
             <input
-              placeholder="Auto LH"
               value={AutoLH}
-              onChange={(e) => setAutoLH(e.target.value)}
+              onChange={(e) => setAutoLH(parseInt(e.target.value) || 0)}
               type="number"
             />
           </Form.Field>
-
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            width="3"
-            onClick={autoLHDown}
-          >
-            -
-          </Button>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            onClick={autoLHUp}
-          >
-            +
-          </Button>
-
-          <Form.Field width={3}>
+          <UpDownButtons upFun={autoLHUp} downFun={autoLHDown} />
+        </Form.Group>
+        <Form.Group style={{ marginTop: 15 }}>
+          <Form.Field>
             <label>Auto Upper Hub</label>
             <input
-              placeholder="Auto UH"
               value={AutoUH}
-              onChange={(e) => setAutoUH(e.target.value)}
+              onChange={(e) => setAutoUH(parseInt(e.target.value) || 0)}
               type="number"
             />
           </Form.Field>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            width="3"
-            onClick={autoUHDown}
-          >
-            -
-          </Button>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            onClick={autoUHUp}
-          >
-            +
-          </Button>
-
+          <UpDownButtons upFun={autoUHUp} downFun={autoUHDown} />
+        </Form.Group>
+        <Form.Group>
           <Form.Field width={3}>
             <label>Auto Comments</label>
             <TextArea
@@ -281,59 +287,30 @@ const MatchScout = () => {
             />
           </Form.Field>
         </Form.Group>
-        <Form.Group>
-          <Form.Field width={3}>
+        <Form.Group style={{ marginTop: 15 }}>
+          <Form.Field>
             <label>Teleop Low Hub</label>
             <input
-              placeholder="Teleop LH"
               value={TeleopLH}
-              onChange={(e) => setTeleopLH(e.target.value)}
+              onChange={(e) => setTeleopLH(parseInt(e.target.value) || 0)}
               type="number"
             />
           </Form.Field>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            width="3"
-            onClick={teleLHDown}
-          >
-            -
-          </Button>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            onClick={teleLHUp}
-          >
-            +
-          </Button>
-          <Form.Field width={3}>
+          <UpDownButtons upFun={teleLHUp} downFun={teleLHDown} />
+        </Form.Group>
+        <Form.Group style={{ marginTop: 15 }}>
+          <Form.Field>
             <label>Teleop Upper Hub</label>
             <input
-              placeholder="Teleop UH"
               value={TeleopUH}
-              onChange={(e) => setTeleopUH(e.target.value)}
+              onChange={(e) => setTeleopUH(parseInt(e.target.value) || 0)}
               type="number"
             />
           </Form.Field>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            width="3"
-            onClick={teleUHDown}
-          >
-            -
-          </Button>
-          <Button
-            type="ui icon button"
-            attached="bottom"
-            size="mini"
-            onClick={teleUHUp}
-          >
-            +
-          </Button>
+          <UpDownButtons upFun={teleUHUp} downFun={teleUHDown} />
+        </Form.Group>
+
+        <Form.Group>
           <Form.Field width={3}>
             <label>Teleop Comments</label>
             <TextArea
@@ -343,6 +320,7 @@ const MatchScout = () => {
             />
           </Form.Field>
         </Form.Group>
+
         <Form.Group widths="equal">
           <Form.Field>
             <label>Hangar</label>
@@ -353,16 +331,30 @@ const MatchScout = () => {
               onChange={(e, data) => setHangar(data.value)}
             />
           </Form.Field>
+        </Form.Group>
+        <Form.Group>
           <Form.Field>
             <label>Climb time</label>
             <input
-              placeholder="Climb Time"
               value={ClimbTime}
-              onChange={(e) => setClimbTime(e.target.value)}
+              onChange={(e) => setClimbTime(parseInt(e.target.value) || 0)}
               type="number"
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field style={{ alignSelf: "flex-end" }}>
+            {timerRunning ? (
+              <Button color="red" onClick={() => setTimerRunning(false)}>
+                Stop
+              </Button>
+            ) : (
+              <Button color="green" onClick={() => setTimerRunning(true)}>
+                Start
+              </Button>
+            )}
+          </Form.Field>
+        </Form.Group>
+        <Form.Group>
+          <Form.Field width={3}>
             <label>Endgame Comments</label>
             <TextArea
               placeholder="Endgame Comments"
@@ -382,7 +374,6 @@ const MatchScout = () => {
             />
           </Form.Field>
         </Form.Group>
-
         <Form.Group widths="equal">
           <Button type="submit" color="green" onClick={save}>
             Submit
