@@ -182,7 +182,9 @@ const MatchScout = () => {
   return (
     <Container>
       <Header as="h1">Scout a match</Header>
-      <Header as="h4">careful... you might miss something</Header>
+      <Header as="h4">
+        Take good notes, our fate is in your hands my dear scouter
+      </Header>
 
       <Message attached header="Add Match data" />
       <Form>
