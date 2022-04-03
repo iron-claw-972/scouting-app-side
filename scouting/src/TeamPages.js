@@ -64,7 +64,7 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row columns={2} divided>
+          <Grid.Row columns={4} divided>
             <Grid.Column>
               <Label horizontal color={labelcolor}>
                 DriveTrain:
@@ -178,6 +178,7 @@ const TeamPages = () => {
     const db = getFirestore();
     const teamSnapshot = await getDocs(collection(db, "teams"));
     const matchSnapshot = await getDocs(collection(db, "match"));
+    console.log(teamSnapshot);
 
     //This pushes each data object (a match or a team) to their respective arrays.
     matchSnapshot.forEach((match) => {
@@ -197,8 +198,8 @@ const TeamPages = () => {
 
       //THIS IS THE FORMAT HANGAR DATA MUST BE IN
       let hang = [
-        ["Traverse", "High", "Medium", "Low", "None"],
-        [0, 0, 0, 0, 0],
+        ["Traverse", "High", "Mid or more Day 1", "Mid", "Low", "None"],
+        [0, 0, 0, 0, 0, 0],
       ];
 
       //THIS IS THE FORMAT NUMERICAL DATA MUST BE IN
@@ -228,10 +229,12 @@ const TeamPages = () => {
           hang[1][1] += 1;
         } else if (j.Hangar == "Medium") {
           hang[1][2] += 1;
-        } else if (j.Hangar == "Low") {
+        } else if (j.Hangar == "Mid") {
           hang[1][3] += 1;
-        } else {
+        } else if (j.Hangar == "Low") {
           hang[1][4] += 1;
+        } else {
+          hang[1][5] += 1;
         }
 
         //This simply adds in the numerical data (we haven't calculated average yet)
@@ -250,7 +253,7 @@ const TeamPages = () => {
       //This divides numerical data by number of matches to get averages
       if (totMatch > 0) {
         for (let k = 0; k < matchavg[1].length; k++) {
-          matchavg[1][k] = matchavg[1][k] / totMatch;
+          matchavg[1][k] = Number(matchavg[1][k] / totMatch).toFixed(3);
         }
       }
 
@@ -262,6 +265,7 @@ const TeamPages = () => {
         commentTele: teleopC,
         commentEnd: endgameC,
       };
+      teamDataArr[i].teamNumber = "-" + teamDataArr[i].teamNumber + "-";
 
       //This combines team data and match data and pushes it to an array -- mergedDataArr
 

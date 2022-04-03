@@ -9645,6 +9645,14 @@
   "resolved" "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.10.tgz"
   "version" "6.0.10"
 
+"react-event-injector@^1.1.2":
+  "integrity" "sha512-gSBsMinT3yeqGOqL6VoeekqdWYgMQ6O2rfYr5zPhNvE5qR3aL+xbn9Kjv4dLeL25gOSRJA/roDre9L5fHj89og=="
+  "resolved" "https://registry.npmjs.org/react-event-injector/-/react-event-injector-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "prop-types" "^15.6.2"
+    "tiny-invariant" "^1.0.1"
+
 "react-fast-compare@^3.0.1":
   "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
@@ -9837,6 +9845,15 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"react@^16.3.0":
+  "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
+  "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  "version" "16.14.0"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "prop-types" "^15.6.2"
 
 "readable-stream@^2.0.1":
   "integrity" "sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw=="
@@ -10306,6 +10323,15 @@
   "version" "2.4.1"
   dependencies:
     "jquery" "x.*"
+
+"semantic-ui-react-numberinput@^1.5.0":
+  "integrity" "sha512-pZoXVR7IjcOyCCD/GepJQAoiG2WH8t0OtJ6hHEhlIhX0sptmtZPrL1YBJtBDEfJdsFNRUH8FjaCUezzZr77UmA=="
+  "resolved" "https://registry.npmjs.org/semantic-ui-react-numberinput/-/semantic-ui-react-numberinput-1.5.0.tgz"
+  "version" "1.5.0"
+  dependencies:
+    "lodash" "^4.17.15"
+    "prop-types" "^15.7.2"
+    "react-event-injector" "^1.1.2"
 
 "semantic-ui-react@^2.1.2":
   "integrity" "sha512-NG7qMUi2Ab2gPWzOnGyBO9Ao2tjf9MZjjMMPbmg8uEUcEFm+z1QPqCKhW+eYMiZekH8L9azw9M+hzoTIB1lZgQ=="
@@ -11151,7 +11177,7 @@
   "resolved" "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz"
   "version" "0.3.0"
 
-"tiny-invariant@^1.0.0":
+"tiny-invariant@^1.0.0", "tiny-invariant@^1.0.1":
   "integrity" "sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg=="
   "resolved" "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.2.0.tgz"
   "version" "1.2.0"

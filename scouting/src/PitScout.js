@@ -201,9 +201,7 @@ const PitScout = () => {
   return (
     <Container>
       <Header as="h1">Scout or prescout a Team</Header>
-      <Header as="h4">
-        You don't need to fill out everything, especially the last two
-      </Header>
+      <Header as="h4">Please dont use a sheet of paper... please?</Header>
 
       <Message attached header="Add or Edit a Team's data" />
       <Form style={{ marginTop: 10 }}>

@@ -41,6 +41,8 @@ const MatchScout = () => {
   const [Hangar, setHangar] = useState("");
   const [ClimbTime, setClimbTime] = useState(0);
   const [EndgameC, setEndgameC] = useState("");
+  const [MatchNo, setMatchNo] = useState("");
+  const [name, setName] = useState("");
 
   const [color, setColor] = useState("");
 
@@ -55,7 +57,13 @@ const MatchScout = () => {
   const [docRefId, setDocRefId] = useState("initRef");
 
   //We put all the variables declared previously into an array, this is our full match data
+  const buttonStyle = {
+    height: "20px",
+    position: "bottom",
+  };
   const matchData = {
+    MatchNo,
+    name,
     AutoLH,
     AutoUH,
     AutoC,
@@ -73,6 +81,9 @@ const MatchScout = () => {
 
   //This function sets everything back to the default values
   const resetForm = () => {
+    setMatchNo("");
+    setName("");
+    setTeamNumber("");
     setAutoLH(0);
     setAutoUH(0);
     setAutoC("");
@@ -106,6 +117,7 @@ const MatchScout = () => {
         console.error("Error adding document: ", e);
         setShowError(true);
       });
+    resetForm();
   }, [docRefId]);
 
   //This function has an array called requiredFields
@@ -135,6 +147,38 @@ const MatchScout = () => {
   all the form data once you submit it
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
   */
+
+  function autoLHUp() {
+    setAutoLH(AutoLH + 1);
+  }
+
+  function autoLHDown() {
+    setAutoLH(AutoLH - 1);
+  }
+
+  function autoUHUp() {
+    setAutoUH(AutoUH + 1);
+  }
+
+  function autoUHDown() {
+    setAutoUH(AutoUH - 1);
+  }
+
+  function teleLHUp() {
+    setTeleopLH(TeleopLH + 1);
+  }
+
+  function teleLHDown() {
+    setTeleopLH(TeleopLH - 1);
+  }
+
+  function teleUHUp() {
+    setTeleopUH(TeleopUH + 1);
+  }
+
+  function teleUHDown() {
+    setTeleopUH(TeleopUH - 1);
+  }
   return (
     <Container>
       <Header as="h1">Scout a match</Header>
@@ -143,18 +187,35 @@ const MatchScout = () => {
       <Message attached header="Add Match data" />
       <Form>
         <Form.Group>
-          <Form.Field>
-            <label>Team Number</label>
+          <Form.Field width={3}>
+            <label style={{ color: "red" }}>Team Number*</label>
             <input
               placeholder="Team Number"
               value={teamNumber}
               onChange={(e) => setTeamNumber(e.target.value)}
             />
           </Form.Field>
+          <Form.Field width={3}>
+            <label style={{ color: "red" }}>Scouter Name*</label>
+            <input
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Field>
+
+          <Form.Field width={3}>
+            <label>Qual Match Number</label>
+            <input
+              placeholder="Match #"
+              value={MatchNo}
+              onChange={(e) => setMatchNo(e.target.value)}
+            />
+          </Form.Field>
         </Form.Group>
 
-        <Form.Group widths="equal">
-          <Form.Field>
+        <Form.Group>
+          <Form.Field width={3}>
             <label>Auto Low Hub</label>
             <input
               placeholder="Auto LH"
@@ -163,7 +224,26 @@ const MatchScout = () => {
               type="number"
             />
           </Form.Field>
-          <Form.Field>
+
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            width="3"
+            onClick={autoLHDown}
+          >
+            -
+          </Button>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            onClick={autoLHUp}
+          >
+            +
+          </Button>
+
+          <Form.Field width={3}>
             <label>Auto Upper Hub</label>
             <input
               placeholder="Auto UH"
@@ -172,7 +252,25 @@ const MatchScout = () => {
               type="number"
             />
           </Form.Field>
-          <Form.Field>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            width="3"
+            onClick={autoUHDown}
+          >
+            -
+          </Button>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            onClick={autoUHUp}
+          >
+            +
+          </Button>
+
+          <Form.Field width={3}>
             <label>Auto Comments</label>
             <TextArea
               placeholder="Auto Comments"
@@ -181,8 +279,8 @@ const MatchScout = () => {
             />
           </Form.Field>
         </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Field>
+        <Form.Group>
+          <Form.Field width={3}>
             <label>Teleop Low Hub</label>
             <input
               placeholder="Teleop LH"
@@ -191,7 +289,24 @@ const MatchScout = () => {
               type="number"
             />
           </Form.Field>
-          <Form.Field>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            width="3"
+            onClick={teleLHDown}
+          >
+            -
+          </Button>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            onClick={teleLHUp}
+          >
+            +
+          </Button>
+          <Form.Field width={3}>
             <label>Teleop Upper Hub</label>
             <input
               placeholder="Teleop UH"
@@ -200,7 +315,24 @@ const MatchScout = () => {
               type="number"
             />
           </Form.Field>
-          <Form.Field>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            width="3"
+            onClick={teleUHDown}
+          >
+            -
+          </Button>
+          <Button
+            type="ui icon button"
+            attached="bottom"
+            size="mini"
+            onClick={teleUHUp}
+          >
+            +
+          </Button>
+          <Form.Field width={3}>
             <label>Teleop Comments</label>
             <TextArea
               placeholder="Teleop Comments"

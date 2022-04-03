@@ -84,9 +84,9 @@ const yesNoOptions = [
 ];
 
 const hangarOptions = [
-  { key: 1, text: "Traverse", value: "Medium" },
-  { key: 2, text: "High", value: "Medium" },
-  { key: 3, text: "Medium", value: "Medium" },
+  { key: 1, text: "Traverse", value: "Traverse" },
+  { key: 2, text: "High", value: "High" },
+  { key: 3, text: "Mid", value: "Mid" },
   { key: 4, text: "Low", value: "Low" },
   { key: 5, text: "None", value: "None" },
 ];
