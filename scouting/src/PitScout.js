@@ -42,17 +42,15 @@ const PitScout = () => {
   setTeamNumber can be called at any time to change teamNumber
   It also sets the initial value of teamNumber to "", by using useState()
   */
-  const [teamName, setTeamName] = useState("");
+
   const [teamNumber, setTeamNumber] = useState("");
-  const [color, setColor] = useState("");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [length, setLength] = useState("");
-  const [driveTrain, setDriveTrain] = useState("");
-  const [cvCapability, setCvCapability] = useState("");
-  const [shooter, setShooter] = useState("");
-  const [worlds, setWorlds] = useState("");
-  const [pastFocuses, setPastFocuses] = useState("");
+  const [scouterName, setScouterName] = useState("");
+  const [noBatteries, setNoBatteries] = useState("");
+  const [organization, setOrg] = useState("");
+  const [lang, setLang] = useState("");
+  const [spareParts, setSpareParts] = useState("");
+  const [motors, setMotor] = useState("");
+  const [notes, setNotes] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -65,16 +63,12 @@ const PitScout = () => {
 
   //This function sets everything back to the default values
   const resetForm = () => {
-    setTeamName("");
-    setColor("");
-    setWeight("");
-    setHeight("");
-    setLength("");
-    setDriveTrain("");
-    setCvCapability("");
-    setShowError("");
-    setWorlds("");
-    setPastFocuses("");
+    setTeamNumber("");
+    setScouterName("");
+    setOrg("");
+    setLang("");
+
+    setNotes("");
   };
 
   /*Whenever anything in the array in this function is changed, this function gets called.
@@ -84,32 +78,16 @@ const PitScout = () => {
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
-  }, [
-    teamNumber,
-    teamName,
-    color,
-    weight,
-    height,
-    length,
-    driveTrain,
-    cvCapability,
-    worlds,
-    pastFocuses,
-  ]);
+  }, [teamNumber, scouterName, organization, lang, notes]);
 
   //We put all the variables declared previously into an array, this is our full team data
 
   const pitData = {
     teamNumber,
-    teamName,
-    color,
-    weight,
-    height,
-    length,
-    driveTrain,
-    cvCapability,
-    worlds,
-    pastFocuses,
+    scouterName,
+    organization,
+    lang,
+    notes,
     docRefId,
   };
   useEffect(() => {
@@ -147,26 +125,13 @@ const PitScout = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      const {
-        teamName,
-        color,
-        weight,
-        height,
-        length,
-        driveTrain,
-        cvCapability,
-        worlds,
-        pastFocuses,
-      } = doc.data();
-      setTeamName(teamName || "");
-      setColor(color || "");
-      setWeight(weight || "");
-      setHeight(height || "");
-      setLength(length || "");
-      setDriveTrain(driveTrain || "");
-      setCvCapability(cvCapability || "");
-      setWorlds(worlds || "");
-      setPastFocuses(pastFocuses || "");
+      const { teamNumber, scouterName, organization, lang, notes } = doc.data();
+      setTeamNumber(teamNumber || "");
+      setScouterName(scouterName || "");
+      setOrg(organization || "");
+      setLang(lang || "");
+
+      setNotes(notes || "");
     });
   };
 
@@ -201,7 +166,7 @@ const PitScout = () => {
   return (
     <Container>
       <Header as="h1">Scout or prescout a Team</Header>
-      <Header as="h4">Please dont use a sheet of paper... please?</Header>
+      <Header as="h4">It's better than a sheet of paper™</Header>
 
       <Message attached header="Add or Edit a Team's data" />
       <Form style={{ marginTop: 10 }}>
@@ -216,90 +181,39 @@ const PitScout = () => {
             />
           </Form.Field>
           <Form.Field>
-            <label>Team Name</label>
+            <label>Scouter Name</label>
             <Form.Input
-              placeholder="Team Name"
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
+              placeholder="Scouter Name"
+              value={scouterName}
+              onChange={(e) => setScouterName(e.target.value)}
             />
           </Form.Field>
         </Form.Group>
         <Form.Group widths="equal">
           <Form.Field>
-            <label>Weight (lb)</label>
+            <label>Are they organized?</label>
             <input
-              placeholder="Weight"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
+              placeholder="notes here"
+              value={organization}
+              onChange={(e) => setOrg(e.target.value)}
             />
           </Form.Field>
           <Form.Field>
-            <label>Height</label>
+            <label>What language was used?</label>
             <input
-              placeholder="Height"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Frame Perimeter</label>
-            <input
-              placeholder="Length"
-              value={length}
-              onChange={(e) => setLength(e.target.value)}
+              placeholder="java, c++ etc."
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
             />
           </Form.Field>{" "}
         </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Field
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-            }}
-          >
-            <label>Drive Train</label>
-            <Dropdown
-              options={driveTrainOptions}
-              placeholder="Drive Train"
-              value={driveTrain}
-              onChange={(e, data) => setDriveTrain(data.value)}
-            />
-          </Form.Field>
-          <Form.Field
-            style={{
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-            }}
-          >
-            <label>CV Capabilities</label>
-            <Dropdown
-              options={cvOptions}
-              placeholder="CV Capabilities"
-              value={cvCapability}
-              onChange={(e, data) => setCvCapability(data.value)}
-            />
-          </Form.Field>
-        </Form.Group>
-        <Form.Field
-          style={{
-            border: "1px solid rgba(0, 0, 0, 0.1)",
-            borderRadius: "5px",
-          }}
-        >
-          <label>Been to Worlds?</label>
-          <Dropdown
-            options={yesNoOptions}
-            placeholder=""
-            value={worlds}
-            onChange={(e, data) => setWorlds(data.value)}
-          />
-        </Form.Field>{" "}
+
         <Form.Field>
-          <label>Max Height</label>
+          <label>Notes</label>
           <TextArea
-            placeholder="Max Height"
-            value={pastFocuses}
-            onChange={(e) => setPastFocuses(e.target.value)}
+            placeholder="Notes"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
           />
         </Form.Field>
         <Form.Group>

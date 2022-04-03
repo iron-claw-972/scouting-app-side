@@ -13,14 +13,11 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
   //The whole team's data is put in this array
   const {
     teamNumber = "",
-    teamName = "",
-    cvCapability = "",
-    driveTrain = "",
-    height = "",
-    length = "",
-    pastFocuses = "",
-    weight = "",
-    worlds = "",
+    scouterName = "",
+    organization = "",
+    lang = "",
+    notes = "",
+
     hangar = [[0, 0, 0, 0, 0]],
     matchAvg = [[0, 0, 0, 0, 0]],
     commentAuto = [""],
@@ -57,61 +54,35 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
                 {teamNumber}
               </Label>
             </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns={2} divided>
             <Grid.Column>
-              <Label color={labelcolor} size="big">
-                <LabelDetail>{teamName}</LabelDetail>
+              <Label horizontal color={labelcolor}>
+                Pit Scouter:
               </Label>
+              <TextHelper>{scouterName}</TextHelper>
+            </Grid.Column>
+            <Grid.Column>
+              <Label horizontal color={labelcolor}>
+                Robot Lang:
+              </Label>
+              <TextHelper>{lang}</TextHelper>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row columns={4} divided>
+          <Grid.Row columns={1} divided>
             <Grid.Column>
               <Label horizontal color={labelcolor}>
-                DriveTrain:
+                organization level:
               </Label>
-              <TextHelper>{driveTrain}</TextHelper>
-            </Grid.Column>
-            <Grid.Column>
-              <Label horizontal color={labelcolor}>
-                CV:
-              </Label>
-              <TextHelper>{cvCapability}</TextHelper>
+              <TextHelper>{organization}</TextHelper>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row columns={3} divided>
+          <Grid.Row>
             <Grid.Column>
-              <Label horizontal color={labelcolor}>
-                Height:
-              </Label>
-              <TextHelper>{height}</TextHelper>
-            </Grid.Column>
-            <Grid.Column>
-              <Label horizontal color={labelcolor}>
-                Frame Perimeter:
-              </Label>
-              <TextHelper>{length}</TextHelper>
-            </Grid.Column>
-            <Grid.Column>
-              <Label horizontal color={labelcolor}>
-                Weight:
-              </Label>
-              <TextHelper>{weight}</TextHelper>
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row divided>
-            <Grid.Column width={6}>
-              <Label horizontal color={labelcolor}>
-                World?:
-              </Label>
-              <TextHelper>{worlds}</TextHelper>
-            </Grid.Column>
-            <Grid.Column width={10}>
-              <Label horizontal color={labelcolor}>
-                Max Height
-              </Label>
-              <TextHelper>{pastFocuses}</TextHelper>
+              <Textbox category={"Notes from Pit:"} text={notes} />
             </Grid.Column>
           </Grid.Row>
 
@@ -131,7 +102,7 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
             <Grid.Column>
               <Textbox
                 category={"Auto comments"}
-                text={commentAuto.join(",   ")}
+                text={commentAuto.join("-")}
               ></Textbox>
             </Grid.Column>
           </Grid.Row>
@@ -139,7 +110,7 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
             <Grid.Column>
               <Textbox
                 category={"Teleop comments"}
-                text={commentTele.join(",   ")}
+                text={commentTele.join("-")}
               ></Textbox>
             </Grid.Column>
           </Grid.Row>
@@ -147,7 +118,7 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
             <Grid.Column>
               <Textbox
                 category={"Endgame comments"}
-                text={commentEnd.join(",   ")}
+                text={commentEnd.join("-")}
               ></Textbox>
             </Grid.Column>
           </Grid.Row>
@@ -198,7 +169,7 @@ const TeamPages = () => {
 
       //THIS IS THE FORMAT HANGAR DATA MUST BE IN
       let hang = [
-        ["Traverse", "High", "Mid or more Day 1", "Mid", "Low", "None"],
+        ["Traverse", "High", "Mid", "Low", "None"],
         [0, 0, 0, 0, 0, 0],
       ];
 
@@ -229,12 +200,10 @@ const TeamPages = () => {
           hang[1][1] += 1;
         } else if (j.Hangar == "Medium") {
           hang[1][2] += 1;
-        } else if (j.Hangar == "Mid") {
-          hang[1][3] += 1;
         } else if (j.Hangar == "Low") {
-          hang[1][4] += 1;
+          hang[1][3] += 1;
         } else {
-          hang[1][5] += 1;
+          hang[1][4] += 1;
         }
 
         //This simply adds in the numerical data (we haven't calculated average yet)
@@ -245,9 +214,9 @@ const TeamPages = () => {
         matchavg[1][4] += parseInt(j.ClimbTime);
 
         //This adds in comments
-        autoC.push(j.AutoC);
-        teleopC.push(j.TeleopC);
-        endgameC.push(j.EndgameC);
+        autoC.push(j.Name + ":  " + j.AutoC + "\n");
+        teleopC.push(j.Name + ":  " + j.TeleopC + "\n");
+        endgameC.push(j.Name + ":  " + j.EndgameC + "\n");
       });
 
       //This divides numerical data by number of matches to get averages

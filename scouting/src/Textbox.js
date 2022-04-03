@@ -14,7 +14,7 @@ export default function Textbox(props) {
     >
       <strong>{props.category}</strong>
       <br />
-      <div>{props.text}</div>
+      <p style={{ whiteSpace: "pre-line" }}>{props.text}</p>
     </div>
   );
 }
