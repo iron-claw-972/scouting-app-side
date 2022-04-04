@@ -31,11 +31,16 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
   );
 
   const linkGen = (lst) => {
-    for (let i = 0; i < lst.length; i++) {
-      console.log(lst[i]);
-      var str = "https://www.thebluealliance.com/match/2022camb_qm" + lst[i];
-      return <a href={str}>{lst[i]}</a>;
-    }
+    const sz = lst.length;
+    return lst.map((e, i) => {
+      var str = "https://www.thebluealliance.com/match/2022casj_qm" + e;
+      return (
+        <a key={e} href={str}>
+          {e}
+          {i + 1 === sz ? "" : ","}
+        </a>
+      );
+    });
   };
 
   /* 

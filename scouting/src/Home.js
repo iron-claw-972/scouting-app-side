@@ -99,8 +99,8 @@ const Home = () => (
 
       <Card href={"https://www.thebluealliance.com/event/2022casj#rankings"}>
         <Card.Content
-          header="Live Rankings"
-          description="You can also see OPR on The Blue Alliance"
+          header="Rankings and Averages"
+          description="The Blue Alliance has lots of useful data, dont miss it"
         />
       </Card>
     </Card.Group>
