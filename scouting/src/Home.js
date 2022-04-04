@@ -71,6 +71,15 @@ const Home = () => (
         </Card>
       </Link>
 
+      <Link to="/rawmatchtable" style={{ margin: 10 }}>
+        <Card>
+          <Card.Content
+            header="Raw Matches Table"
+            description="View Match data table "
+          />
+        </Card>
+      </Link>
+
       <Link to="/pitdisplay" style={{ margin: 10 }}>
         <Card>
           <Card.Content

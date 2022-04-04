@@ -9,6 +9,7 @@ import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
 import ScanMatchScoutDataQR from "./ScanMatchScoutDataQR";
 import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
+import RawMatchTable from "./RawMatchTable";
 
 //setting up main page
 //The element= causes all the content of the pages to show
@@ -19,6 +20,7 @@ const App = () => {
       <Route path="matchscout" element={<MatchScout />} />
       <Route path="pitscout" element={<PitScout />} />
       <Route path="teampages" element={<TeamPages />} />
+      <Route path="rawmatchtable" element={<RawMatchTable />} />
       <Route path="pitdisplay" element={<PitDisplay />} />
       <Route path="datadisplay" element={<DataDisplay />} />
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
