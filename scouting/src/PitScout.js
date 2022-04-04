@@ -57,10 +57,6 @@ const PitScout = () => {
   const [showError, setShowError] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
 
-  //docRef is a unique id that we will store the match under
-  //we will use the default value "initRef", and set the id later.
-  const [docRefId, setDocRefId] = useState("initRef");
-
   //This function sets everything back to the default values
   const resetForm = () => {
     setTeamNumber("");
@@ -88,24 +84,7 @@ const PitScout = () => {
     organization,
     lang,
     notes,
-    docRefId,
   };
-  useEffect(() => {
-    //checks if the form was submitted (if a unique id was made)
-    if (docRefId === "initRef") return;
-    setShowQrCode(true);
-    const db = getFirestore();
-    const docRef = doc(db, "teams_svr", docRefId);
-    setDoc(docRef, pitData, { merge: true })
-      .then(() => {
-        setShowSuccess(true);
-        //setTimeout(resetForm, 1500);
-      })
-      .catch((e) => {
-        console.error("Error adding document: ", e);
-        setShowError(true);
-      });
-  }, [docRefId]);
 
   //checks if we at least filled out team number
   const validate = () => {
@@ -148,12 +127,20 @@ const PitScout = () => {
     return newObj;
   };
 
-  //This saves the data in the form
-  //setDocRefId is using a library that generates a unique ID
-  //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
-    setDocRefId(uuidv4());
+    setShowQrCode(true);
+    const db = getFirestore();
+    const docRef = doc(db, "teams_svr", teamNumber);
+    setDoc(docRef, pitData, { merge: true })
+      .then(() => {
+        setShowSuccess(true);
+        //setTimeout(resetForm, 1500);
+      })
+      .catch((e) => {
+        console.error("Error adding document: ", e);
+        setShowError(true);
+      });
   };
 
   /*Search these tags on semantic ui website for info
