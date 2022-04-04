@@ -23,7 +23,7 @@ const ScanMatchScoutDataQR = (props) => {
     const db = getFirestore();
     const matchData = JSON.parse(data);
     const { docRefId } = matchData;
-    const docRef = doc(db, "match", docRefId);
+    const docRef = doc(db, "match_svr", docRefId);
     setDoc(docRef, matchData, { merge: true });
   };
 

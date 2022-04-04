@@ -163,8 +163,8 @@ const TeamPages = () => {
 
     //This gets teamSnapshot (Pit Scout data) and matchSnapshot (Match Scout data)
     const db = getFirestore();
-    const teamSnapshot = await getDocs(collection(db, "teams"));
-    const matchSnapshot = await getDocs(collection(db, "match"));
+    const teamSnapshot = await getDocs(collection(db, "teams_svr"));
+    const matchSnapshot = await getDocs(collection(db, "match_svr"));
     console.log(teamSnapshot);
 
     //This pushes each data object (a match or a team) to their respective arrays.

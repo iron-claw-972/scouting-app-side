@@ -34,7 +34,7 @@ const RawMatchTable = () => {
   useEffect(async () => {
     const matchDataArr = [];
     const db = getFirestore();
-    const matchSnapshot = await getDocs(collection(db, "match"));
+    const matchSnapshot = await getDocs(collection(db, "match_svr"));
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });

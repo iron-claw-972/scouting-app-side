@@ -95,7 +95,7 @@ const PitScout = () => {
     if (docRefId === "initRef") return;
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "teams", docRefId);
+    const docRef = doc(db, "teams_svr", docRefId);
     setDoc(docRef, pitData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -120,7 +120,7 @@ const PitScout = () => {
   //This is the function for autofill if you've already filled out part of the form
   const lookupTeamIfExists = async () => {
     const db = getFirestore();
-    const teamsRef = collection(db, "teams");
+    const teamsRef = collection(db, "teams_svr");
     const q = query(teamsRef, where("teamNumber", "==", teamNumber));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {

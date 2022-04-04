@@ -112,7 +112,7 @@ const MatchScout = () => {
     //And then saves into the database
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "match", docRefId);
+    const docRef = doc(db, "match_svr", docRefId);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
