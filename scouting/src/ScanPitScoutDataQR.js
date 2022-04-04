@@ -23,8 +23,8 @@ const ScanPitScoutDataQR = (props) => {
   const save = async () => {
     const db = getFirestore();
     const pitData = JSON.parse(data);
-    const { docRefId } = pitData;
-    const docRef = doc(db, "teams_svr", docRefId);
+    const { teamNumber } = pitData;
+    const docRef = doc(db, "teams_svr", teamNumber);
     setDoc(docRef, pitData, { merge: true });
   };
 

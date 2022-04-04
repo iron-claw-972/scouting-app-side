@@ -61,7 +61,10 @@ const Home = () => (
           </Card.Content>
         </Card>
       </Link>
+    </Card.Group>
+    <Divider section />
 
+    <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
       <Link to="/teampages" style={{ margin: 10 }}>
         <Card>
           <Card.Content
@@ -76,6 +79,15 @@ const Home = () => (
           <Card.Content
             header="Raw Matches Table"
             description="View Match data table "
+          />
+        </Card>
+      </Link>
+
+      <Link to="/teamlookup" style={{ margin: 10 }}>
+        <Card>
+          <Card.Content
+            header="Team Lookup"
+            description="Lookup data on one team "
           />
         </Card>
       </Link>
