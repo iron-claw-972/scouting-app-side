@@ -7,7 +7,10 @@ import {
   query,
   where,
   getDocs,
+  orderBy,
 } from "firebase/firestore";
+import { LineChart, PieChart } from "react-chartkick";
+import "chartkick/chart.js";
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -43,7 +46,7 @@ const TeamLookup = () => {
 
   useEffect(async () => {
     console.log("in useEffect queryTeam is ", queryTeam);
-    if (queryTeam === 0) return;
+    if (queryTeam === "") return;
     const matchDataArr = [];
     const db = getFirestore();
     const q = query(
@@ -68,6 +71,26 @@ const TeamLookup = () => {
 
   const { column, data, direction } = state;
 
+  let AutoLHData = {};
+  let AutoUHData = {};
+  let TeleopLHData = {};
+  let TeleopUHData = {};
+  let ClimbTimeData = {};
+  for (let i = 0; i < data.length; i++) {
+    const { MatchNo, AutoLH, AutoUH, TeleopLH, TeleopUH, ClimbTime } = data[i];
+    AutoLHData = { ...AutoLHData, [MatchNo]: AutoLH };
+    AutoUHData = { ...AutoUHData, [MatchNo]: AutoUH };
+    TeleopLHData = { ...TeleopLHData, [MatchNo]: TeleopLH };
+    TeleopUHData = { ...TeleopUHData, [MatchNo]: TeleopUH };
+    ClimbTimeData = { ...ClimbTimeData, [MatchNo]: ClimbTime };
+  }
+  const chartData = [
+    { name: "AutoLH", data: AutoLHData },
+    { name: "AutoUH", data: AutoUHData },
+    { name: "TeleopLH", data: TeleopLHData },
+    { name: "TeleopUH", data: TeleopUHData },
+    { name: "ClimbTime", data: ClimbTimeData },
+  ];
   return (
     <Container>
       <Form style={{ marginTop: 15 }}>
@@ -186,6 +209,8 @@ const TeamLookup = () => {
           )}
         </Table.Body>
       </Table>
+
+      <LineChart data={chartData} curve={false} />
       <Modal
         size="mini"
         centered={false}
