@@ -17,8 +17,8 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     organization = "",
     lang = "",
     notes = "",
-
-    hangar = [[0, 0, 0, 0, 0]],
+    match = [],
+    hangar = [[0, 0, 0, 0]],
     matchAvg = [[0, 0, 0, 0, 0]],
     commentAuto = [""],
     commentTele = [""],
@@ -30,11 +30,20 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
     <span style={{ fontSize: 16, color: textcolor }}>{props.children}</span>
   );
 
+  const linkGen = (lst) => {
+    for (let i = 0; i < lst.length; i++) {
+      console.log(lst[i]);
+      var str = "https://www.thebluealliance.com/match/2022camb_qm" + lst[i];
+      return <a href={str}>{lst[i]}</a>;
+    }
+  };
+
   /* 
   This uses semantic ui
   As you can see, it displays the values from the above array
   They are loaded and formatted below the return() function
   */
+
   return (
     <div>
       <List.Item key={teamNumber}>
@@ -85,7 +94,14 @@ const TeamCard = ({ bgcolor, labelcolor, textcolor, teamData }) => {
               <Textbox category={"Notes from Pit:"} text={notes} />
             </Grid.Column>
           </Grid.Row>
-
+          <Grid.Row>
+            <Grid.Column>
+              <Label>Matches Played</Label>
+            </Grid.Column>
+            <Grid.Column>
+              <p style={{ fontSize: 20 }}>{linkGen(match)}</p>
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row divided>
             <Grid.Column width={7}>
               <SpecTable
@@ -187,6 +203,7 @@ const TeamPages = () => {
       var autoC = [];
       var teleopC = [];
       var endgameC = [];
+      var matches = [];
 
       //iterating over matches the team played.
       filteredTeamMatchData.forEach((j) => {
@@ -206,6 +223,9 @@ const TeamPages = () => {
           hang[1][4] += 1;
         }
 
+        matches.push(j.MatchNo);
+        console.log(matches);
+
         //This simply adds in the numerical data (we haven't calculated average yet)
         matchavg[1][0] += parseInt(j.AutoLH);
         matchavg[1][1] += parseInt(j.AutoUH);
@@ -214,9 +234,9 @@ const TeamPages = () => {
         matchavg[1][4] += parseInt(j.ClimbTime);
 
         //This adds in comments
-        autoC.push(j.Name + ":  " + j.AutoC + "\n");
-        teleopC.push(j.Name + ":  " + j.TeleopC + "\n");
-        endgameC.push(j.Name + ":  " + j.EndgameC + "\n");
+        autoC.push(j.name + ":  " + j.AutoC + "\n");
+        teleopC.push(j.name + ":  " + j.TeleopC + "\n");
+        endgameC.push(j.name + ":  " + j.EndgameC + "\n");
       });
 
       //This divides numerical data by number of matches to get averages
@@ -228,6 +248,7 @@ const TeamPages = () => {
 
       //We create a new object with all our data
       const newMatchAvgObj = {
+        match: matches,
         hangar: hang,
         matchAvg: matchavg,
         commentAuto: autoC,
