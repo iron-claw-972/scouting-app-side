@@ -349,7 +349,14 @@ const TeamPages = () => {
   };
   //This is the final return, it returns the teamPages in a list container (see semantic ui)
   return (
-    <List style={{ margin: "10px", padding: "10px" }}>{returnTeamCards()}</List>
+    <div>
+      <h2 style={{ margin: "10px" }}>
+        Do command + f with the team number surrounded by dashes(-8-, -1234-)
+      </h2>
+      <List style={{ margin: "10px", padding: "10px" }}>
+        {returnTeamCards()}
+      </List>
+    </div>
   );
 };
 export default TeamPages;

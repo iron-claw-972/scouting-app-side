@@ -86,8 +86,8 @@ const Home = () => (
       <Link to="/teamlookup" style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Team Lookup"
-            description="Lookup data on one team "
+            header="Graphs and Tables"
+            description="Data Visualization by team "
           />
         </Card>
       </Link>
