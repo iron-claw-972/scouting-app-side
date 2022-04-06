@@ -22,7 +22,7 @@ export default function DataDisplay() {
       <h5 style={{ marginLeft: 10 }}>
         Use this in future years, you likely won't have to change much.
       </h5>
-
+      <h4>Trans rights are a good.</h4>
       <h5 style={{ marginLeft: 10 }}>
         From Team 972 - Iron Claw at Los Gatos High School :)
       </h5>
