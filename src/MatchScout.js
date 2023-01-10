@@ -20,6 +20,7 @@ import {
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { colorOptions } from "./AllOptions";
+import { truncate } from "lodash";
 
 //This stuff gets meaty
 
@@ -37,6 +38,22 @@ const MatchScout = () => {
   const [teamName, setTeamName] = useState("");
   const [AutoLH, setAutoLH] = useState(0);
   const [AutoUH, setAutoUH] = useState(0);
+
+  const [AutoLR, setAutoLR] = useState(0);
+  const [AutoMR, setAutoMR] = useState(0);
+  const [AutoHR, setAutoHR] = useState(0);
+  const [TeleLR, setTeleLR] = useState(0);
+  const [TeleMR, setTeleMR] = useState(0);
+  const [TeleHR, setTeleHR] = useState(0);
+
+  const [AutoLRSelected, setAutoLRSelected] = useState(false);
+  const [AutoMRSelected, setAutoMRSelected] = useState(false);
+  const [AutoHRSelected, setAutoHRSelected] = useState(false);
+
+  const [TeleHRSelected, setTeleHRSelected] = useState(false);
+  const [TeleMRSelected, setTeleMRSelected] = useState(false);
+  const [TeleLRSelected, setTeleLRSelected] = useState(false);
+
   const [AutoC, setAutoC] = useState("");
   const [TeleopLH, setTeleopLH] = useState(0);
   const [TeleopUH, setTeleopUH] = useState(0);
@@ -49,8 +66,8 @@ const MatchScout = () => {
 
   const [color, setColor] = useState("");
 
-  const [levelSelected, setlevelSelected] = useState(false);
-  const [pieceSelected, setpieceSelected] = useState(false);
+  const [autolevelSelected, setautolevelSelected] = useState(false);
+  const [telelevelSelected, settelelevelSelected] = useState(false);
   const [autopiece, setautoPiece] = useState(false);
   const [telepiece, settelePiece] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -171,35 +188,73 @@ const MatchScout = () => {
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
   */
 
-  const autoLHUp = () => {
-    setAutoLH(AutoLH + 1);
+  const autoLRClick = () => {
+    setAutoLRSelected(true);
+    setAutoMRSelected(false);
+    setAutoHRSelected(false);
+    setautolevelSelected(true);
   };
 
-  const autoLHDown = () => {
-    if (AutoLH === 0) return;
-    setAutoLH(AutoLH - 1);
+  const autoMRClick = () => {
+    setAutoLRSelected(false);
+    setAutoMRSelected(true);
+    setAutoHRSelected(false);
+    setautolevelSelected(true);
   };
 
-  const autoUHUp = () => {
-    setAutoUH(AutoUH + 1);
+  const autoHRClick = () => {
+    setAutoLRSelected(false);
+    setAutoMRSelected(false);
+    setAutoHRSelected(true);
+    setautolevelSelected(true);
+  };
+  const teleLRClick = () => {
+    setTeleLRSelected(true);
+    setTeleMRSelected(false);
+    setTeleHRSelected(false);
+    settelelevelSelected(true);
   };
 
-  const autoUHDown = () => {
-    if (AutoUH === 0) return;
-    setAutoUH(AutoUH - 1);
+  const teleMRClick = () => {
+    setTeleLRSelected(false);
+    setTeleMRSelected(true);
+    setTeleHRSelected(false);
+    settelelevelSelected(true);
   };
 
-  const teleLHUp = () => {
-    setTeleopLH(TeleopLH + 1);
+  const teleHRClick = () => {
+    setTeleLRSelected(false);
+    setTeleMRSelected(false);
+    setTeleHRSelected(true);
+    settelelevelSelected(true);
   };
 
-  const teleLHDown = () => {
-    if (TeleopLH === 0) return;
-    setTeleopLH(TeleopLH - 1);
+  const handleautoEnter = () => {
+    setAutoLRSelected(false);
+    setAutoMRSelected(false);
+    setAutoHRSelected(false);
+    setautolevelSelected(false);
   };
 
-  const teleUHUp = () => {
-    setTeleopUH(TeleopUH + 1);
+  const handleautoRemove = () => {
+    setAutoLRSelected(false);
+    setAutoMRSelected(false);
+    setAutoHRSelected(false);
+    setautolevelSelected(false);
+  };
+
+  const handleteleEnter = () => {
+    setTeleLRSelected(false);
+    setTeleMRSelected(false);
+    setTeleHRSelected(false);
+    settelelevelSelected(false);
+  };
+
+  const handleteleRemove = () => {
+    setTeleLRSelected(false);
+    setTeleMRSelected(false);
+    setTeleHRSelected(false);
+    settelelevelSelected(false);
   };
 
   const teleUHDown = () => {
@@ -302,30 +357,67 @@ const MatchScout = () => {
 
         <Form.Group>
           <Form.Field>
-            <Button
-              color="vk"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              High
-            </Button>
-            <Button
-              color="black"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              Mid
-            </Button>
-            <Button
-              color="black"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              Low
-            </Button>
+            {AutoHRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                High
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={autoHRClick}
+              >
+                High
+              </Button>
+            )}
+
+            {AutoMRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                Mid
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={autoMRClick}
+              >
+                Mid
+              </Button>
+            )}
+            {AutoLRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                Low
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={autoLRClick}
+              >
+                Low
+              </Button>
+            )}
           </Form.Field>
           <Form.Field>
             {autopiece ? (
@@ -350,20 +442,49 @@ const MatchScout = () => {
               </Button>
             )}
             <Divider fitted></Divider>
-            <Button
-              style={{ marginDown: "5px", marginTop: "15px" }}
-              fluid
-              size="mini"
-            >
-              Enter?
-            </Button>
-            <Button
-              style={{ marginDown: "5px", marginTop: "15px" }}
-              fluid
-              size="mini"
-            >
-              Undo
-            </Button>
+            {autolevelSelected ? (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                icon="X"
+                color="green"
+                onClick={handleautoEnter}
+              >
+                Enter?
+              </Button>
+            ) : (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                icon="X"
+                color="white"
+              >
+                -
+              </Button>
+            )}
+
+            {autolevelSelected ? (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                color="google plus"
+                onClick={handleautoRemove}
+              >
+                Take out
+              </Button>
+            ) : (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                color="white"
+              >
+                -
+              </Button>
+            )}
           </Form.Field>
         </Form.Group>
 
@@ -376,30 +497,67 @@ const MatchScout = () => {
 
         <Form.Group>
           <Form.Field>
-            <Button
-              color="vk"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              High
-            </Button>
-            <Button
-              color="black"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              Mid
-            </Button>
-            <Button
-              color="black"
-              style={{ marginDown: "5px", marginTop: "10px" }}
-              size="medium"
-              fluid
-            >
-              Low
-            </Button>
+            {TeleHRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                High
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={teleHRClick}
+              >
+                High
+              </Button>
+            )}
+
+            {TeleMRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                Mid
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={teleMRClick}
+              >
+                Mid
+              </Button>
+            )}
+            {TeleLRSelected ? (
+              <Button
+                color="orange"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+              >
+                Low
+              </Button>
+            ) : (
+              <Button
+                color="black"
+                style={{ marginDown: "5px", marginTop: "10px" }}
+                size="medium"
+                fluid
+                onClick={teleLRClick}
+              >
+                Low
+              </Button>
+            )}
           </Form.Field>
           <Form.Field>
             {telepiece ? (
@@ -424,22 +582,49 @@ const MatchScout = () => {
               </Button>
             )}
             <Divider fitted></Divider>
-            <Button
-              style={{ marginDown: "5px", marginTop: "15px" }}
-              fluid
-              size="mini"
-              icon="X"
-            >
-              Enter?
-            </Button>
-            <Button
-              style={{ marginDown: "5px", marginTop: "15px" }}
-              fluid
-              size="mini"
-              color="google plus"
-            >
-              Undo
-            </Button>
+
+            {telelevelSelected ? (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                icon="X"
+                color="green"
+                onClick={handleteleEnter}
+              >
+                Enter?
+              </Button>
+            ) : (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                icon="X"
+                color="white"
+              >
+                -
+              </Button>
+            )}
+            {telelevelSelected ? (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                color="google plus"
+                onClick={handleteleRemove}
+              >
+                Take out
+              </Button>
+            ) : (
+              <Button
+                style={{ marginDown: "5px", marginTop: "15px" }}
+                fluid
+                size="mini"
+                color="white"
+              >
+                -
+              </Button>
+            )}
           </Form.Field>
         </Form.Group>
         <Divider></Divider>

@@ -254,7 +254,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setClimb(false)}
               >
-                Can Climb
+                Ground Intake
               </Button>
             ) : (
               <Button
@@ -263,7 +263,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setClimb(true)}
               >
-                Can't Climb
+                Ground Intake?
               </Button>
             )}
           </Form.Field>
@@ -276,7 +276,7 @@ const PitScout = () => {
                 color="green"
                 onClick={() => setVision(false)}
               >
-                Has Vision
+                Vision
               </Button>
             ) : (
               <Button
@@ -285,7 +285,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setVision(true)}
               >
-                No Vision
+                Vision?
               </Button>
             )}
           </Form.Field>
@@ -300,7 +300,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setClimb(false)}
               >
-                Can Climb
+                Ground Intake
               </Button>
             ) : (
               <Button
@@ -309,7 +309,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setClimb(true)}
               >
-                Can't Climb
+                Ground Intake?
               </Button>
             )}
           </Form.Field>
@@ -322,7 +322,7 @@ const PitScout = () => {
                 color="green"
                 onClick={() => setVision(false)}
               >
-                Has Vision
+                Vision
               </Button>
             ) : (
               <Button
@@ -331,7 +331,7 @@ const PitScout = () => {
                 fluid
                 onClick={() => setVision(true)}
               >
-                No Vision
+                Vision?
               </Button>
             )}
           </Form.Field>

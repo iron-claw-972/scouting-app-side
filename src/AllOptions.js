@@ -86,6 +86,9 @@ const yesNoOptions = [
 const driveOptions = [
   { key: 1, text: "Tank", value: "Tank" },
   { key: 2, text: "Swerve", value: "Swerve" },
+  { key: 3, text: "Mecanum", value: "Mecanum" },
+  { key: 4, text: "Slide", value: "Slide" },
+  { key: 5, text: "Other", value: "Other" },
 ];
 
 export {
