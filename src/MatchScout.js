@@ -660,12 +660,17 @@ const MatchScout = () => {
           </Form.Field>
         </Form.Group>
         <Form.Group>
-          <Header>Number of ground intakes</Header>
+          <Form.Field>
+            <Header>Number of ground intakes</Header>
+            <Divider hidden></Divider>
+            {groundIntakes}
+          </Form.Field>
+          
           <Form.Field>
             <ButtonGroup up={groundIntakesUp} down={groundIntakesDown}></ButtonGroup>
             </Form.Field>
           <Form.Field>
-            {groundIntakes}
+            
           </Form.Field>
           
         </Form.Group>
