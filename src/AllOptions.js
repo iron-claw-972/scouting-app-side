@@ -91,6 +91,13 @@ const driveOptions = [
   { key: 5, text: "Other", value: "Other" },
 ];
 
+const abilityOptions = [
+  { key: 1, text: "Cubes", value: "Cube" },
+  { key: 2, text: "Cones", value: "Cones" },
+  { key: 3, text: "Cubes AND Cones", value: "Cubes AND Cones" },
+  { key: 4, text: "None", value: "None" },
+];
+
 export {
   colorOptions,
   driveTrainOptions,
@@ -98,4 +105,5 @@ export {
   autoOptions,
   yesNoOptions,
   driveOptions,
+  abilityOptions,
 };

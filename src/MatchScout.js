@@ -39,12 +39,19 @@ const MatchScout = () => {
   const [AutoLH, setAutoLH] = useState(0);
   const [AutoUH, setAutoUH] = useState(0);
 
-  const [AutoLR, setAutoLR] = useState(0);
-  const [AutoMR, setAutoMR] = useState(0);
-  const [AutoHR, setAutoHR] = useState(0);
-  const [TeleLR, setTeleLR] = useState(0);
-  const [TeleMR, setTeleMR] = useState(0);
-  const [TeleHR, setTeleHR] = useState(0);
+  const [AutoCLR, setAutoCLR] = useState(0);
+  const [AutoCMR, setAutoCMR] = useState(0);
+  const [AutoCHR, setAutoCHR] = useState(0);
+  const [TeleCLR, setTeleCLR] = useState(0);
+  const [TeleCMR, setTeleCMR] = useState(0);
+  const [TeleCHR, setTeleCHR] = useState(0);
+
+  const [AutoULR, setAutoULR] = useState(0);
+  const [AutoUMR, setAutoUMR] = useState(0);
+  const [AutoUHR, setAutoUHR] = useState(0);
+  const [TeleULR, setTeleULR] = useState(0);
+  const [TeleUMR, setTeleUMR] = useState(0);
+  const [TeleUHR, setTeleUHR] = useState(0);
 
   const [AutoLRSelected, setAutoLRSelected] = useState(false);
   const [AutoMRSelected, setAutoMRSelected] = useState(false);
@@ -106,22 +113,7 @@ const MatchScout = () => {
   };
 
   //This function sets everything back to the default values
-  const resetForm = () => {
-    setMatchNo("");
-    setName("");
-    setTeamNumber("");
-    setAutoLH(0);
-    setAutoUH(0);
-    setAutoC("");
-    setTeleopLH(0);
-    setTeleopUH(0);
-    setTeleopC("");
-    setHangar("");
-    setClimbTime(0);
-    setEndgameC("");
-    setTeamName("");
-    setColor("");
-  };
+  const resetForm = () => {};
 
   //This gets called on page load and whenever docRefId changes
   //You can see docRefId in an array at the bottom
@@ -230,6 +222,30 @@ const MatchScout = () => {
   };
 
   const handleautoEnter = () => {
+    if (AutoLRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCLR + 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoULR + 1);
+      }
+    }
+    if (AutoMRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCMR + 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoUMR + 1);
+      }
+    }
+    if (AutoHRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCHR + 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoUHR + 1);
+      }
+    }
     setAutoLRSelected(false);
     setAutoMRSelected(false);
     setAutoHRSelected(false);
@@ -237,6 +253,30 @@ const MatchScout = () => {
   };
 
   const handleautoRemove = () => {
+    if (AutoLRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCLR - 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoULR - 1);
+      }
+    }
+    if (AutoMRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCMR - 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoUMR - 1);
+      }
+    }
+    if (AutoHRSelected) {
+      if (autopiece) {
+        setAutoCLR(AutoCHR - 1);
+      }
+      if (!autopiece) {
+        setAutoCLR(AutoUHR - 1);
+      }
+    }
     setAutoLRSelected(false);
     setAutoMRSelected(false);
     setAutoHRSelected(false);
@@ -244,6 +284,30 @@ const MatchScout = () => {
   };
 
   const handleteleEnter = () => {
+    if (TeleLRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCLR + 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleULR + 1);
+      }
+    }
+    if (TeleMRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCMR + 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleUMR + 1);
+      }
+    }
+    if (TeleHRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCHR + 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleUHR + 1);
+      }
+    }
     setTeleLRSelected(false);
     setTeleMRSelected(false);
     setTeleHRSelected(false);
@@ -251,15 +315,34 @@ const MatchScout = () => {
   };
 
   const handleteleRemove = () => {
+    if (TeleLRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCLR - 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleULR - 1);
+      }
+    }
+    if (TeleMRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCMR - 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleUMR - 1);
+      }
+    }
+    if (TeleHRSelected) {
+      if (telepiece) {
+        setTeleCLR(TeleCHR - 1);
+      }
+      if (!telepiece) {
+        setTeleCLR(TeleUHR - 1);
+      }
+    }
     setTeleLRSelected(false);
     setTeleMRSelected(false);
     setTeleHRSelected(false);
     settelelevelSelected(false);
-  };
-
-  const teleUHDown = () => {
-    if (TeleopUH === 0) return;
-    setTeleopUH(TeleopUH - 1);
   };
 
   const UpDownButtons = ({ upFun, downFun }) => {

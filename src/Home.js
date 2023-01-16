@@ -65,6 +65,14 @@ const Home = () => (
     <Divider section />
 
     <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
+      <Link to="/teamlist" style={{ margin: 10 }}>
+        <Card>
+          <Card.Content
+            header="Teams List"
+            description="current ranking + link to teams list"
+          />
+        </Card>
+      </Link>
       <Link to="/teampages" style={{ margin: 10 }}>
         <Card>
           <Card.Content
