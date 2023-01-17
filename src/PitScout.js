@@ -33,6 +33,7 @@ import {
   cvOptions,
   autoOptions,
   yesNoOptions,
+  abilityOptions,
 } from "./AllOptions";
 
 const PitScout = () => {
@@ -48,10 +49,10 @@ const PitScout = () => {
 
   const [teamNumber, setTeamNumber] = useState("");
   const [climb, setClimb] = useState(false);
-  const [noBatteries, setNoBatteries] = useState("");
+  const [shelfIntake, setShelfIntake] = useState(false);
   const [organization, setOrg] = useState("");
   const [drive, setDrive] = useState("");
-  const [spareParts, setSpareParts] = useState("");
+  const [ability, setAbility] = useState("");
   const [motors, setMotors] = useState(0);
   const [vision, setVision] = useState(false);
 
@@ -245,7 +246,7 @@ const PitScout = () => {
           </Form.Field>
         </Form.Group>
         <Divider></Divider>
-        <Form.Group>
+        <Form.Group style={{ textAlign: "center" }}>
           <Form.Field>
             {climb ? (
               <Button
@@ -291,25 +292,25 @@ const PitScout = () => {
           </Form.Field>
         </Form.Group>
         <Divider hidden></Divider>
-        <Form.Group>
+        <Form.Group style={{ textAlign: "center" }}>
           <Form.Field>
-            {climb ? (
+            {shelfIntake ? (
               <Button
                 size="huge"
                 color="green"
                 fluid
-                onClick={() => setClimb(false)}
+                onClick={() => setShelfIntake(false)}
               >
-                Ground Intake
+                Shelf Intake
               </Button>
             ) : (
               <Button
                 size="huge"
                 color="black"
                 fluid
-                onClick={() => setClimb(true)}
+                onClick={() => setShelfIntake(true)}
               >
-                Ground Intake?
+                Shelf Intake?
               </Button>
             )}
           </Form.Field>
@@ -349,13 +350,13 @@ const PitScout = () => {
             />
           </Form.Field>
           <Form.Field width="8">
-            <label>Drivetrain Type</label>
+            <label>Abilities</label>
             <Form.Select
               fluid
-              options={driveOptions}
+              options={abilityOptions}
               placeholder="Tank"
-              value={drive}
-              onChange={(e, data) => setDrive(data.value)}
+              value={ability}
+              onChange={(e, data) => setAbility(data.value)}
             />
           </Form.Field>
         </Form.Group>
