@@ -15,7 +15,6 @@ import {
   Divider,
   Icon,
   Input,
-  ButtonGroup,
 } from "semantic-ui-react";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
