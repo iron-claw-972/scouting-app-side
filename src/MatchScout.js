@@ -106,6 +106,7 @@ const MatchScout = () => {
     teamNumber,
     color,
     docRefId,
+    groundIntakes
   };
 
   //This function sets everything back to the default values
@@ -124,6 +125,7 @@ const MatchScout = () => {
     setEndgameC("");
     setTeamName("");
     setColor("");
+    setGroundIntakes(0);
   };
 
   //This gets called on page load and whenever docRefId changes
@@ -659,18 +661,16 @@ const MatchScout = () => {
             )}
           </Form.Field>
         </Form.Group>
+
         <Form.Group>
           <Form.Field>
-            <Header>Number of ground intakes</Header>
+            <Header>Ground Intakes</Header>
             <Divider hidden></Divider>
             {groundIntakes}
           </Form.Field>
           
           <Form.Field>
             <ButtonGroup up={groundIntakesUp} down={groundIntakesDown}></ButtonGroup>
-            </Form.Field>
-          <Form.Field>
-            
           </Form.Field>
           
         </Form.Group>
