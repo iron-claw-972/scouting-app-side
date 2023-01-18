@@ -89,6 +89,8 @@ const MatchScout = () => {
 
   const [timerRunning, setTimerRunning] = useState(false);
 
+  const [groundIntakes, setGroundIntakes] = useState(0);
+
   //docRef is a unique id that we will store the match under
   //we will use the default value "initRef", and set the id later.
   const [docRefId, setDocRefId] = useState("initRef");
@@ -115,9 +117,27 @@ const MatchScout = () => {
     color,
     docRefId,
     mobility
+    groundIntakes
   };
 
   //This function sets everything back to the default values
+  const resetForm = () => {
+    setMatchNo("");
+    setName("");
+    setTeamNumber("");
+    setAutoLH(0);
+    setAutoUH(0);
+    setAutoC("");
+    setTeleopLH(0);
+    setTeleopUH(0);
+    setTeleopC("");
+    setHangar("");
+    setClimbTime(0);
+    setEndgameC("");
+    setTeamName("");
+    setColor("");
+    setGroundIntakes(0);
+  };
   const resetForm = () => {};
 
   //This gets called on page load and whenever docRefId changes
@@ -350,6 +370,21 @@ const MatchScout = () => {
     settelelevelSelected(false);
   };
 
+  const teleUHDown = () => {
+    if (TeleopUH === 0) return;
+    setTeleopUH(TeleopUH - 1);
+  };
+
+  const groundIntakesUp = () => {
+    setGroundIntakes(groundIntakes + 1)
+  };
+
+  const groundIntakesDown = () => {
+    if (groundIntakes > 0) {
+      setGroundIntakes(groundIntakes - 1)
+    }
+  };
+
   const UpDownButtons = ({ upFun, downFun }) => {
     return (
       <Form.Group style={{ flexDirection: "column" }}>
@@ -364,6 +399,25 @@ const MatchScout = () => {
           </Button>
         </Form.Field>
       </Form.Group>
+    );
+  };
+
+  const ButtonGroup = ({ up, down }) => {
+    return (
+      <Container fluid>
+        <Form.Group style={{ flexDirection: "column" }}>
+          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
+            <Button size="big" color="linkedin" onClick={up}>
+              +
+            </Button>
+          </Form.Field>
+          <Form.Field style={{ alignSelf: "center" }}>
+            <Button size="big" onClick={down}>
+              -
+            </Button>
+          </Form.Field>
+        </Form.Group>
+      </Container>
     );
   };
 
@@ -736,6 +790,20 @@ const MatchScout = () => {
             )}
           </Form.Field>
         </Form.Group>
+
+        <Form.Group>
+          <Form.Field>
+            <Header>Ground Intakes</Header>
+            <Divider hidden></Divider>
+            {groundIntakes}
+          </Form.Field>
+          
+          <Form.Field>
+            <ButtonGroup up={groundIntakesUp} down={groundIntakesDown}></ButtonGroup>
+          </Form.Field>
+          
+        </Form.Group>
+
         <Divider></Divider>
         <Form.Group widths="equal">
           <Button
