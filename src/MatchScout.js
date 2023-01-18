@@ -1,3 +1,5 @@
+// need to center mobility button
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -73,6 +75,8 @@ const MatchScout = () => {
 
   const [color, setColor] = useState("");
 
+  const [mobility, setMobility] = useState("");
+
   const [autolevelSelected, setautolevelSelected] = useState(false);
   const [telelevelSelected, settelelevelSelected] = useState(false);
   const [autopiece, setautoPiece] = useState(false);
@@ -112,6 +116,7 @@ const MatchScout = () => {
     teamNumber,
     color,
     docRefId,
+    mobility
     groundIntakes
   };
 
@@ -560,7 +565,7 @@ const MatchScout = () => {
             {autopiece ? (
               <Button
                 fluid
-                size="medium"
+                size="small"
                 style={{ marginDown: "5px", marginTop: "11px" }}
                 color="purple"
                 onClick={() => setautoPiece(false)}
@@ -623,6 +628,27 @@ const MatchScout = () => {
               </Button>
             )}
           </Form.Field>
+          <Form.Field>
+            {mobility ? (
+                <Button
+                  size="medium"
+                  color="green"
+                  fluid
+                  onClick={() => setMobility(false)}
+                >
+                  Mobility
+                </Button>
+              ) : (
+                <Button
+                  size="medium"
+                  color="black"
+                  fluid
+                  onClick={() => setMobility(true)}
+                >
+                  Mobility?
+                </Button>
+              )}
+            </Form.Field>
         </Form.Group>
 
         <Header style={{ color: "black" }} as="h3">
@@ -701,7 +727,7 @@ const MatchScout = () => {
               <Button
                 fluid
                 style={{ marginTop: "10px" }}
-                size="medium"
+                size="small"
                 color="purple"
                 onClick={() => settelePiece(false)}
               >
@@ -783,22 +809,22 @@ const MatchScout = () => {
           <Button
             icon="camera retro"
             type="submit"
-            color="green"
+            color="instagram"
             onClick={save}
           >
             Submit
           </Button>
+          <Button type="submit" color="grey" onClick={resetForm}>
+            Clear Form
+          </Button>
           <Button
             type="submit"
-            color="blue"
+            color="white"
             onClick={() => {
               setShowQrCode(true);
             }}
           >
             Show QR again
-          </Button>
-          <Button type="submit" color="red" onClick={resetForm}>
-            Clear Form
           </Button>
         </Form.Group>
       </Form>
