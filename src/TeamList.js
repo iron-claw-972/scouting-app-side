@@ -7,41 +7,44 @@ import {
   Table,
   Container,
   Header,
+  Button,
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-const TeamTab = ({ teamdata }) => {
+const TeamTab = ({ teamdata, oprs, team }) => {
+  const record =
+    teamdata.qual.ranking.record.losses +
+    "-" +
+    teamdata.qual.ranking.record.wins +
+    "-" +
+    teamdata.qual.ranking.record.losses;
   return (
     <Container>
       <Table basic compact small>
         <Table.Row>
-          <Table.Cell>Rank</Table.Cell>
-          <Table.Cell>Team</Table.Cell>
-          <Table.Cell>Avg Match</Table.Cell>
-          <Table.Cell>Avg Hangar</Table.Cell>
+          <Table.Cell>{teamdata.qual.ranking.rank}</Table.Cell>
+          <Table.Cell>
+            <Link to="/teampage">
+              <Button>{team}</Button>
+            </Link>
+          </Table.Cell>
+          <Table.Cell>{teamdata.qual.ranking.qual_average}</Table.Cell>
+          <Table.Cell>smth else</Table.Cell>
           <Table.Cell>Auto</Table.Cell>
-          <Table.Cell>Record</Table.Cell>
-          <Table.Cell>Played</Table.Cell>
+          <Table.Cell>{record}</Table.Cell>
+          <Table.Cell>{teamdata.qual.ranking.matches_played}</Table.Cell>
         </Table.Row>
       </Table>
     </Container>
   );
 };
 const TeamList = () => {
-  const compcode = "casj2022";
-  const xhr = new XMLHttpRequest();
-  xhr.open(
-    "GET",
-    "https://www.thebluealliance.com/api/v3/event/" + compcode + "/matches"
-  );
-  xhr.send();
-  xhr.responseType = "json";
-  xhr.onload = () => {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      const data = xhr.response;
-    } else {
-      console.log(`Error: ${xhr.status}`);
-    }
-  };
+  var res;
+  fetch(
+    "https://www.thebluealliance.com/api/v3/event/casj2022/teams/statuses"
+  ).then((res) => res.json()); // the .json() method parses the JSON response into a JS object literal
+  console.log(res);
+
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
@@ -53,7 +56,7 @@ const TeamList = () => {
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Rank</Table.HeaderCell>
+            <Table.HeaderCell>{}</Table.HeaderCell>
             <Table.HeaderCell>Team</Table.HeaderCell>
             <Table.HeaderCell>Avg Match</Table.HeaderCell>
             <Table.HeaderCell>Avg Hangar</Table.HeaderCell>

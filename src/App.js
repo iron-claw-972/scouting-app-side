@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import MatchScout from "./MatchScout";
 import PitScout from "./PitScout";
-import TeamPages from "./TeamPages";
+import NewTeamPages from "./NewTeamPage";
 import PitDisplay from "./PitDisplay";
 import DataDisplay from "./DataDisplay";
 import ScanMatchScoutDataQR from "./ScanMatchScoutDataQR";
@@ -21,7 +21,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="matchscout" element={<MatchScout />} />
       <Route path="pitscout" element={<PitScout />} />
-      <Route path="teampages" element={<TeamPages />} />
+      <Route path="teampages" element={<NewTeamPages />} />
       <Route path="rawmatchtable" element={<RawMatchTable />} />
       <Route path="/teamlist" element={<TeamList />} />
       <Route path="/teamlookup" element={<TeamLookup />} />

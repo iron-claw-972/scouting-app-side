@@ -506,7 +506,7 @@ const MatchScout = () => {
             {autopiece ? (
               <Button
                 fluid
-                size="medium"
+                size="small"
                 style={{ marginDown: "5px", marginTop: "11px" }}
                 color="purple"
                 onClick={() => setautoPiece(false)}
@@ -647,7 +647,7 @@ const MatchScout = () => {
               <Button
                 fluid
                 style={{ marginTop: "10px" }}
-                size="medium"
+                size="small"
                 color="purple"
                 onClick={() => settelePiece(false)}
               >
