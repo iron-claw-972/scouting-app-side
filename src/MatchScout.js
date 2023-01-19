@@ -1,4 +1,4 @@
-// need to center mobility button
+// need to center buttons
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -75,7 +75,8 @@ const MatchScout = () => {
 
   const [color, setColor] = useState("");
 
-  const [mobility, setMobility] = useState("");
+  const [docked, setDocked] = useState("");
+  const [engaged, setEngaged] = useState("");
 
   const [autolevelSelected, setautolevelSelected] = useState(false);
   const [telelevelSelected, settelelevelSelected] = useState(false);
@@ -116,7 +117,8 @@ const MatchScout = () => {
     teamNumber,
     color,
     docRefId,
-    mobility
+    docked,
+    engaged,
     groundIntakes
   };
 
@@ -137,8 +139,9 @@ const MatchScout = () => {
     setTeamName("");
     setColor("");
     setGroundIntakes(0);
+    setDocked(false);
+    setEngaged(false)
   };
-  const resetForm = () => {};
 
   //This gets called on page load and whenever docRefId changes
   //You can see docRefId in an array at the bottom
@@ -628,24 +631,44 @@ const MatchScout = () => {
               </Button>
             )}
           </Form.Field>
-          <Form.Field>
-            {mobility ? (
+          <Form.Field style={{alignSelf: "center", marginLeft: "45px"}}>
+            {docked ? (
                 <Button
                   size="medium"
                   color="green"
                   fluid
-                  onClick={() => setMobility(false)}
+                  onClick={() => setDocked(false)}
                 >
-                  Mobility
+                  Docked
                 </Button>
               ) : (
                 <Button
                   size="medium"
                   color="black"
                   fluid
-                  onClick={() => setMobility(true)}
+                  onClick={() => setDocked(true)}
                 >
-                  Mobility?
+                  Docked?
+                </Button>
+              )}
+              <Divider hidden></Divider>
+            {engaged ? (
+                <Button
+                  size="medium"
+                  color="green"
+                  fluid
+                  onClick={() => setEngaged(false)}
+                >
+                  Engaged
+                </Button>
+              ) : (
+                <Button
+                  size="medium"
+                  color="black"
+                  fluid
+                  onClick={() => setEngaged(true)}
+                >
+                  Engaged?
                 </Button>
               )}
             </Form.Field>
@@ -791,10 +814,13 @@ const MatchScout = () => {
           </Form.Field>
         </Form.Group>
 
-        <Form.Group>
-          <Form.Field>
-            <Header>Ground Intakes</Header>
-            <Divider hidden></Divider>
+        <Form.Group
+        style={{ marginTop: 20 }}
+        >
+        <Form.Field>
+            <Divider hidden />
+
+            <h5>Ground Intakes</h5>
             {groundIntakes}
           </Form.Field>
           
@@ -802,35 +828,40 @@ const MatchScout = () => {
             <ButtonGroup up={groundIntakesUp} down={groundIntakesDown}></ButtonGroup>
           </Form.Field>
           
+          <Button color="instagram" type="submit" onClick={save}>
+            Submit / Save
+          </Button>
         </Form.Group>
 
         <Divider></Divider>
         <Form.Group widths="equal">
-          <Button
-            icon="camera retro"
+        <Button
             type="submit"
-            color="instagram"
-            onClick={save}
-          >
-            Submit
-          </Button>
-          <Button type="submit" color="grey" onClick={resetForm}>
-            Clear Form
-          </Button>
-          <Button
-            type="submit"
-            color="white"
+            color="black"
             onClick={() => {
               setShowQrCode(true);
             }}
           >
             Show QR again
           </Button>
+          {/* <Button
+            icon="camera retro"
+            type="submit"
+            color="instagram"
+            onClick={save}
+          >
+            Submit
+          </Button> */}
+          <Button type="submit" color="grey" onClick={resetForm}>
+            Clear Form
+          </Button>
+          <Link to="/">
+            {" "}
+            <Button color="white">Back to Home</Button>
+          </Link>
         </Form.Group>
+        <Divider hidden></Divider>
       </Form>
-      <div style={{ marginTop: 20, marginBottom: 30 }}>
-        <Link to="/"> Back to Home</Link>
-      </div>
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <Modal.Header>Some fields are blank</Modal.Header>
         <Modal.Content>
