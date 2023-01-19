@@ -55,6 +55,7 @@ const PitScout = () => {
   const [ability, setAbility] = useState("");
   const [motors, setMotors] = useState(0);
   const [vision, setVision] = useState(false);
+  const [balance, setBalance] = useState(false);
 
   const [dataUri, setDataUri] = useState("");
 
@@ -73,6 +74,9 @@ const PitScout = () => {
     setDrive("");
     setMotors(0);
     setVision(false);
+    setBalance(false);
+    setShelfIntake(false);
+    setAbility("");
   };
 
   /*Whenever anything in the array in this function is changed, this function gets called.
@@ -82,7 +86,7 @@ const PitScout = () => {
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
-  }, [teamNumber, climb, organization, drive, vision]);
+  }, [teamNumber, climb, organization, drive, vision, balance]);
 
   //We put all the variables declared previously into an array, this is our full team data
 
@@ -92,6 +96,7 @@ const PitScout = () => {
     organization,
     drive,
     vision,
+    balance
   };
 
   //checks if we at least filled out team number
@@ -117,7 +122,7 @@ const PitScout = () => {
       setClimb(climb || false);
       setOrg(organization || "");
       setDrive(drive || "");
-
+      setDrive(balance || false);
       setVision(vision || false);
     });
   };
@@ -216,14 +221,14 @@ const PitScout = () => {
               fluid
               icon="camera retro"
               size="medium"
-              style={{ margin: "4px" }}
+              style={{ margin: "0px" }}
               onClick={() => {
                 setShowCamera(true);
               }}
             ></Button>
           </Form.Field>
           <Form.Field>
-            <label>end camera</label>
+            <label>Close camera</label>
             <Button
               icon="undo"
               size="medium"
@@ -316,23 +321,23 @@ const PitScout = () => {
           </Form.Field>
 
           <Form.Field>
-            {vision ? (
+            {balance ? (
               <Button
                 size="huge"
                 fluid
                 color="green"
-                onClick={() => setVision(false)}
+                onClick={() => setBalance(false)}
               >
-                Vision
+                Balance
               </Button>
             ) : (
               <Button
                 size="huge"
                 color="black"
                 fluid
-                onClick={() => setVision(true)}
+                onClick={() => setBalance(true)}
               >
-                Vision?
+                Balance?
               </Button>
             )}
           </Form.Field>
@@ -344,7 +349,7 @@ const PitScout = () => {
             <Form.Select
               fluid
               options={driveOptions}
-              placeholder="Tank"
+              placeholder="Drivetrain"
               value={drive}
               onChange={(e, data) => setDrive(data.value)}
             />
@@ -354,7 +359,7 @@ const PitScout = () => {
             <Form.Select
               fluid
               options={abilityOptions}
-              placeholder="Tank"
+              placeholder="Ability"
               value={ability}
               onChange={(e, data) => setAbility(data.value)}
             />
