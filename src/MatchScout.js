@@ -141,6 +141,16 @@ const MatchScout = () => {
     setGroundIntakes(0);
     setDocked(false);
     setEngaged(false)
+    setautoPiece(false)
+    settelePiece(false)
+    setAutoLRSelected(false);
+    setAutoMRSelected(false);
+    setAutoHRSelected(false);
+    setautolevelSelected(false);
+    setTeleLRSelected(false);
+    setTeleMRSelected(false);
+    setTeleHRSelected(false);
+    settelelevelSelected(false);
   };
 
   //This gets called on page load and whenever docRefId changes
@@ -184,7 +194,7 @@ const MatchScout = () => {
   //And it checks whether they've been filled out
   //It's empty now, but could be useful in coming years
   const validate = () => {
-    const requiredFields = [];
+    const requiredFields = [MatchNo, teamNumber];
     if (requiredFields.some((f) => f === "")) {
       setShowModal(true);
       return false;
@@ -414,7 +424,7 @@ const MatchScout = () => {
               +
             </Button>
           </Form.Field>
-          <Form.Field style={{ alignSelf: "center" }}>
+          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
             <Button size="big" onClick={down}>
               -
             </Button>
@@ -437,29 +447,29 @@ const MatchScout = () => {
               fluid
               size="medium"
               placeholder=""
-              value={teamNumber}
+              value={name}
               onChange={(e) => setTeamNumber(e.target.value)}
             />
           </Form.Field>
 
           <Form.Field>
-            <label>Match #</label>
-            <Input
-              fluid
-              size="medium"
-              placeholder=""
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>---Team #---</label>
+            <label>Match #*</label>
             <Input
               fluid
               size="medium"
               placeholder=""
               value={MatchNo}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Field>
+
+          <Form.Field>
+            <label>---Team #*---</label>
+            <Input
+              fluid
+              size="medium"
+              placeholder=""
+              value={teamNumber}
               onChange={(e) => setMatchNo(e.target.value)}
             />
           </Form.Field>
@@ -865,7 +875,7 @@ const MatchScout = () => {
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <Modal.Header>Some fields are blank</Modal.Header>
         <Modal.Content>
-          <p>Please check some fields are not entered</p>
+          <p>Please check some required fields with (*) are not entered</p>
         </Modal.Content>
         <Modal.Actions>
           <Button positive onClick={() => setShowModal(false)}>
