@@ -171,7 +171,7 @@ const PitScout = () => {
               +
             </Button>
           </Form.Field>
-          <Form.Field style={{ alignSelf: "center" }}>
+          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
             <Button size="big" onClick={down}>
               -
             </Button>
@@ -221,7 +221,7 @@ const PitScout = () => {
               fluid
               icon="camera retro"
               size="medium"
-              style={{ margin: "0px" }}
+              style={{ marginTop: "5px" }}
               onClick={() => {
                 setShowCamera(true);
               }}
@@ -238,7 +238,7 @@ const PitScout = () => {
               }}
             ></Button>
           </Form.Field>
-          <Form.Field>
+          <Form.Field style = {{ marginTop: 10 }}>
             {showCamera ? (
               <Camera
                 onTakePhoto={(dataUri) => {
