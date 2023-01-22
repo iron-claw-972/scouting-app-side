@@ -56,7 +56,7 @@ const TeamList = () => {
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>{}</Table.HeaderCell>
+            <Table.HeaderCell>Rank</Table.HeaderCell>
             <Table.HeaderCell>Team</Table.HeaderCell>
             <Table.HeaderCell>Avg Match</Table.HeaderCell>
             <Table.HeaderCell>Avg Hangar</Table.HeaderCell>

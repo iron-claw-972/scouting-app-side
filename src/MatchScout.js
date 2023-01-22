@@ -38,6 +38,8 @@ const MatchScout = () => {
   */
   const [teamNumber, setTeamNumber] = useState("");
   const [teamName, setTeamName] = useState("");
+  const [mode, setMode] = useState(true);
+
   const [AutoLH, setAutoLH] = useState(0);
   const [AutoUH, setAutoUH] = useState(0);
 
@@ -119,7 +121,7 @@ const MatchScout = () => {
     docRefId,
     docked,
     engaged,
-    groundIntakes
+    groundIntakes,
   };
 
   //This function sets everything back to the default values
@@ -140,9 +142,9 @@ const MatchScout = () => {
     setColor("");
     setGroundIntakes(0);
     setDocked(false);
-    setEngaged(false)
-    setautoPiece(false)
-    settelePiece(false)
+    setEngaged(false);
+    setautoPiece(false);
+    settelePiece(false);
     setAutoLRSelected(false);
     setAutoMRSelected(false);
     setAutoHRSelected(false);
@@ -389,12 +391,12 @@ const MatchScout = () => {
   };
 
   const groundIntakesUp = () => {
-    setGroundIntakes(groundIntakes + 1)
+    setGroundIntakes(groundIntakes + 1);
   };
 
   const groundIntakesDown = () => {
     if (groundIntakes > 0) {
-      setGroundIntakes(groundIntakes - 1)
+      setGroundIntakes(groundIntakes - 1);
     }
   };
 
@@ -500,352 +502,384 @@ const MatchScout = () => {
           </Form.Field>
         </Form.Group>
         <Divider></Divider>
-
-        <Header style={{ color: "black" }} as="h3">
-          Auto
-        </Header>
-        <Form.Field>
-          <Header style={{ color: "black" }} as="h4">
-            Piece Scoring:
-          </Header>
-        </Form.Field>
-
-        <Form.Group>
-          <Form.Field>
-            {AutoHRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                High
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={autoHRClick}
-              >
-                High
-              </Button>
-            )}
-
-            {AutoMRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                Mid
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={autoMRClick}
-              >
-                Mid
-              </Button>
-            )}
-            {AutoLRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                Low
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={autoLRClick}
-              >
-                Low
-              </Button>
-            )}
-          </Form.Field>
-          <Form.Field>
-            {autopiece ? (
-              <Button
-                fluid
-                size="small"
-                style={{ marginDown: "5px", marginTop: "11px" }}
-                color="purple"
-                onClick={() => setautoPiece(false)}
-              >
-                CUBE
-              </Button>
-            ) : (
-              <Button
-                fluid
-                size="small"
-                style={{ marginDown: "5px", marginTop: "11px" }}
-                color="yellow"
-                onClick={() => setautoPiece(true)}
-              >
-                CONE
-              </Button>
-            )}
-            <Divider fitted></Divider>
-            {autolevelSelected ? (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                icon="X"
-                color="green"
-                onClick={handleautoEnter}
-              >
-                Enter?
-              </Button>
-            ) : (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                icon="X"
-                color="white"
-              >
-                -
-              </Button>
-            )}
-
-            {autolevelSelected ? (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                color="google plus"
-                onClick={handleautoRemove}
-              >
-                Take out
-              </Button>
-            ) : (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                color="white"
-              >
-                -
-              </Button>
-            )}
-          </Form.Field>
-          <Form.Field style={{alignSelf: "center", marginLeft: "45px"}}>
-            {docked ? (
-                <Button
-                  size="medium"
-                  color="green"
-                  fluid
-                  onClick={() => setDocked(false)}
-                >
-                  Docked
-                </Button>
-              ) : (
-                <Button
-                  size="medium"
-                  color="black"
-                  fluid
-                  onClick={() => setDocked(true)}
-                >
-                  Docked?
-                </Button>
-              )}
-              <Divider hidden></Divider>
-            {engaged ? (
-                <Button
-                  size="medium"
-                  color="green"
-                  fluid
-                  onClick={() => setEngaged(false)}
-                >
-                  Engaged
-                </Button>
-              ) : (
-                <Button
-                  size="medium"
-                  color="black"
-                  fluid
-                  onClick={() => setEngaged(true)}
-                >
-                  Engaged?
-                </Button>
-              )}
+        {mode ? (
+          <Container>
+            <Header style={{ color: "black" }} as="h3">
+              Auto
+            </Header>
+            <Form.Field>
+              <Header style={{ color: "black" }} as="h4">
+                Piece Scoring:
+              </Header>
             </Form.Field>
-        </Form.Group>
 
-        <Header style={{ color: "black" }} as="h3">
-          Tele/End
-        </Header>
-        <Header style={{ color: "black" }} as="h4">
-          Piece Scoring
-        </Header>
+            <Form.Group>
+              <Form.Field>
+                {AutoHRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    High
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoHRClick}
+                  >
+                    High
+                  </Button>
+                )}
 
-        <Form.Group>
-          <Form.Field>
-            {TeleHRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                High
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={teleHRClick}
-              >
-                High
-              </Button>
-            )}
+                {AutoMRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    Mid
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoMRClick}
+                  >
+                    Mid
+                  </Button>
+                )}
+                {AutoLRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    Low
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoLRClick}
+                  >
+                    Low
+                  </Button>
+                )}
+              </Form.Field>
+              <Form.Field>
+                {autopiece ? (
+                  <Button
+                    fluid
+                    size="small"
+                    style={{ marginDown: "5px", marginTop: "11px" }}
+                    color="purple"
+                    onClick={() => setautoPiece(false)}
+                  >
+                    CUBE
+                  </Button>
+                ) : (
+                  <Button
+                    fluid
+                    size="small"
+                    style={{ marginDown: "5px", marginTop: "11px" }}
+                    color="yellow"
+                    onClick={() => setautoPiece(true)}
+                  >
+                    CONE
+                  </Button>
+                )}
+                <Divider fitted></Divider>
+                {autolevelSelected ? (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    icon="X"
+                    color="green"
+                    onClick={handleautoEnter}
+                  >
+                    Enter?
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    icon="X"
+                    color="white"
+                  >
+                    -
+                  </Button>
+                )}
 
-            {TeleMRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                Mid
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={teleMRClick}
-              >
-                Mid
-              </Button>
-            )}
-            {TeleLRSelected ? (
-              <Button
-                color="orange"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-              >
-                Low
-              </Button>
-            ) : (
-              <Button
-                color="black"
-                style={{ marginDown: "5px", marginTop: "10px" }}
-                size="medium"
-                fluid
-                onClick={teleLRClick}
-              >
-                Low
-              </Button>
-            )}
-          </Form.Field>
-          <Form.Field>
-            {telepiece ? (
-              <Button
-                fluid
-                style={{ marginTop: "10px" }}
-                size="small"
-                color="purple"
-                onClick={() => settelePiece(false)}
-              >
-                CUBE
-              </Button>
-            ) : (
-              <Button
-                fluid
-                size="small"
-                style={{ marginTop: "10px" }}
-                color="yellow"
-                onClick={() => settelePiece(true)}
-              >
-                CONE
-              </Button>
-            )}
-            <Divider fitted></Divider>
+                {autolevelSelected ? (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    color="google plus"
+                    onClick={handleautoRemove}
+                  >
+                    Take out
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    color="white"
+                  >
+                    -
+                  </Button>
+                )}
+              </Form.Field>
+              <Form.Field style={{ alignSelf: "center", marginLeft: "45px" }}>
+                {docked ? (
+                  <Button
+                    size="medium"
+                    color="green"
+                    fluid
+                    onClick={() => setDocked(false)}
+                  >
+                    Dock
+                  </Button>
+                ) : (
+                  <Button
+                    size="medium"
+                    color="black"
+                    fluid
+                    onClick={() => setDocked(true)}
+                  >
+                    Dock
+                  </Button>
+                )}
+                <Divider hidden></Divider>
+                {engaged ? (
+                  <Button
+                    size="medium"
+                    color="green"
+                    fluid
+                    onClick={() => setEngaged(false)}
+                  >
+                    Engage
+                  </Button>
+                ) : (
+                  <Button
+                    size="medium"
+                    color="black"
+                    fluid
+                    onClick={() => setEngaged(true)}
+                  >
+                    Engage
+                  </Button>
+                )}
+              </Form.Field>
+              <Form.Group style={{ marginTop: 20 }}>
+                <Form.Field>
+                  <Divider hidden />
 
-            {telelevelSelected ? (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                icon="X"
-                color="green"
-                onClick={handleteleEnter}
-              >
-                Enter?
-              </Button>
-            ) : (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                icon="X"
-                color="white"
-              >
-                -
-              </Button>
-            )}
-            {telelevelSelected ? (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                color="google plus"
-                onClick={handleteleRemove}
-              >
-                Take out
-              </Button>
-            ) : (
-              <Button
-                style={{ marginDown: "5px", marginTop: "15px" }}
-                fluid
-                size="mini"
-                color="white"
-              >
-                -
-              </Button>
-            )}
-          </Form.Field>
-        </Form.Group>
+                  <h5>Ground Intakes</h5>
+                  {groundIntakes}
+                </Form.Field>
 
-        <Form.Group
-        style={{ marginTop: 20 }}
-        >
-        <Form.Field>
-            <Divider hidden />
+                <Form.Field>
+                  <ButtonGroup
+                    up={groundIntakesUp}
+                    down={groundIntakesDown}
+                  ></ButtonGroup>
+                </Form.Field>
+                <Button
+                  size="medium"
+                  color="blue"
+                  style={{ margin: "10px" }}
+                  onClick={() => setMode(false)}
+                >
+                  To tele
+                </Button>
+              </Form.Group>
+            </Form.Group>
+          </Container>
+        ) : (
+          <Container>
+            <Header style={{ color: "black" }} as="h3">
+              Tele/End
+            </Header>
+            <Header style={{ color: "black" }} as="h4">
+              Piece Scoring
+            </Header>
 
-            <h5>Ground Intakes</h5>
-            {groundIntakes}
-          </Form.Field>
-          
-          <Form.Field>
-            <ButtonGroup up={groundIntakesUp} down={groundIntakesDown}></ButtonGroup>
-          </Form.Field>
-          
-          <Button color="instagram" type="submit" onClick={save}>
-            Submit / Save
-          </Button>
-        </Form.Group>
+            <Form.Group>
+              <Form.Field>
+                {TeleHRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    High
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={teleHRClick}
+                  >
+                    High
+                  </Button>
+                )}
+
+                {TeleMRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    Mid
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={teleMRClick}
+                  >
+                    Mid
+                  </Button>
+                )}
+                {TeleLRSelected ? (
+                  <Button
+                    color="orange"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                  >
+                    Low
+                  </Button>
+                ) : (
+                  <Button
+                    color="black"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={teleLRClick}
+                  >
+                    Low
+                  </Button>
+                )}
+              </Form.Field>
+              <Form.Field>
+                {telepiece ? (
+                  <Button
+                    fluid
+                    style={{ marginTop: "10px" }}
+                    size="small"
+                    color="purple"
+                    onClick={() => settelePiece(false)}
+                  >
+                    CUBE
+                  </Button>
+                ) : (
+                  <Button
+                    fluid
+                    size="small"
+                    style={{ marginTop: "10px" }}
+                    color="yellow"
+                    onClick={() => settelePiece(true)}
+                  >
+                    CONE
+                  </Button>
+                )}
+                <Divider fitted></Divider>
+
+                {telelevelSelected ? (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    icon="X"
+                    color="green"
+                    onClick={handleteleEnter}
+                  >
+                    Enter?
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    icon="X"
+                    color="white"
+                  >
+                    -
+                  </Button>
+                )}
+                {telelevelSelected ? (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    color="google plus"
+                    onClick={handleteleRemove}
+                  >
+                    Take out
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ marginDown: "5px", marginTop: "15px" }}
+                    fluid
+                    size="mini"
+                    color="white"
+                  >
+                    -
+                  </Button>
+                )}
+              </Form.Field>
+              <Form.Group style={{ marginTop: 20 }}>
+                <Form.Field>
+                  <Divider hidden />
+
+                  <h5>Ground Intakes</h5>
+                  {groundIntakes}
+                </Form.Field>
+
+                <Form.Field>
+                  <ButtonGroup
+                    up={groundIntakesUp}
+                    down={groundIntakesDown}
+                  ></ButtonGroup>
+                </Form.Field>
+                <Button
+                  size="medium"
+                  color="blue"
+                  style={{ margin: "10px" }}
+                  onClick={() => setMode(true)}
+                >
+                  To auto
+                </Button>
+              </Form.Group>
+            </Form.Group>
+          </Container>
+        )}
 
         <Divider></Divider>
         <Form.Group widths="equal">
-        <Button
+          <Button
             type="submit"
             color="black"
             onClick={() => {
@@ -863,11 +897,13 @@ const MatchScout = () => {
             Submit
           </Button> */}
           <Button type="submit" color="grey" onClick={resetForm}>
-            Clear Form
+            Clear
           </Button>
           <Link to="/">
             {" "}
-            <Button color="white">Back to Home</Button>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
           </Link>
         </Form.Group>
         <Divider hidden></Divider>

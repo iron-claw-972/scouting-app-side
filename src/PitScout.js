@@ -96,7 +96,7 @@ const PitScout = () => {
     organization,
     drive,
     vision,
-    balance
+    balance,
   };
 
   //checks if we at least filled out team number
@@ -228,7 +228,7 @@ const PitScout = () => {
             ></Button>
           </Form.Field>
           <Form.Field>
-            <label>Close camera</label>
+            <label>X camera</label>
             <Button
               icon="undo"
               size="medium"
@@ -238,7 +238,7 @@ const PitScout = () => {
               }}
             ></Button>
           </Form.Field>
-          <Form.Field style = {{ marginTop: 10 }}>
+          <Form.Field style={{ marginTop: 10 }}>
             {showCamera ? (
               <Camera
                 onTakePhoto={(dataUri) => {
