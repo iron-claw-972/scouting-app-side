@@ -47,7 +47,12 @@ const Home = () => (
 
     <Divider section />
 
-    <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
+    <Card.Group
+    centered
+    stackable
+    textAlign="center"
+    style={{ margin: "10px" }}
+    >
       <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
         <Card>
           <Card.Content>
@@ -68,7 +73,12 @@ const Home = () => (
     </Card.Group>
     <Divider section />
 
-    <Card.Group centered stackable textAlign="center" style={{ marginTop: 10 }}>
+    <Card.Group
+    centered
+    stackable
+    textAlign="center"
+    style={{ margin: "10px" }}
+    >
       <Link to="/teamlist" style={{ margin: 10 }}>
         <Card>
           <Card.Content
@@ -121,12 +131,14 @@ const Home = () => (
         </Card>
       </Link>
 
-      <Card href={"https://www.thebluealliance.com/event/2022casj#rankings"}>
-        <Card.Content
-          header="Rankings and Averages"
-          description="The Blue Alliance has lots of useful data, dont miss it"
-        />
-      </Card>
+      <Link style={{ margin: 10 }}>
+        <Card href={"https://www.thebluealliance.com/event/2022casj#rankings"}>
+          <Card.Content
+            header="Rankings and Averages"
+            description="The Blue Alliance has lots of useful data, dont miss it"
+          />
+        </Card>
+      </Link>
     </Card.Group>
   </Container>
 );
