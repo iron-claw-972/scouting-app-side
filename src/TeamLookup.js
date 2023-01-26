@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Table, Container, Form, Button, Modal } from "semantic-ui-react";
+import {
+  Radio,
+  Container,
+  Form,
+  Button,
+  Modal,
+  Header,
+  Divider,
+} from "semantic-ui-react";
 import {
   getFirestore,
   collection,
@@ -93,6 +101,9 @@ const TeamLookup = () => {
   ];
   return (
     <Container>
+      <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
+        Team Lookup
+      </Header>
       <Form style={{ marginTop: 15 }}>
         <Form.Group unstackable>
           <Form.Input
@@ -106,110 +117,70 @@ const TeamLookup = () => {
           </Form.Field>
         </Form.Group>
       </Form>
-      <Table sortable celled striped unstackable compact="very" size="small">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell
-              sorted={column === "MatchNo" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "MatchNo" })
-              }
-            >
-              MatchNo
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teamNumber" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teamNumber" })
-              }
-            >
-              teamNumber
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "AutoLH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "AutoLH" })
-              }
-            >
-              AutoLH
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "AutoUH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "AutoUH" })
-              }
-            >
-              AutoUH
-            </Table.HeaderCell>
-            <Table.HeaderCell>AutoC</Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "TeleopLH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "TeleopLH" })
-              }
-            >
-              TeleopLH
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "TeleopUH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "TeleopUH" })
-              }
-            >
-              TeleopUH
-            </Table.HeaderCell>
-            <Table.HeaderCell>TeleopC</Table.HeaderCell>
-            <Table.HeaderCell>Hangar</Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "ClimbTime" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "ClimbTime" })
-              }
-            >
-              ClimbTime
-            </Table.HeaderCell>
-            <Table.HeaderCell>EndgameC</Table.HeaderCell>
-            <Table.HeaderCell>color</Table.HeaderCell>
-            <Table.HeaderCell>name</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map(
-            ({
-              MatchNo,
-              teamNumber,
-              AutoLH,
-              AutoUH,
-              AutoC,
-              TeleopLH,
-              TeleopUH,
-              TeleopC,
-              hangar,
-              ClimbTime,
-              EndgameC,
-              color,
-              name,
-            }) => (
-              <Table.Row key={MatchNo + teamNumber}>
-                <Table.Cell>{MatchNo}</Table.Cell>
-                <Table.Cell>{teamNumber}</Table.Cell>
-                <Table.Cell>{AutoLH}</Table.Cell>
-                <Table.Cell>{AutoUH}</Table.Cell>
-                <Table.Cell>{AutoC}</Table.Cell>
-                <Table.Cell>{TeleopLH}</Table.Cell>
-                <Table.Cell>{TeleopUH}</Table.Cell>
-                <Table.Cell>{TeleopC}</Table.Cell>
-                <Table.Cell>{hangar}</Table.Cell>
-                <Table.Cell>{ClimbTime}</Table.Cell>
-                <Table.Cell>{EndgameC}</Table.Cell>
-                <Table.Cell>{color}</Table.Cell>
-                <Table.Cell>{name}</Table.Cell>
-              </Table.Row>
-            )
-          )}
-        </Table.Body>
-      </Table>
+      <Container style={{ display: "inline-block" }}>
+        <Container>
+          <Form.Field inline>
+            <label>last 4 matches only</label>
+            <Radio
+              style={{
+                display: "inline-block",
+                marginLeft: "20px",
+                marginTop: "3px",
+                alignSelf: "center",
+              }}
+              toggle
+            />
+          </Form.Field>
+        </Container>
+        <Container>
+          <Header as="h3" style={{ display: "inline-block" }}>
+            Avg Cones Auto:
+          </Header>
+          <Header
+            as="h3"
+            style={{ display: "inline-block", marginLeft: "50px" }}
+          >
+            Avg Cubes Auto:
+          </Header>
+        </Container>
+        <Container>
+          <Header style={{ display: "inline-block" }} as="h3">
+            Avg Cubes Tele:
+          </Header>
+          <Header
+            as="h3"
+            style={{ display: "inline-block", marginLeft: "50px" }}
+          >
+            Avg Cubes Tele:
+          </Header>
+        </Container>
+        <Container>
+          <Header as="h3" style={{ display: "inline-block" }}>
+            #Docks:
+          </Header>
+          <Header
+            as="h3"
+            style={{ display: "inline-block", marginLeft: "115px" }}
+          >
+            #Engage:
+          </Header>
+        </Container>
 
+        <Container>
+          <Header as="h3" style={{ display: "inline-block" }}>
+            Avg Ground Intake:
+          </Header>
+          <Header
+            as="h3"
+            style={{ display: "inline-block", marginLeft: "40px" }}
+          >
+            Avg Links:
+          </Header>
+        </Container>
+      </Container>
+      <Divider></Divider>
+      <label>what to graph</label>
+      <Form.Select></Form.Select>
       <LineChart data={chartData} curve={false} />
       <Modal
         size="mini"

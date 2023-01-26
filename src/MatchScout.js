@@ -466,7 +466,7 @@ const MatchScout = () => {
           </Form.Field>
 
           <Form.Field>
-            <label>---Team #*---</label>
+            <label>-Team #-</label>
             <Input
               fluid
               size="medium"

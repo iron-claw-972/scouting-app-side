@@ -4,11 +4,12 @@ import {
   Label,
   List,
   LabelDetail,
-  Table,
+  Divider,
   Container,
   Header,
   Button,
   Input,
+  Form,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 const NewTeamPages = () => {
@@ -16,13 +17,19 @@ const NewTeamPages = () => {
     <Container>
       <Header style={{ textAlign: "center", margin: "2px" }} as="h1">
         Team Pages
+        <Header as="h5" style={{ textAlign: "center" }}>
+          the man in the chair, automated entirely by software
+        </Header>
       </Header>
-      <label>-Team 1-</label>
-      <Input fluid size="small" placeholder="" />
-      <label>-Team 2-</label>
-      <Input fluid size="small" placeholder="" />
-      <label>-Team 3-</label>
-      <Input fluid size="small" placeholder="" />
+      <Divider hidden></Divider>
+
+      <label> -Team 1-</label>
+      <Input size="small" placeholder="" />
+      <label> -Team 2-</label>
+      <Input size="small" placeholder="" />
+
+      <label> -Team 3-</label>
+      <Input size="small" placeholder="" />
     </Container>
   );
 };

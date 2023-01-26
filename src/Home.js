@@ -11,8 +11,12 @@ const Home = () => (
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
       Scouting App 2023
     </Header>
-    <Header textAlign="center" as="h4">
-      "Datum vos liberabit" - Julius Caesar, probably
+
+    <Header as="h4" style={{ textAlign: "center" }}>
+      TV972:BREAKING NEWS - upcoming scouters
+    </Header>
+    <Header as="h4" style={{ textAlign: "center" }}>
+      {}: {} {}: {} {}: {} {}: {} {}: {} {}: {} {}: {} {}: {}
     </Header>
     <Card.Group
       centered
@@ -68,7 +72,7 @@ const Home = () => (
       <Link to="/teamlist" style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Teams List"
+            header="Picklist + Teams List"
             description="current ranking + link to teams list"
           />
         </Card>

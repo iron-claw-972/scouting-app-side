@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Grid,
+  Divider,
   Label,
   List,
   LabelDetail,
@@ -8,7 +8,12 @@ import {
   Container,
   Header,
   Button,
+  Form,
+  Input,
 } from "semantic-ui-react";
+
+import { LineChart, PieChart } from "react-chartkick";
+
 import { Link } from "react-router-dom";
 
 const TeamTab = ({ teamdata, oprs, team }) => {
@@ -48,11 +53,25 @@ const TeamList = () => {
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
-        Ranking
+        All teams + Picklist Editor
       </Header>
       <Header as="h5" style={{ textAlign: "center", margin: "3px" }}>
-        Rankings are ~2 matches behind real rankings
+        (Rankings are ~2 matches behind real rankings)
       </Header>
+
+      <label> -Team 1-</label>
+      <Input size="small" placeholder="" />
+      <label> -Team 2-</label>
+      <Input size="small" placeholder="" />
+      <label> -Team 3-</label>
+      <Input size="small" placeholder="" />
+      <Header as="h3">Picklist:</Header>
+
+      <Divider></Divider>
+      <label>what to graph</label>
+
+      <Form.Select></Form.Select>
+      <LineChart></LineChart>
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
