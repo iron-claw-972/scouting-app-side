@@ -206,7 +206,7 @@ const PitScout = () => {
 
         <Form style={{ marginTop: 10 }}>
           <Form.Group width="equal">
-            <Form.Field>
+            <Form.Field style={{ marginLeft: "10px" }}>
               <label style={{ color: "white" }}>Team Number *</label>
               <input
                 placeholder="Team Number"
