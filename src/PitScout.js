@@ -198,228 +198,232 @@ const PitScout = () => {
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
   */
   return (
-    <Container>
-      <Header as="h1" style={{ textAlign: "center", marginTop: "10px" }}>
-        Pit Scout
-      </Header>
+    <body style={{ backgroundColor: "rgb(64,56,58)" }}>
+      <Container>
+        <Header as="h1" style={{ textAlign: "center", marginTop: "10px", color: "white" }}>
+          Pit Scout
+        </Header>
 
-      <Form style={{ marginTop: 10 }}>
-        <Form.Group width="equal">
-          <Form.Field>
-            <label>Team Number *</label>
-            <input
-              placeholder="Team Number"
-              value={teamNumber}
-              onChange={(e) => setTeamNumber(e.target.value)}
-              onBlur={lookupTeamIfExists}
-            />
-          </Form.Field>
-
-          <Form.Field inline>
-            <label>Robot pic</label>
-            <Button
-              fluid
-              icon="camera retro"
-              size="medium"
-              style={{ marginTop: "5px" }}
-              onClick={() => {
-                setShowCamera(true);
-              }}
-            ></Button>
-          </Form.Field>
-          <Form.Field>
-            <label>X camera</label>
-            <Button
-              icon="undo"
-              size="medium"
-              style={{ margin: "0px" }}
-              onClick={() => {
-                setShowCamera(false);
-              }}
-            ></Button>
-          </Form.Field>
-          <Form.Field style={{ marginTop: 10 }}>
-            {showCamera ? (
-              <Camera
-                onTakePhoto={(dataUri) => {
-                  handleTakePhoto(dataUri);
-                }}
+        <Form style={{ marginTop: 10 }}>
+          <Form.Group width="equal">
+            <Form.Field>
+              <label style={{ color: "white" }}>Team Number *</label>
+              <input
+                placeholder="Team Number"
+                value={teamNumber}
+                onChange={(e) => setTeamNumber(e.target.value)}
+                onBlur={lookupTeamIfExists}
               />
-            ) : (
-              <label></label>
-            )}
-          </Form.Field>
-        </Form.Group>
-        <Divider></Divider>
-        <Form.Group style={{ textAlign: "center" }}>
-          <Form.Field>
-            {climb ? (
-              <Button
-                size="huge"
-                color="green"
-                fluid
-                onClick={() => setClimb(false)}
-              >
-                Ground Intake
-              </Button>
-            ) : (
-              <Button
-                size="huge"
-                color="black"
-                fluid
-                onClick={() => setClimb(true)}
-              >
-                Ground Intake?
-              </Button>
-            )}
-          </Form.Field>
+            </Form.Field>
 
-          <Form.Field>
-            {vision ? (
+            <Form.Field inline>
+              <label style={{ color: "white" }}>Robot pic</label>
               <Button
-                size="huge"
                 fluid
-                color="green"
-                onClick={() => setVision(false)}
-              >
-                Vision
-              </Button>
-            ) : (
+                icon="camera retro"
+                size="medium"
+                style={{ marginTop: "5px"}}
+                onClick={() => {
+                  setShowCamera(true);
+                }}
+              ></Button>
+            </Form.Field>
+            <Form.Field>
+              <label style={{ color: "white" }}>X camera</label>
               <Button
-                size="huge"
-                color="black"
-                fluid
-                onClick={() => setVision(true)}
-              >
-                Vision?
-              </Button>
-            )}
-          </Form.Field>
-        </Form.Group>
-        <Divider hidden></Divider>
-        <Form.Group style={{ textAlign: "center" }}>
-          <Form.Field>
-            {shelfIntake ? (
-              <Button
-                size="huge"
-                color="green"
-                fluid
-                onClick={() => setShelfIntake(false)}
-              >
-                Shelf Intake
-              </Button>
-            ) : (
-              <Button
-                size="huge"
-                color="black"
-                fluid
-                onClick={() => setShelfIntake(true)}
-              >
-                Shelf Intake?
-              </Button>
-            )}
-          </Form.Field>
+                icon="undo"
+                size="medium"
+                style={{ margin: "0px" }}
+                onClick={() => {
+                  setShowCamera(false);
+                }}
+              ></Button>
+            </Form.Field>
+            <Form.Field style={{ marginTop: 10 }}>
+              {showCamera ? (
+                <Camera
+                  onTakePhoto={(dataUri) => {
+                    handleTakePhoto(dataUri);
+                  }}
+                />
+              ) : (
+                <label></label>
+              )}
+            </Form.Field>
+          </Form.Group>
+          <Divider></Divider>
+          <Form.Group style={{ textAlign: "center", marginLeft: "10px" }}>
+            <Form.Field style={{ marginRight: "15px" }}>
+              {climb ? (
+                <Button
+                  size="huge"
+                  color="green"
+                  fluid
+                  onClick={() => setClimb(false)}
+                >
+                  Ground Intake
+                </Button>
+              ) : (
+                <Button
+                  size="huge"
+                  color="white"
+                  fluid
+                  onClick={() => setClimb(true)}
+                >
+                  Ground Intake
+                </Button>
+              )}
+            </Form.Field>
 
-          <Form.Field>
-            {balance ? (
-              <Button
-                size="huge"
+            <Form.Field>
+              {vision ? (
+                <Button
+                  size="huge"
+                  fluid
+                  color="green"
+                  style={{ alignSelf: "right"}}
+                  onClick={() => setVision(false)}
+                >
+                  Vision
+                </Button>
+              ) : (
+                <Button
+                  size="huge"
+                  color="white"
+                  fluid
+                  style={{ alignSelf: "right"}}
+                  onClick={() => setVision(true)}
+                >
+                  Vision
+                </Button>
+              )}
+            </Form.Field>
+          </Form.Group>
+          <Divider hidden></Divider>
+          <Form.Group style={{ textAlign: "center", marginLeft: "13px"  }}>
+            <Form.Field style={{marginRight: "15px" }}>
+              {shelfIntake ? (
+                <Button
+                  size="huge"
+                  color="green"
+                  fluid
+                  onClick={() => setShelfIntake(false)}
+                >
+                  Shelf Intake
+                </Button>
+              ) : (
+                <Button
+                  size="huge"
+                  color="white"
+                  fluid
+                  onClick={() => setShelfIntake(true)}
+                >
+                  Shelf Intake
+                </Button>
+              )}
+            </Form.Field>
+
+            <Form.Field>
+              {balance ? (
+                <Button
+                  size="huge"
+                  fluid
+                  color="green"
+                  onClick={() => setBalance(false)}
+                >
+                  Balance
+                </Button>
+              ) : (
+                <Button
+                  size="huge"
+                  color="white"
+                  fluid
+                  onClick={() => setBalance(true)}
+                >
+                  Balance
+                </Button>
+              )}
+            </Form.Field>
+          </Form.Group>
+          <Divider hidden></Divider>
+          <Form.Group style={{ margin: "auto" }}>
+            <Form.Field width="8">
+              <label style={{ color: "white" }}>Drivetrain Type</label>
+              <Form.Select
                 fluid
-                color="green"
-                onClick={() => setBalance(false)}
-              >
-                Balance
-              </Button>
-            ) : (
-              <Button
-                size="huge"
-                color="black"
+                options={driveOptions}
+                placeholder="Drivetrain"
+                value={drive}
+                onChange={(e, data) => setDrive(data.value)}
+              />
+            </Form.Field>
+            <Form.Field width="8">
+              <label style={{ color: "white" }}>Abilities</label>
+              <Form.Select
                 fluid
-                onClick={() => setBalance(true)}
-              >
-                Balance?
-              </Button>
-            )}
-          </Form.Field>
-        </Form.Group>
-        <Divider hidden></Divider>
-        <Form.Group style={{ margin: "auto" }}>
-          <Form.Field width="8">
-            <label>Drivetrain Type</label>
-            <Form.Select
-              fluid
-              options={driveOptions}
-              placeholder="Drivetrain"
-              value={drive}
-              onChange={(e, data) => setDrive(data.value)}
-            />
-          </Form.Field>
-          <Form.Field width="8">
-            <label>Abilities</label>
-            <Form.Select
-              fluid
-              options={abilityOptions}
-              placeholder="Ability"
-              value={ability}
-              onChange={(e, data) => setAbility(data.value)}
-            />
-          </Form.Field>
-        </Form.Group>
-        <Divider></Divider>
-        <Form.Group style={{ margin: "auto" }}>
-          <Form.Field>
-            <Divider hidden />
+                options={abilityOptions}
+                placeholder="Ability"
+                value={ability}
+                onChange={(e, data) => setAbility(data.value)}
+              />
+            </Form.Field>
+          </Form.Group>
+          <Divider></Divider>
+          <Form.Group style={{ margin: "auto" }}>
+            <Form.Field style={{ color: "white" }}>
+              <Divider hidden />
 
-            <label>Motors #</label>
-            {motors}
-          </Form.Field>
+              <label style={{ color: "white" }}>Motors #</label>
+              {motors}
+            </Form.Field>
 
-          <Form.Field>
-            <ButtonGroup up={motorsUp} down={motorsDown}></ButtonGroup>
-          </Form.Field>
+            <Form.Field>
+              <ButtonGroup up={motorsUp} down={motorsDown}></ButtonGroup>
+            </Form.Field>
 
-          <Button color="instagram" type="submit" onClick={save}>
-            Submit / Save
-          </Button>
-        </Form.Group>
-        <div style={{ marginTop: "30px", marginBottom: "10px" }} />
-        <Form.Group>
-          <Button color="black" type="reset" onClick={lookupTeamIfExists}>
-            Undo edits
-          </Button>
-          <Button type="submit" color="grey" onClick={resetForm}>
-            Clear Form
-          </Button>
-          <Link to="/">
-            {" "}
-            <Button color="white">Back to Home</Button>
-          </Link>
-        </Form.Group>
-      </Form>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
+          </Form.Group>
+          <div style={{ marginTop: "30px", marginBottom: "10px" }} />
+          <Form.Group>
+            <Button color="black" type="reset" onClick={lookupTeamIfExists}>
+              Undo edits
+            </Button>
+            <Button type="submit" color="grey" onClick={resetForm}>
+              Clear Form
+            </Button>
+            <Link to="/">
+              {" "}
+              <Button color="white">Back to Home</Button>
+            </Link>
+          </Form.Group>
+        </Form>
 
-      <Modal size="small" open={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Header>Some fields are blank</Modal.Header>
-        <Modal.Content>
-          <p>Please check some required fields with (*) are not entered</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button positive onClick={() => setShowModal(false)}>
-            OK
-          </Button>
-        </Modal.Actions>
-      </Modal>
-      {showSuccess && <Message success header="Data saved successfully" />}
-      {showError && <Message negative header="Unable to save record" />}
-      <Modal
-        open={showQrCode}
-        size="fullscreen"
-        onClose={() => setShowQrCode(false)}
-      >
-        <Modal.Content>
-          <QRCode value={JSON.stringify(pitData)} />
-        </Modal.Content>
-      </Modal>
-    </Container>
+        <Modal size="small" open={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Header>Some fields are blank</Modal.Header>
+          <Modal.Content>
+            <p>Please check some required fields with (*) are not entered</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button positive onClick={() => setShowModal(false)}>
+              OK
+            </Button>
+          </Modal.Actions>
+        </Modal>
+        {showSuccess && <Message success header="Data saved successfully" />}
+        {showError && <Message negative header="Unable to save record" />}
+        <Modal
+          open={showQrCode}
+          size="fullscreen"
+          onClose={() => setShowQrCode(false)}
+        >
+          <Modal.Content>
+            <QRCode value={JSON.stringify(pitData)} />
+          </Modal.Content>
+        </Modal>
+      </Container>
+    </body>
   );
 };
 export default PitScout;
