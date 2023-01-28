@@ -19,6 +19,8 @@ import {
   Input,
 } from "semantic-ui-react";
 
+import CanvasChooser from "./CanvasChooser";
+
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { colorOptions } from "./AllOptions";
@@ -93,6 +95,8 @@ const MatchScout = () => {
   const [timerRunning, setTimerRunning] = useState(false);
 
   const [groundIntakes, setGroundIntakes] = useState(0);
+  const [mousePos, setMousePos] = useState([]);
+
 
   //docRef is a unique id that we will store the match under
   //we will use the default value "initRef", and set the id later.
@@ -512,7 +516,9 @@ const MatchScout = () => {
                 Piece Scoring:
               </Header>
             </Form.Field>
-
+            <Form.Group>
+              <CanvasChooser setMouseCoord={setMousePos}/>
+            </Form.Group>
             <Form.Group>
               <Form.Field>
                 {AutoHRSelected ? (
