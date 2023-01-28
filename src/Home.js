@@ -114,6 +114,15 @@ const Home = () => (
         </Card>
       </Link>
 
+      <Link to="/matchlist" style={{ margin: 10 }}>
+        <Card>
+          <Card.Content
+            header="Match List"
+            description="TBD"
+          />
+        </Card>
+      </Link>
+
       <Link to="/pitdisplay" style={{ margin: 10 }}>
         <Card>
           <Card.Content
