@@ -264,14 +264,13 @@ const PitScout = () => {
                   Ground Intake
                 </Button>
               ) : (
-                <Button
-                  size="huge"
-                  color="white"
+                <button
+                  class="ui inverted huge white button"
                   fluid
                   onClick={() => setClimb(true)}
                 >
                   Ground Intake
-                </Button>
+                </button>
               )}
             </Form.Field>
 
@@ -287,15 +286,14 @@ const PitScout = () => {
                   Vision
                 </Button>
               ) : (
-                <Button
-                  size="huge"
-                  color="white"
+                <button
+                  class="ui inverted huge white button"
                   fluid
                   style={{ alignSelf: "right"}}
                   onClick={() => setVision(true)}
                 >
                   Vision
-                </Button>
+                </button>
               )}
             </Form.Field>
           </Form.Group>
@@ -312,14 +310,13 @@ const PitScout = () => {
                   Shelf Intake
                 </Button>
               ) : (
-                <Button
-                  size="huge"
-                  color="white"
+                <button
+                  class="ui inverted huge white button"
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
                   Shelf Intake
-                </Button>
+                </button>
               )}
             </Form.Field>
 
@@ -334,14 +331,13 @@ const PitScout = () => {
                   Balance
                 </Button>
               ) : (
-                <Button
-                  size="huge"
-                  color="white"
+                <button
+                  class="ui inverted huge white button"
                   fluid
                   onClick={() => setBalance(true)}
                 >
                   Balance
-                </Button>
+                </button>
               )}
             </Form.Field>
           </Form.Group>
