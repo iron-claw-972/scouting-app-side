@@ -95,7 +95,7 @@ const MatchScout = () => {
   const [timerRunning, setTimerRunning] = useState(false);
 
   const [groundIntakes, setGroundIntakes] = useState(0);
-  const [mousePos, setMousePos] = useState([]);
+  const [mousePos, setMousePos] = useState({});
 
 
   //docRef is a unique id that we will store the match under
@@ -511,14 +511,18 @@ const MatchScout = () => {
             <Header style={{ color: "black" }} as="h3">
               Auto
             </Header>
+            <Form.Group>
+              <Form.Field>
+                <h4>Click or tap to select starting position on field map</h4>
+                <CanvasChooser setMouseCoord={setMousePos} getMouseCoord={mousePos}/>
+              </Form.Field>
+            </Form.Group>
             <Form.Field>
               <Header style={{ color: "black" }} as="h4">
                 Piece Scoring:
               </Header>
             </Form.Field>
-            <Form.Group>
-              <CanvasChooser setMouseCoord={setMousePos}/>
-            </Form.Group>
+            
             <Form.Group>
               <Form.Field>
                 {AutoHRSelected ? (

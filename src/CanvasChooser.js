@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import field_image from "./img/field_image.png";
 
-const CanvasChooser = ({setMouseCoord}) => {
+const CanvasChooser = ({setMouseCoord, getMouseCoord}) => {
 
     const canvasRef = useRef(null);
 
@@ -15,20 +15,19 @@ const CanvasChooser = ({setMouseCoord}) => {
         const draw = (event = null) => {
             if (event != null) {
                 let rect = canvas.getBoundingClientRect();
-                let x = event.clientX - rect.left;
-                let y = event.clientY - rect.top;
+                let xCoord = event.clientX - rect.left;
+                let yCoord = event.clientY - rect.top;
         
                 ctx.clearRect(0, 0, 360, 180);
                 ctx.drawImage(field_background, 0, 0, 360, 180);
-        
-                ctx.beginPath();
-                ctx.strokeStyle = 'orange';
-                ctx.arc(x, y, 8, 0, Math.PI*2);
-                ctx.stroke();
-                console.log("Coordinate x: " + Math.round(x), "Coordinate y: " + Math.round(y));
-
                 
-        
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.strokeStyle = 'lime';
+                ctx.arc(xCoord, yCoord, 8, 0, Math.PI*2);
+                ctx.stroke();
+                setMouseCoord({x: xCoord, y: yCoord});
+                // console.log("Coordinate x: " + Math.round(xCoord), "Coordinate y: " + Math.round(yCoord); // For debugging
             } else {
                 ctx.drawImage(field_background, 0, 0, 360, 180);  
             }  
