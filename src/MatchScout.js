@@ -94,6 +94,9 @@ const MatchScout = () => {
 
   const [groundIntakes, setGroundIntakes] = useState(0);
 
+  const [autoPieceCount, setAutoPieceCount] = useState(0);
+  const [telePieceCount, setTelePieceCount] = useState(0);
+
   //docRef is a unique id that we will store the match under
   //we will use the default value "initRef", and set the id later.
   const [docRefId, setDocRefId] = useState("initRef");
@@ -153,6 +156,9 @@ const MatchScout = () => {
     setTeleMRSelected(false);
     setTeleHRSelected(false);
     settelelevelSelected(false);
+    setAutoPieceCount(0);
+    setTelePieceCount(0);
+    setMode(true);
   };
 
   //This gets called on page load and whenever docRefId changes
@@ -286,6 +292,7 @@ const MatchScout = () => {
         setAutoCLR(AutoUHR + 1);
       }
     }
+    setAutoPieceCount(autoPieceCount + 1);
     setAutoLRSelected(false);
     setAutoMRSelected(false);
     setAutoHRSelected(false);
@@ -316,6 +323,9 @@ const MatchScout = () => {
       if (!autopiece) {
         setAutoCLR(AutoUHR - 1);
       }
+    }
+    if (autoPieceCount > 0) {
+      setAutoPieceCount(autoPieceCount - 1);
     }
     setAutoLRSelected(false);
     setAutoMRSelected(false);
@@ -348,6 +358,7 @@ const MatchScout = () => {
         setTeleCLR(TeleUHR + 1);
       }
     }
+    setTelePieceCount(telePieceCount + 1);
     setTeleLRSelected(false);
     setTeleMRSelected(false);
     setTeleHRSelected(false);
@@ -378,6 +389,9 @@ const MatchScout = () => {
       if (!telepiece) {
         setTeleCLR(TeleUHR - 1);
       }
+    }
+    if (telePieceCount > 0) {
+      setTelePieceCount(telePieceCount - 1);
     }
     setTeleLRSelected(false);
     setTeleMRSelected(false);
@@ -511,6 +525,9 @@ const MatchScout = () => {
               <Form.Field>
                 <Header style={{ color: "white" }} as="h4">
                   Piece Scoring:
+                  <label style={{marginLeft: "10px"}}>
+                    {autoPieceCount}
+                  </label>
                 </Header>
               </Form.Field>
 
@@ -716,9 +733,14 @@ const MatchScout = () => {
               <Header style={{ color: "white" }} as="h3">
                 Tele/End
               </Header>
-              <Header style={{ color: "white" }} as="h4">
-                Piece Scoring
-              </Header>
+              <Form.Field>
+                <Header style={{ color: "white" }} as="h4">
+                  Piece Scoring:
+                  <label style={{marginLeft: "10px"}}>
+                    {telePieceCount}
+                  </label>
+                </Header>
+              </Form.Field>
 
               <Form.Group>
                 <Form.Field>
@@ -788,7 +810,7 @@ const MatchScout = () => {
                   {telepiece ? (
                     <Button
                       fluid
-                      style={{ marginTop: "10px" }}
+                      style={{ marginTop: "11px" }}
                       size="small"
                       color="purple"
                       onClick={() => settelePiece(false)}
@@ -799,7 +821,7 @@ const MatchScout = () => {
                     <Button
                       fluid
                       size="small"
-                      style={{ marginTop: "10px" }}
+                      style={{ marginTop: "11px" }}
                       color="yellow"
                       onClick={() => settelePiece(true)}
                     >
