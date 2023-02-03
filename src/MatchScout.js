@@ -304,137 +304,128 @@ const MatchScout = () => {
     settelelevelSelected(true);
   };
 
-  const HighUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoHighCubeCount(autoHighCubeCount + 1);
-      }
-      if (coneButton) {
-        setAutoHighConeCount(autoHighConeCount + 1);
-      }
+  const AutoHighUp = () => {
+    if (cubeButton) {
+      setAutoHighCubeCount(autoHighCubeCount + 1);
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleHighCubeCount(teleHighCubeCount + 1);
-      }
-      if (coneButton) {
-        setTeleHighConeCount(teleHighConeCount + 1);
-      }
+    if (coneButton) {
+      setAutoHighConeCount(autoHighConeCount + 1);
     }
   };
-  const HighDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        if (autoHighCubeCount > -9) {
-          setAutoHighCubeCount(autoHighCubeCount - 1);
-        }
-      }
-      if (coneButton) {
-        if (autoHighConeCount > -9) {
-          setAutoHighConeCount(autoHighConeCount - 1);
-        }
+  const AutoHighDown = () => {
+    if (cubeButton) {
+      if (autoHighCubeCount > -9) {
+        setAutoHighCubeCount(autoHighCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        if (teleHighCubeCount > -9) {
-          setTeleHighCubeCount(teleHighCubeCount - 1);
-        }
-      }
-      if (coneButton) {
-        if (teleHighConeCount > -9) {
-          setTeleHighConeCount(teleHighConeCount - 1);
-        }
+    if (coneButton) {
+      if (autoHighConeCount > -9) {
+        setAutoHighConeCount(autoHighConeCount - 1);
       }
     }
   };
 
-  const MidUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoMidCubeCount(autoMidCubeCount + 1);
-      }
-      if (coneButton) {
-        setAutoMidConeCount(autoMidConeCount + 1);
-      }
+  const AutoMidUp = () => {
+    if (cubeButton) {
+      setAutoMidCubeCount(autoMidCubeCount + 1);
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleMidCubeCount(teleMidCubeCount + 1);
-      }
-      if (coneButton) {
-        setTeleMidConeCount(teleMidConeCount + 1);
-      }
+    if (coneButton) {
+      setAutoMidConeCount(autoMidConeCount + 1);
     }
   };
-  const MidDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        if (autoMidCubeCount > -9) {
-          setAutoMidCubeCount(autoMidCubeCount - 1);
-        }
-      }
-      if (coneButton) {
-        if (autoMidConeCount > -9) {
-          setAutoMidConeCount(autoMidConeCount - 1);
-        }
+  const AutoMidDown = () => {
+    if (cubeButton) {
+      if (autoMidCubeCount > -9) {
+        setAutoMidCubeCount(autoMidCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        if (teleMidCubeCount > -9) {
-          setTeleMidCubeCount(teleMidCubeCount - 1);
-        }
-      }
-      if (coneButton) {
-        if (teleMidConeCount > -9) {
-          setTeleMidConeCount(teleMidConeCount - 1);
-        }
+    if (coneButton) {
+      if (autoMidConeCount > -9) {
+        setAutoMidConeCount(autoMidConeCount - 1);
       }
     }
   };
 
-  const LowUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoLowCubeCount(autoLowCubeCount + 1);
-      }
-      if (coneButton) {
-        setAutoLowConeCount(autoLowConeCount + 1);
+  const AutoLowUp = () => {
+    if (cubeButton) {
+      setAutoLowCubeCount(autoLowCubeCount + 1);
+    }
+    if (coneButton) {
+      setAutoLowConeCount(autoLowConeCount + 1);
+    }
+  };
+  const AutoLowDown = () => {
+    if (cubeButton) {
+      if (autoLowCubeCount > -9) {
+        setAutoLowCubeCount(autoLowCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleLowCubeCount(teleLowCubeCount + 1);
-      }
-      if (coneButton) {
-        setTeleLowConeCount(teleLowConeCount + 1);
+    if (coneButton) {
+      if (autoLowConeCount > -9) {
+        setAutoLowConeCount(autoLowConeCount - 1);
       }
     }
   };
-  const LowDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        if (autoLowCubeCount > -9) {
-          setAutoLowCubeCount(autoLowCubeCount - 1);
-        }
-      }
-      if (coneButton) {
-        if (autoLowConeCount > -9) {
-          setAutoLowConeCount(autoLowConeCount - 1);
-        }
+
+  const TeleHighUp = () => {
+    if (cubeButton) {
+      setTeleHighCubeCount(teleHighCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleHighConeCount(teleHighConeCount + 1);
+    }
+  };
+  const TeleHighDown = () => {
+    if (cubeButton) {
+      if (teleHighCubeCount > -9) {
+        setTeleHighCubeCount(teleHighCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        if (teleLowCubeCount > -9) {
-          setTeleLowCubeCount(teleLowCubeCount - 1);
-        }
+    if (coneButton) {
+      if (teleHighConeCount > -9) {
+        setTeleHighConeCount(teleHighConeCount - 1);
       }
-      if (coneButton) {
-        if (teleLowConeCount > -9) {
-          setTeleLowConeCount(teleLowConeCount - 1);
-        }
+    }
+  };
+
+  const TeleMidUp = () => {
+    if (cubeButton) {
+      setTeleMidCubeCount(teleMidCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleMidConeCount(teleMidConeCount + 1);
+    }
+  };
+  const TeleMidDown = () => {
+    if (cubeButton) {
+      if (teleMidCubeCount > -9) {
+        setTeleMidCubeCount(teleMidCubeCount - 1);
+      }
+    }
+    if (coneButton) {
+      if (teleMidConeCount > -9) {
+        setTeleMidConeCount(teleMidConeCount - 1);
+      }
+    }
+  };
+
+  const TeleLowUp = () => {
+    if (cubeButton) {
+      setTeleLowCubeCount(teleLowCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleLowConeCount(teleLowConeCount + 1);
+    }
+  };
+  const TeleLowDown = () => {
+    if (cubeButton) {
+      if (teleLowCubeCount > -9) {
+        setTeleLowCubeCount(teleLowCubeCount - 1);
+      }
+    }
+    if (coneButton) {
+      if (teleLowConeCount > -9) {
+        setTeleLowConeCount(teleLowConeCount - 1);
       }
     }
   };
@@ -448,130 +439,6 @@ const MatchScout = () => {
       setConeButton(false);
       setCubeButton(true);
     }
-  };
-
-  const handleautoEnter = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR + 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR + 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR + 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleautoRemove = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR - 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR - 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR - 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleteleEnter = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR + 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR + 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR + 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
-  };
-
-  const handleteleRemove = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR - 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR - 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR - 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
   };
 
   const teleUHDown = () => {
@@ -626,7 +493,6 @@ const MatchScout = () => {
   };
 
   const HighEnterRemoveButtons = ({ enter, remove }) => {
-    console.log(mode);
     return (
       <Container>
         <Button
@@ -870,18 +736,18 @@ const MatchScout = () => {
                   </Form.Field>
                   <Form.Field style={{ marginLeft: "9px" }}>
                     <HighEnterRemoveButtons
-                      enter={HighUp}
-                      remove={HighDown}
+                      enter={AutoHighUp}
+                      remove={AutoHighDown}
                     ></HighEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "4px" }}></Divider>
                     <MidEnterRemoveButtons
-                      enter={MidUp}
-                      remove={MidDown}
+                      enter={AutoMidUp}
+                      remove={AutoMidDown}
                     ></MidEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "3px" }}></Divider>
                     <LowEnterRemoveButtons
-                      enter={LowUp}
-                      remove={LowDown}
+                      enter={AutoLowUp}
+                      remove={AutoLowDown}
                     ></LowEnterRemoveButtons>
                   </Form.Field>
                 </Form.Group>
@@ -1079,18 +945,18 @@ const MatchScout = () => {
                   </Form.Field>
                   <Form.Field style={{ marginLeft: "9px" }}>
                     <HighEnterRemoveButtons
-                      enter={HighUp}
-                      remove={HighDown}
+                      enter={TeleHighUp}
+                      remove={TeleHighDown}
                     ></HighEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "4px" }}></Divider>
                     <MidEnterRemoveButtons
-                      enter={MidUp}
-                      remove={MidDown}
+                      enter={TeleMidUp}
+                      remove={TeleMidDown}
                     ></MidEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "3px" }}></Divider>
                     <LowEnterRemoveButtons
-                      enter={LowUp}
-                      remove={LowDown}
+                      enter={TeleLowUp}
+                      remove={TeleLowDown}
                     ></LowEnterRemoveButtons>
                   </Form.Field>
                 </Form.Group>
