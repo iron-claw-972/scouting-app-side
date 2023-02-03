@@ -252,8 +252,8 @@ const PitScout = () => {
             </Form.Field>
           </Form.Group>
           <Divider></Divider>
-          <Form.Group style={{ textAlign: "center", marginLeft: "10px" }}>
-            <Form.Field style={{ marginRight: "15px" }}>
+          <Form.Group style={{ textAlign: "center", margin: "auto" }}>
+            <Form.Field>
               {climb ? (
                 <Button
                   size="huge"
@@ -298,8 +298,8 @@ const PitScout = () => {
             </Form.Field>
           </Form.Group>
           <Divider hidden></Divider>
-          <Form.Group style={{ textAlign: "center", marginLeft: "13px"  }}>
-            <Form.Field style={{marginRight: "15px" }}>
+          <Form.Group style={{ textAlign: "center", margin: "auto"  }}>
+            <Form.Field>
               {shelfIntake ? (
                 <Button
                   size="huge"
