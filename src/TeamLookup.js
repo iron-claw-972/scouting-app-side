@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import {
-  Radio,
+  Table,
   Container,
   Form,
   Button,
   Modal,
   Header,
   Divider,
+  Radio,
 } from "semantic-ui-react";
 import {
   getFirestore,
@@ -19,7 +20,7 @@ import {
 } from "firebase/firestore";
 import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
-
+import Textbox from "./Textbox.js";
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -117,67 +118,59 @@ const TeamLookup = () => {
           </Form.Field>
         </Form.Group>
       </Form>
-      <Container style={{ display: "inline-block" }}>
+      <Container style={{ display: "flex" }}>
         <Container>
-          <Form.Field inline>
-            <label>last 4 matches only</label>
-            <Radio
-              style={{
-                display: "inline-block",
-                marginLeft: "20px",
-                marginTop: "3px",
-                alignSelf: "center",
-              }}
-              toggle
-            />
-          </Form.Field>
+          <Table celled small collapsing basic stackable>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>Avg Cones Auto</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Cubes Auto</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Has Vision</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Cones Tele</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Cubes Tele</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Ground Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Dock</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Engage</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Shelf Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Ground Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Mobility</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Balance</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell># of Motors</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Drivetrain</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
         </Container>
         <Container>
-          <Header as="h3" style={{ display: "inline-block" }}>
-            Avg Cones Auto:
-          </Header>
-          <Header
-            as="h3"
-            style={{ display: "inline-block", marginLeft: "50px" }}
-          >
-            Avg Cubes Auto:
-          </Header>
-        </Container>
-        <Container>
-          <Header style={{ display: "inline-block" }} as="h3">
-            Avg Cubes Tele:
-          </Header>
-          <Header
-            as="h3"
-            style={{ display: "inline-block", marginLeft: "50px" }}
-          >
-            Avg Cubes Tele:
-          </Header>
-        </Container>
-        <Container>
-          <Header as="h3" style={{ display: "inline-block" }}>
-            #Docks:
-          </Header>
-          <Header
-            as="h3"
-            style={{ display: "inline-block", marginLeft: "115px" }}
-          >
-            #Engage:
-          </Header>
-        </Container>
-
-        <Container>
-          <Header as="h3" style={{ display: "inline-block" }}>
-            Avg Ground Intake:
-          </Header>
-          <Header
-            as="h3"
-            style={{ display: "inline-block", marginLeft: "40px" }}
-          >
-            Avg Links:
-          </Header>
+          <Header as="h3">comments</Header>
+          <Textbox></Textbox>
+          <Textbox></Textbox>
+          <Textbox></Textbox>
         </Container>
       </Container>
+
       <Divider></Divider>
       <label>what to graph</label>
       <Form.Select></Form.Select>
