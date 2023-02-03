@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Table, Container, Form, Button, Modal } from "semantic-ui-react";
+import {
+  Table,
+  Container,
+  Form,
+  Button,
+  Modal,
+  Header,
+  Divider,
+  Radio,
+} from "semantic-ui-react";
 import {
   getFirestore,
   collection,
@@ -11,7 +20,7 @@ import {
 } from "firebase/firestore";
 import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
-
+import Textbox from "./Textbox.js";
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -93,6 +102,9 @@ const TeamLookup = () => {
   ];
   return (
     <Container>
+      <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
+        Team Lookup
+      </Header>
       <Form style={{ marginTop: 15 }}>
         <Form.Group unstackable>
           <Form.Input
@@ -106,110 +118,62 @@ const TeamLookup = () => {
           </Form.Field>
         </Form.Group>
       </Form>
-      <Table sortable celled striped unstackable compact="very" size="small">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell
-              sorted={column === "MatchNo" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "MatchNo" })
-              }
-            >
-              MatchNo
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teamNumber" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teamNumber" })
-              }
-            >
-              teamNumber
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "AutoLH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "AutoLH" })
-              }
-            >
-              AutoLH
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "AutoUH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "AutoUH" })
-              }
-            >
-              AutoUH
-            </Table.HeaderCell>
-            <Table.HeaderCell>AutoC</Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "TeleopLH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "TeleopLH" })
-              }
-            >
-              TeleopLH
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "TeleopUH" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "TeleopUH" })
-              }
-            >
-              TeleopUH
-            </Table.HeaderCell>
-            <Table.HeaderCell>TeleopC</Table.HeaderCell>
-            <Table.HeaderCell>Hangar</Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "ClimbTime" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "ClimbTime" })
-              }
-            >
-              ClimbTime
-            </Table.HeaderCell>
-            <Table.HeaderCell>EndgameC</Table.HeaderCell>
-            <Table.HeaderCell>color</Table.HeaderCell>
-            <Table.HeaderCell>name</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map(
-            ({
-              MatchNo,
-              teamNumber,
-              AutoLH,
-              AutoUH,
-              AutoC,
-              TeleopLH,
-              TeleopUH,
-              TeleopC,
-              hangar,
-              ClimbTime,
-              EndgameC,
-              color,
-              name,
-            }) => (
-              <Table.Row key={MatchNo + teamNumber}>
-                <Table.Cell>{MatchNo}</Table.Cell>
-                <Table.Cell>{teamNumber}</Table.Cell>
-                <Table.Cell>{AutoLH}</Table.Cell>
-                <Table.Cell>{AutoUH}</Table.Cell>
-                <Table.Cell>{AutoC}</Table.Cell>
-                <Table.Cell>{TeleopLH}</Table.Cell>
-                <Table.Cell>{TeleopUH}</Table.Cell>
-                <Table.Cell>{TeleopC}</Table.Cell>
-                <Table.Cell>{hangar}</Table.Cell>
-                <Table.Cell>{ClimbTime}</Table.Cell>
-                <Table.Cell>{EndgameC}</Table.Cell>
-                <Table.Cell>{color}</Table.Cell>
-                <Table.Cell>{name}</Table.Cell>
+      <Container style={{ display: "flex" }}>
+        <Container>
+          <Table celled small collapsing basic stackable>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>Avg Cones Auto</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Cubes Auto</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Has Vision</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
               </Table.Row>
-            )
-          )}
-        </Table.Body>
-      </Table>
+              <Table.Row>
+                <Table.Cell>Avg Cones Tele</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Cubes Tele</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Ground Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Dock</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Engage</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Shelf Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>Avg Ground Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Avg Mobility</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Balance</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell># of Motors</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Drivetrain</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </Container>
+        <Container>
+          <Header as="h3">comments</Header>
+          <Textbox></Textbox>
+          <Textbox></Textbox>
+          <Textbox></Textbox>
+        </Container>
+      </Container>
 
+      <Divider></Divider>
+      <label>what to graph</label>
+      <Form.Select></Form.Select>
       <LineChart data={chartData} curve={false} />
       <Modal
         size="mini"
