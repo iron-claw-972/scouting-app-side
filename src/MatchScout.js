@@ -17,6 +17,8 @@ import {
   Input,
 } from "semantic-ui-react";
 
+import CanvasChooser from "./CanvasChooser";
+
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { colorOptions } from "./AllOptions";
@@ -91,6 +93,8 @@ const MatchScout = () => {
   const [timerRunning, setTimerRunning] = useState(false);
 
   const [groundIntakes, setGroundIntakes] = useState(0);
+  const [mousePos, setMousePos] = useState({});
+
 
   const [cubeButton, setCubeButton] = useState(true);
   const [coneButton, setConeButton] = useState(false);
@@ -669,6 +673,28 @@ const MatchScout = () => {
               <label style={{ color: "white" }}>Match #*</label>
               <Input
                 fluid
+                size="small"
+                margin="4px"
+                color="red"
+                onClick={() => setColor(true)}
+              >
+                Red
+              </Button>
+            )}
+          </Form.Field>
+        </Form.Group>
+        <Divider></Divider>
+        {mode ? (
+          <Container>
+            <Header style={{ color: "black" }} as="h3">
+              Auto
+            </Header>
+            <Form.Group>
+              <Form.Field>
+                <h4>Click or tap to select starting position on field map</h4>
+                <CanvasChooser setMouseCoord={setMousePos} getMouseCoord={mousePos}/>
+              </Form.Field>
+            </Form.Group>
                 size="medium"
                 placeholder=""
                 value={MatchNo}
@@ -686,6 +712,8 @@ const MatchScout = () => {
                 onChange={(e) => setMatchNo(e.target.value)}
               />
             </Form.Field>
+            
+            <Form.Group>
 
             <Form.Field>
               <label style={{ color: "white" }}>Alliance</label>

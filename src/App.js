@@ -12,6 +12,8 @@ import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
 import RawMatchTable from "./RawMatchTable";
 import TeamLookup from "./TeamLookup";
 import TeamList from "./TeamList";
+import CanvasChooser from "./CanvasChooser";
+
 import MatchList from "./MatchList";
 
 
