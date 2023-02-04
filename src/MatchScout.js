@@ -28,14 +28,14 @@ import { truncate } from "lodash";
 
 const MatchScout = () => {
   /*
-  We create these state variables
-  In summary, state in React.js allows components to re-render when a variable is changed.
-  
-  These variables work like this, using teamNumber as an example
-  The line below this comment creates teamNumber and creates a function to set its value -- setTeamNumber
-  setTeamNumber can be called at any time to change teamNumber
-  It also sets the initial value of teamNumber to "", by using useState()
-  */
+ We create these state variables
+ In summary, state in React.js allows components to re-render when a variable is changed.
+ 
+ These variables work like this, using teamNumber as an example
+ The line below this comment creates teamNumber and creates a function to set its value -- setTeamNumber
+ setTeamNumber can be called at any time to change teamNumber
+ It also sets the initial value of teamNumber to "", by using useState()
+ */
   const [teamNumber, setTeamNumber] = useState("");
   const [teamName, setTeamName] = useState("");
   const [mode, setMode] = useState(true);
@@ -142,6 +142,18 @@ const MatchScout = () => {
     docked,
     engaged,
     groundIntakes,
+    autoHighCubeCount,
+    autoMidCubeCount,
+    autoLowCubeCount,
+    autoHighConeCount,
+    autoMidConeCount,
+    autoLowConeCount,
+    teleHighCubeCount,
+    teleMidCubeCount,
+    teleLowCubeCount,
+    teleHighConeCount,
+    teleMidConeCount,
+    teleLowConeCount
   };
 
   //This function sets everything back to the default values
@@ -247,13 +259,21 @@ const MatchScout = () => {
     setDocRefId(uuidv4());
   };
 
-  /*Search these tags on semantic ui website for info
-  Eventually, I'll make these modular and easier to make
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
 
-  Near the bottom of return() we use a library to generate a qr code containing
-  all the form data once you submit it
-  This is necessary if we want to transfer data without wifi or with sketchy comp wifi
-  */
+  /*Search these tags on semantic ui website for info
+ Eventually, I'll make these modular and easier to make
+
+ Near the bottom of return() we use a library to generate a qr code containing
+ all the form data once you submit it
+ This is necessary if we want to transfer data without wifi or with sketchy comp wifi
+ */
 
   const autoLRClick = () => {
     setAutoLRSelected(true);
@@ -296,250 +316,141 @@ const MatchScout = () => {
     settelelevelSelected(true);
   };
 
-  const HighUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoHighCubeCount(autoHighCubeCount + 1)
-      }
-      if (coneButton) {
-        setAutoHighConeCount(autoHighConeCount +1)
+  const AutoHighUp = () => {
+    if (cubeButton) {
+      setAutoHighCubeCount(autoHighCubeCount + 1);
+    }
+    if (coneButton) {
+      setAutoHighConeCount(autoHighConeCount + 1);
+    }
+  };
+  const AutoHighDown = () => {
+    if (cubeButton) {
+      if (autoHighCubeCount > -9) {
+        setAutoHighCubeCount(autoHighCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleHighCubeCount(teleHighCubeCount + 1)
-      }
-      if (coneButton) {
-        setTeleHighConeCount(teleHighConeCount +1)
+    if (coneButton) {
+      if (autoHighConeCount > -9) {
+        setAutoHighConeCount(autoHighConeCount - 1);
       }
     }
-  }
-  const HighDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoHighCubeCount(autoHighCubeCount - 1)
-      }
-      if (coneButton) {
-        setAutoHighConeCount(autoHighConeCount - 1)
-      }
-    }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleHighCubeCount(teleHighCubeCount - 1)
-      }
-      if (coneButton) {
-        setTeleHighConeCount(teleHighConeCount - 1)
-      }
-    }
-  }
+  };
 
-  const MidUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoMidCubeCount(autoMidCubeCount + 1)
-      }
-      if (coneButton) {
-        setAutoMidConeCount(autoMidConeCount +1)
+  const AutoMidUp = () => {
+    if (cubeButton) {
+      setAutoMidCubeCount(autoMidCubeCount + 1);
+    }
+    if (coneButton) {
+      setAutoMidConeCount(autoMidConeCount + 1);
+    }
+  };
+  const AutoMidDown = () => {
+    if (cubeButton) {
+      if (autoMidCubeCount > -9) {
+        setAutoMidCubeCount(autoMidCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleMidCubeCount(teleMidCubeCount + 1)
-      }
-      if (coneButton) {
-        setTeleMidConeCount(teleMidConeCount +1)
+    if (coneButton) {
+      if (autoMidConeCount > -9) {
+        setAutoMidConeCount(autoMidConeCount - 1);
       }
     }
-  }
-  const MidDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoMidCubeCount(autoMidCubeCount - 1)
-      }
-      if (coneButton) {
-        setAutoMidConeCount(autoMidConeCount - 1)
-      }
-    }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleMidCubeCount(teleMidCubeCount - 1)
-      }
-      if (coneButton) {
-        setTeleMidConeCount(teleMidConeCount - 1)
-      }
-    }
-  }
+  };
 
-  const LowUp = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoLowCubeCount(autoLowCubeCount + 1)
-      }
-      if (coneButton) {
-        setAutoLowConeCount(autoLowConeCount + 1)
+  const AutoLowUp = () => {
+    if (cubeButton) {
+      setAutoLowCubeCount(autoLowCubeCount + 1);
+    }
+    if (coneButton) {
+      setAutoLowConeCount(autoLowConeCount + 1);
+    }
+  };
+  const AutoLowDown = () => {
+    if (cubeButton) {
+      if (autoLowCubeCount > -9) {
+        setAutoLowCubeCount(autoLowCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleLowCubeCount(teleLowCubeCount + 1)
-      }
-      if (coneButton) {
-        setTeleLowConeCount(teleLowConeCount + 1)
+    if (coneButton) {
+      if (autoLowConeCount > -9) {
+        setAutoLowConeCount(autoLowConeCount - 1);
       }
     }
-  }
-  const LowDown = () => {
-    if (setMode) {
-      if (cubeButton) {
-        setAutoLowCubeCount(autoLowCubeCount - 1)
-      }
-      if (coneButton) {
-        setAutoLowConeCount(autoLowConeCount - 1)
+  };
+
+  const TeleHighUp = () => {
+    if (cubeButton) {
+      setTeleHighCubeCount(teleHighCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleHighConeCount(teleHighConeCount + 1);
+    }
+  };
+  const TeleHighDown = () => {
+    if (cubeButton) {
+      if (teleHighCubeCount > -9) {
+        setTeleHighCubeCount(teleHighCubeCount - 1);
       }
     }
-    if (!setMode) {
-      if (cubeButton) {
-        setTeleLowCubeCount(teleLowCubeCount - 1)
-      }
-      if (coneButton) {
-        setTeleLowConeCount(teleLowConeCount - 1)
+    if (coneButton) {
+      if (teleHighConeCount > -9) {
+        setTeleHighConeCount(teleHighConeCount - 1);
       }
     }
-  }
+  };
+
+  const TeleMidUp = () => {
+    if (cubeButton) {
+      setTeleMidCubeCount(teleMidCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleMidConeCount(teleMidConeCount + 1);
+    }
+  };
+  const TeleMidDown = () => {
+    if (cubeButton) {
+      if (teleMidCubeCount > -9) {
+        setTeleMidCubeCount(teleMidCubeCount - 1);
+      }
+    }
+    if (coneButton) {
+      if (teleMidConeCount > -9) {
+        setTeleMidConeCount(teleMidConeCount - 1);
+      }
+    }
+  };
+
+  const TeleLowUp = () => {
+    if (cubeButton) {
+      setTeleLowCubeCount(teleLowCubeCount + 1);
+    }
+    if (coneButton) {
+      setTeleLowConeCount(teleLowConeCount + 1);
+    }
+  };
+  const TeleLowDown = () => {
+    if (cubeButton) {
+      if (teleLowCubeCount > -9) {
+        setTeleLowCubeCount(teleLowCubeCount - 1);
+      }
+    }
+    if (coneButton) {
+      if (teleLowConeCount > -9) {
+        setTeleLowConeCount(teleLowConeCount - 1);
+      }
+    }
+  };
 
   const CubeCone = () => {
-    if (cubeButton){
+    if (cubeButton) {
       setConeButton(true);
       setCubeButton(false);
     }
-    if (coneButton){
-      setConeButton(false)
+    if (coneButton) {
+      setConeButton(false);
       setCubeButton(true);
     }
-  }
-  
-  const handleautoEnter = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR + 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR + 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR + 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleautoRemove = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR - 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR - 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR - 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleteleEnter = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR + 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR + 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR + 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
-  };
-
-  const handleteleRemove = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR - 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR - 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR - 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
   };
 
   const teleUHDown = () => {
@@ -653,19 +564,22 @@ const MatchScout = () => {
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
-        <Header as="h1" style={{ textAlign: "center", marginTop: "10px", color: "white" }}>
+        <Header
+          as="h1"
+          style={{ textAlign: "center", marginTop: "10px", color: "white" }}
+        >
           Match Scout (Objective)
         </Header>
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 10 }}>
             <Form.Field>
-              <label  style={{ color: "white" }}>-Your Initials-</label>
+              <label style={{ color: "white" }}>-Your Initials-</label>
               <Input
                 fluid
                 size="medium"
                 placeholder=""
                 value={name}
-                onChange={(e) => setTeamNumber(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Field>
 
@@ -698,7 +612,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={MatchNo}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setMatchNo(e.target.value)}
               />
             </Form.Field>
 
@@ -709,7 +623,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => setMatchNo(e.target.value)}
+                onChange={(e) => setTeamNumber(e.target.value)}
               />
             </Form.Field>
             
@@ -753,213 +667,133 @@ const MatchScout = () => {
               </Form.Field>
 
               <Form.Field>
-              {cubeButton ? (
-                    <Button
+                {cubeButton ? (
+                  <Button
                     size="small"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "78px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "52px",
+                    }}
                     color="purple"
                     onClick={CubeCone}
                   >
                     CUBE
                   </Button>
-                  ) : (
-                    <button
+                ) : (
+                  <button
                     class="ui inverted small purple button"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "78px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "52px",
+                    }}
                     onClick={CubeCone}
                   >
                     CUBE
                   </button>
-                  )}
+                )}
                 {coneButton ? (
-                    <Button
+                  <Button
                     size="small"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "2px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "3px",
+                    }}
                     color="yellow"
                     onClick={CubeCone}
                   >
                     CONE
                   </Button>
-                  ) : (
-                    <button
+                ) : (
+                  <button
                     class="ui inverted small yellow button"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "2px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "3px",
+                    }}
                     onClick={CubeCone}
                   >
                     CONE
                   </button>
-                  )}
+                )}
               </Form.Field>
 
               <Form.Group>
                 <Form.Field>
-                  {AutoHRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                    >
-                      High
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                      onClick={autoHRClick}
-                    >
-                      High
-                    </Button>
-                  )}
-
-                  {AutoMRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Mid
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={autoMRClick}
-                    >
-                      Mid
-                    </Button>
-                  )}
-                  {AutoLRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Low
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={autoLRClick}
-                    >
-                      Low
-                    </Button>
-                  )}
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    High
+                  </label>
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "29px",
+                    }}
+                  >
+                    Mid
+                  </label>
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "25px",
+                    }}
+                  >
+                    Low
+                  </label>
                 </Form.Field>
-                
-                <Form.Group style={{ marginTop: "7px", marginLeft: "19px" }}>
+                <Form.Group style={{ marginTop: "7px", marginLeft: "28px" }}>
                   <Form.Field>
                     <label style={{ color: "white" }}>
                       {autoHighCubeCount}
                     </label>
                     <Divider hidden style={{ marginBottom: "12px" }}></Divider>
-                    <label style={{ color: "white" }}>
-                      {autoMidCubeCount}
-                    </label>
+                    <label style={{ color: "white" }}>{autoMidCubeCount}</label>
                     <Divider hidden style={{ marginBottom: "10px" }}></Divider>
-                    <label style={{ color: "white" }}>
-                      {autoLowCubeCount}
-                    </label>
+                    <label style={{ color: "white" }}>{autoLowCubeCount}</label>
                   </Form.Field>
-                  <Form.Field style={{ marginLeft: "54px" }}>
+                  <Form.Field style={{ marginLeft: "59px" }}>
                     <label style={{ color: "white" }}>
                       {autoHighConeCount}
                     </label>
                     <Divider hidden style={{ marginBottom: "12px" }}></Divider>
-                    <label style={{ color: "white" }}>
-                      {autoMidConeCount}
-                    </label>
+                    <label style={{ color: "white" }}>{autoMidConeCount}</label>
                     <Divider hidden style={{ marginBottom: "10px" }}></Divider>
-                    <label style={{ color: "white" }}>
-                      {autoLowConeCount}
-                    </label>
+                    <label style={{ color: "white" }}>{autoLowConeCount}</label>
                   </Form.Field>
-                  <Form.Field style={{ marginLeft: "6px"}}>
-                    <HighEnterRemoveButtons enter = {HighUp} remove = {HighDown} ></HighEnterRemoveButtons>
+                  <Form.Field style={{ marginLeft: "9px" }}>
+                    <HighEnterRemoveButtons
+                      enter={AutoHighUp}
+                      remove={AutoHighDown}
+                    ></HighEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "4px" }}></Divider>
-                    <MidEnterRemoveButtons enter = {MidUp} remove= {MidDown} ></MidEnterRemoveButtons>
+                    <MidEnterRemoveButtons
+                      enter={AutoMidUp}
+                      remove={AutoMidDown}
+                    ></MidEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "3px" }}></Divider>
-                    <LowEnterRemoveButtons enter = {LowUp} remove= {LowDown} ></LowEnterRemoveButtons>
+                    <LowEnterRemoveButtons
+                      enter={AutoLowUp}
+                      remove={AutoLowDown}
+                    ></LowEnterRemoveButtons>
                   </Form.Field>
                 </Form.Group>
-
-                {/* <Form.Field>
-                  {autopiece ? (
-                    <Button
-                      fluid
-                      size="small"
-                      style={{ marginDown: "5px", marginTop: "11px" }}
-                      color="purple"
-                      onClick={() => setautoPiece(false)}
-                    >
-                      CUBE
-                    </Button>
-                  ) : (
-                    <Button
-                      fluid
-                      size="small"
-                      style={{ marginDown: "5px", marginTop: "11px" }}
-                      color="yellow"
-                      onClick={() => setautoPiece(true)}
-                    >
-                      CONE
-                    </Button>
-                  )}
-                  <Divider fitted></Divider>
-                  {autolevelSelected ? (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      icon="X"
-                      color="green"
-                      onClick={handleautoEnter}
-                    >
-                      Enter?
-                    </Button>
-                  ) : (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      icon="X"
-                      color="white"
-                    >
-                      -
-                    </Button>
-                  )}
-
-                  {autolevelSelected ? (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      color="google plus"
-                      onClick={handleautoRemove}
-                    >
-                      Take out
-                    </Button>
-                  ) : (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      color="white"
-                    >
-                      -
-                    </Button>
-                  )}
-                </Form.Field> */}
-                <Form.Group style={{ alignSelf: "center", paddingTop: "25px", margin: "auto" }}>
+                <Form.Group
+                  style={{
+                    alignSelf: "center",
+                    paddingTop: "25px",
+                    margin: "auto",
+                  }}
+                >
                   {docked ? (
                     <Button
                       size="medium"
@@ -1035,109 +869,90 @@ const MatchScout = () => {
                 </Header>
               </Form.Field>
               <Form.Field>
-              {cubeButton ? (
-                    <Button
+                {cubeButton ? (
+                  <Button
                     size="small"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "80px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "52px",
+                    }}
                     color="purple"
                     onClick={CubeCone}
                   >
                     CUBE
                   </Button>
-                  ) : (
-                    <button
+                ) : (
+                  <button
                     class="ui inverted small purple button"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "80px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "52px",
+                    }}
                     onClick={CubeCone}
                   >
                     CUBE
                   </button>
-                  )}
+                )}
                 {coneButton ? (
-                    <Button
+                  <Button
                     size="small"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "3px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "3px",
+                    }}
                     color="yellow"
                     onClick={CubeCone}
                   >
                     CONE
                   </Button>
-                  ) : (
-                    <button
+                ) : (
+                  <button
                     class="ui inverted small yellow button"
-                    style={{ marginDown: "5px", marginTop: "11px", marginLeft: "3px" }}
+                    style={{
+                      marginDown: "5px",
+                      marginTop: "11px",
+                      marginLeft: "3px",
+                    }}
                     onClick={CubeCone}
                   >
                     CONE
                   </button>
-                  )}
+                )}
               </Form.Field>
               <Form.Group>
                 <Form.Field>
-                  {TeleHRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                    >
-                      High
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                      onClick={autoHRClick}
-                    >
-                      High
-                    </Button>
-                  )}
-
-                  {TeleMRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Mid
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={teleMRClick}
-                    >
-                      Mid
-                    </Button>
-                  )}
-                  {TeleLRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Low
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={teleLRClick}
-                    >
-                      Low
-                    </Button>
-                  )}
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    High
+                  </label>
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "29px",
+                    }}
+                  >
+                    Mid
+                  </label>
+                  <label
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      marginTop: "25px",
+                    }}
+                  >
+                    Low
+                  </label>
                 </Form.Field>
-
-                <Form.Group style={{ marginTop: "7px", marginLeft: "24px" }}>
+                <Form.Group style={{ marginTop: "7px", marginLeft: "28px" }}>
                   <Form.Field>
                     <label style={{ color: "white" }}>
                       {teleHighCubeCount}
@@ -1164,86 +979,27 @@ const MatchScout = () => {
                       {teleLowConeCount}
                     </label>
                   </Form.Field>
-                  <Form.Field style={{ marginLeft: "9px"}}>
-                    <HighEnterRemoveButtons enter = {HighUp} remove = {HighDown} ></HighEnterRemoveButtons>
+                  <Form.Field style={{ marginLeft: "9px" }}>
+                    <HighEnterRemoveButtons
+                      enter={TeleHighUp}
+                      remove={TeleHighDown}
+                    ></HighEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "4px" }}></Divider>
-                    <MidEnterRemoveButtons enter = {MidUp} remove= {MidDown} ></MidEnterRemoveButtons>
+                    <MidEnterRemoveButtons
+                      enter={TeleMidUp}
+                      remove={TeleMidDown}
+                    ></MidEnterRemoveButtons>
                     <Divider hidden style={{ marginBottom: "3px" }}></Divider>
-                    <LowEnterRemoveButtons enter = {LowUp} remove= {LowDown} ></LowEnterRemoveButtons>
+                    <LowEnterRemoveButtons
+                      enter={TeleLowUp}
+                      remove={TeleLowDown}
+                    ></LowEnterRemoveButtons>
                   </Form.Field>
                 </Form.Group>
-{/*                 
-                <Form.Field>
-                  {telepiece ? (
-                    <Button
-                      fluid
-                      style={{ marginTop: "11px" }}
-                      size="small"
-                      color="purple"
-                      onClick={() => settelePiece(false)}
-                    >
-                      CUBE
-                    </Button>
-                  ) : (
-                    <Button
-                      fluid
-                      size="small"
-                      style={{ marginTop: "11px" }}
-                      color="yellow"
-                      onClick={() => settelePiece(true)}
-                    >
-                      CONE
-                    </Button>
-                  )}
-                  <Divider fitted></Divider>
 
-                  {telelevelSelected ? (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      icon="X"
-                      color="green"
-                      onClick={handleteleEnter}
-                    >
-                      Enter?
-                    </Button>
-                  ) : (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      icon="X"
-                      color="white"
-                    >
-                      -
-                    </Button>
-                  )}
-                  {telelevelSelected ? (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      color="google plus"
-                      onClick={handleteleRemove}
-                    >
-                      Take out
-                    </Button>
-                  ) : (
-                    <Button
-                      style={{ marginDown: "5px", marginTop: "15px" }}
-                      fluid
-                      size="mini"
-                      color="white"
-                    >
-                      -
-                    </Button>
-                  )}
-                </Form.Field> */}
                 <Form.Group style={{ marginTop: 20 }}>
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />
-
                     <h5 style={{ color: "white" }}>Ground Intakes</h5>
                     {groundIntakes}
                   </Form.Field>
@@ -1269,12 +1025,9 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Link to="/">
-              {" "}
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
-            </Link>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
@@ -1282,14 +1035,6 @@ const MatchScout = () => {
               {" "}
               <Button color="white">Back to Home</Button>
             </Link>
-            {/* <Button 
-              icon="camera retro"
-              type="submit"
-              color="instagram"
-              onClick={save}
-            >
-              Submit
-            </Button> */}
           </Form.Group>
           <Divider hidden></Divider>
         </Form>
@@ -1322,6 +1067,10 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
+            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
+              Math.floor(Math.random() * randomCompliments.length)
+            ]}</h4>
           </Modal.Content>
         </Modal>
       </Container>
