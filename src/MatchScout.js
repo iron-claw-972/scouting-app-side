@@ -255,6 +255,14 @@ const MatchScout = () => {
     setDocRefId(uuidv4());
   };
 
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
+
   /*Search these tags on semantic ui website for info
  Eventually, I'll make these modular and easier to make
 
@@ -567,7 +575,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={name}
-                onChange={(e) => setTeamNumber(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Field>
 
@@ -578,7 +586,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={MatchNo}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setMatchNo(e.target.value)}
               />
             </Form.Field>
 
@@ -589,7 +597,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => setMatchNo(e.target.value)}
+                onChange={(e) => setTeamNumber(e.target.value)}
               />
             </Form.Field>
 
@@ -989,12 +997,9 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Link to="/">
-              {" "}
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
-            </Link>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
@@ -1034,6 +1039,10 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
+            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
+              Math.floor(Math.random() * randomCompliments.length)
+            ]}</h4>
           </Modal.Content>
         </Modal>
       </Container>
