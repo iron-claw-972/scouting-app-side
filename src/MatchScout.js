@@ -776,14 +776,13 @@ const MatchScout = () => {
                       Dock
                     </Button>
                   ) : (
-                    <Button
-                      size="medium"
-                      color="white"
+                    <button
+                      class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
                       onClick={() => setDocked(true)}
                     >
                       Dock
-                    </Button>
+                    </button>
                   )}
                   {engaged ? (
                     <Button
@@ -795,14 +794,13 @@ const MatchScout = () => {
                       Engage
                     </Button>
                   ) : (
-                    <Button
-                      size="medium"
-                      color="white"
+                    <button
+                      class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
                       onClick={() => setEngaged(true)}
                     >
                       Engage
-                    </Button>
+                    </button>
                   )}
                 </Form.Group>
                 <Form.Group style={{ marginTop: 20 }}>
