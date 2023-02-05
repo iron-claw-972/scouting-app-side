@@ -21,6 +21,8 @@ import {
 import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
+import CanvasChooser from "./CanvasChooser";
+
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -49,6 +51,8 @@ function exampleReducer(state, action) {
 }
 
 const TeamLookup = () => {
+  const [mousePos, setMousePos] = useState({});
+
   const [teamNumber, setTeamNumber] = useState("");
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -127,7 +131,7 @@ const TeamLookup = () => {
                 <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Has Vision</Table.Cell>
+                <Table.Cell>Ranking</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
               </Table.Row>
               <Table.Row>
@@ -149,7 +153,7 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Avg Mobility</Table.Cell>
+                <Table.Cell>Has Vision</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
@@ -157,6 +161,7 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
+
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
               </Table.Row>
@@ -165,9 +170,19 @@ const TeamLookup = () => {
         </Container>
         <Container>
           <Header as="h3">comments</Header>
+          <Header as="h5">defense</Header>
           <Textbox></Textbox>
+          <Header as="h5">driver skillz</Header>
           <Textbox></Textbox>
+          <Header as="h5"> Extra comments</Header>
           <Textbox></Textbox>
+        </Container>
+        <Container>
+          <Header>Auto Starts</Header>
+          <CanvasChooser
+            setMouseCoord={mousePos}
+            getMouseCoord={{ x: 0, y: 0 }}
+          />
         </Container>
       </Container>
 
