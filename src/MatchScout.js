@@ -95,6 +95,8 @@ const MatchScout = () => {
   const [groundIntakes, setGroundIntakes] = useState(0);
   const [mousePos, setMousePos] = useState({});
 
+  const [canvas, setCanvas] = useState(false);
+
   const [cubeButton, setCubeButton] = useState(true);
   const [coneButton, setConeButton] = useState(false);
 
@@ -172,6 +174,7 @@ const MatchScout = () => {
     setTeleMRSelected(false);
     setTeleHRSelected(false);
     settelelevelSelected(false);
+    setCanvas(false);
     setMode(true);
     setCubeButton(true);
     setConeButton(false);
@@ -295,6 +298,14 @@ const MatchScout = () => {
     settelelevelSelected(true);
   };
 
+  const ShowCanvas = () => {
+    setCanvas(true);
+  }
+
+  const HideCanvas = () => {
+    setCanvas(false);
+  }
+
   const HighUp = () => {
     if (setMode) {
       if (cubeButton) {
@@ -415,135 +426,6 @@ const MatchScout = () => {
       setConeButton(false);
       setCubeButton(true);
     }
-  };
-
-  const handleautoEnter = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR + 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR + 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR + 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR + 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleautoRemove = () => {
-    if (AutoLRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCLR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoULR - 1);
-      }
-    }
-    if (AutoMRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCMR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUMR - 1);
-      }
-    }
-    if (AutoHRSelected) {
-      if (autopiece) {
-        setAutoCLR(AutoCHR - 1);
-      }
-      if (!autopiece) {
-        setAutoCLR(AutoUHR - 1);
-      }
-    }
-    setAutoLRSelected(false);
-    setAutoMRSelected(false);
-    setAutoHRSelected(false);
-    setautolevelSelected(false);
-  };
-
-  const handleteleEnter = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR + 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR + 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR + 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR + 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
-  };
-
-  const handleteleRemove = () => {
-    if (TeleLRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCLR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleULR - 1);
-      }
-    }
-    if (TeleMRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCMR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUMR - 1);
-      }
-    }
-    if (TeleHRSelected) {
-      if (telepiece) {
-        setTeleCLR(TeleCHR - 1);
-      }
-      if (!telepiece) {
-        setTeleCLR(TeleUHR - 1);
-      }
-    }
-    setTeleLRSelected(false);
-    setTeleMRSelected(false);
-    setTeleHRSelected(false);
-    settelelevelSelected(false);
-  };
-
-  const teleUHDown = () => {
-    if (TeleopUH === 0) return;
-    setTeleopUH(TeleopUH - 1);
   };
 
   const groundIntakesUp = () => {
@@ -724,7 +606,23 @@ const MatchScout = () => {
           </Form.Group>
 
           <Divider></Divider>
-          {mode ? (
+          { mode ? (
+          <Form.Field style={{ marginTop: "10px" }}>
+            <Button
+            icon="map"
+            onClick={ShowCanvas}
+            >
+            </Button>
+            <Button
+            icon="compress"
+            onClick={HideCanvas}
+            >
+            </Button>
+          </Form.Field>
+          ) : (
+            <Form.Field></Form.Field>
+          )}
+          {canvas ? (
             <Container>
               <Form.Group>
                 <Form.Field>
