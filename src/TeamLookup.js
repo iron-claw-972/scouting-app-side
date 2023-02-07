@@ -9,6 +9,7 @@ import {
   Header,
   Divider,
   Radio,
+  Segment,
 } from "semantic-ui-react";
 import {
   getFirestore,
@@ -124,14 +125,26 @@ const TeamLookup = () => {
       </Form>
       <Container style={{ display: "flex" }}>
         <Container>
+          <Header style={{ marginLeft: 10 }} as="h3">
+            stats
+          </Header>
           <Table celled small collapsing basic stackable>
             <Table.Body>
+              <Table.Row>
+                <Table.Cell>Can Shelf Intake</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+
+                <Table.Cell>Has Vision</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>Can Balance</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
+              </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Ranking</Table.Cell>
+                <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
               </Table.Row>
               <Table.Row>
@@ -139,7 +152,7 @@ const TeamLookup = () => {
                 <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Can Ground Intake</Table.Cell>
+                <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
               </Table.Row>
               <Table.Row>
@@ -147,17 +160,11 @@ const TeamLookup = () => {
                 <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Avg Engage</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Can Shelf Intake</Table.Cell>
+
+                <Table.Cell>Ranking</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
               </Table.Row>
-              <Table.Row>
-                <Table.Cell>Avg Ground Intake</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-              </Table.Row>
+
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
@@ -169,23 +176,39 @@ const TeamLookup = () => {
           </Table>
         </Container>
         <Container>
-          <Header as="h3">comments</Header>
-          <Header as="h5">defense</Header>
-          <Textbox></Textbox>
-          <Header as="h5">driver skillz</Header>
-          <Textbox></Textbox>
-          <Header as="h5"> Extra comments</Header>
-          <Textbox></Textbox>
+          <Header style={{ marginLeft: 10 }} as="h3">
+            comments
+          </Header>
+          <Header style={{ marginLeft: 10 }} as="h5">
+            defense
+          </Header>
+          <Segment style={{ marginLeft: 10 }}>
+            {" "}
+            lorem impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
+            impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
+            impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
+            impsum dolor lorem impsum dolor lorem impsum dolor lorem
+          </Segment>
+          <Header style={{ marginLeft: 10 }} as="h5">
+            driver skillz
+          </Header>
+          <Segment style={{ marginLeft: 10 }}>
+            lorem impsum dolor lorem impsum dolor lorem impsum dolor lorem
+            impsum dolor lorem impsum dolor
+          </Segment>
         </Container>
         <Container>
-          <Header>Auto Starts</Header>
+          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
           <CanvasChooser
             setMouseCoord={mousePos}
             getMouseCoord={{ x: 0, y: 0 }}
+            style={{ marginLeft: 10 }}
           />
         </Container>
       </Container>
-
+      <Container>
+        <Header as="h3">Matches:</Header>
+      </Container>
       <Divider></Divider>
       <label>what to graph</label>
       <Form.Select></Form.Select>

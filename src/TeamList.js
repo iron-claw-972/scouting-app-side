@@ -56,7 +56,7 @@ const TeamList = () => {
         All teams + Picklist Editor
       </Header>
       <Header as="h5" style={{ textAlign: "center", margin: "3px" }}>
-        (Rankings are ~2 matches behind real rankings)
+        (Rankings are ~2 matches behind real rankings during comp)
       </Header>
 
       <label> -Team 1-</label>
@@ -65,23 +65,26 @@ const TeamList = () => {
       <Input size="small" placeholder="" />
       <label> -Team 3-</label>
       <Input size="small" placeholder="" />
-      <Header as="h3">Picklist:</Header>
 
-      <Divider></Divider>
+      <Divider hidden></Divider>
       <label>what to graph</label>
 
       <Form.Select></Form.Select>
       <LineChart></LineChart>
+      <Divider></Divider>
+      <Header as="h3">Picklist:</Header>
+      <Divider></Divider>
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Rank</Table.HeaderCell>
             <Table.HeaderCell>Team</Table.HeaderCell>
             <Table.HeaderCell>Avg Match</Table.HeaderCell>
-            <Table.HeaderCell>Avg Hangar</Table.HeaderCell>
+            <Table.HeaderCell>Avg Charge</Table.HeaderCell>
             <Table.HeaderCell>Auto</Table.HeaderCell>
             <Table.HeaderCell>Record</Table.HeaderCell>
             <Table.HeaderCell>Played</Table.HeaderCell>
+            <Table.HeaderCell>Add 2 Picklist</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
       </Table>

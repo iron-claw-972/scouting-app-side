@@ -570,7 +570,7 @@ const MatchScout = () => {
               onChange={(e) => setName(e.target.value)}
             ></Form.Field>
             <Form.Field>
-              <label style={{ color: "white" }}>---Team #*---</label>
+              <label style={{ color: "white" }}>-Team #*-</label>
               <Input
                 fluid
                 size="medium"
