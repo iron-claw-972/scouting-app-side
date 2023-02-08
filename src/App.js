@@ -12,10 +12,9 @@ import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
 import RawMatchTable from "./RawMatchTable";
 import TeamLookup from "./TeamLookup";
 import TeamList from "./TeamList";
+import MatchList from "./ListMatch";
+
 import CanvasChooser from "./CanvasChooser";
-
-import MatchList from "./MatchList";
-
 
 //setting up main page
 //The element= causes all the content of the pages to show
@@ -30,11 +29,12 @@ const App = () => {
       <Route path="/teamlist" element={<TeamList />} />
       <Route path="/teamlookup" element={<TeamLookup />} />
 
-      <Route path="pitdisplay" element={<PitDisplay />} />
+      <Route path="/pitdisplay" element={<PitDisplay />} />
+
       <Route path="datadisplay" element={<DataDisplay />} />
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
       <Route path="scanpitscoutdata" element={<ScanPitScoutDataQR />} />
-      <Route path="matchlist" element={<MatchList />} />
+      <Route path="/matchlist" element={<MatchList />} />
     </Routes>
   );
 };

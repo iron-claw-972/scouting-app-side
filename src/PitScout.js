@@ -272,7 +272,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setClimb(false)}
                 >
-                  Gron Itke
+                  Ground itke
                 </Button>
               ) : (
                 <button
@@ -280,7 +280,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setClimb(true)}
                 >
-                  Ground Itke
+                  Ground itke
                 </button>
               )}
             </Form.Field>
@@ -318,7 +318,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
-                  Shelf Itke
+                  Shelf itke
                 </Button>
               ) : (
                 <button
@@ -326,7 +326,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
-                  Shelf Itke
+                  Shelf itke
                 </button>
               )}
             </Form.Field>

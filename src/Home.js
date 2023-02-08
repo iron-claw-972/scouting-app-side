@@ -48,10 +48,10 @@ const Home = () => (
     <Divider section />
 
     <Card.Group
-    centered
-    stackable
-    textAlign="center"
-    style={{ margin: "10px" }}
+      centered
+      stackable
+      textAlign="center"
+      style={{ margin: "10px" }}
     >
       <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
         <Card>
@@ -74,10 +74,10 @@ const Home = () => (
     <Divider section />
 
     <Card.Group
-    centered
-    stackable
-    textAlign="center"
-    style={{ margin: "10px" }}
+      centered
+      stackable
+      textAlign="center"
+      style={{ margin: "10px" }}
     >
       <Link to="/teamlist" style={{ margin: 10 }}>
         <Card>
@@ -116,10 +116,7 @@ const Home = () => (
 
       <Link to="/matchlist" style={{ margin: 10 }}>
         <Card>
-          <Card.Content
-            header="Match List"
-            description="TBD"
-          />
+          <Card.Content header="Match List" description="TBD" />
         </Card>
       </Link>
 
