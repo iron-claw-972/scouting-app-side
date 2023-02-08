@@ -127,7 +127,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["red"]["team_keys"][0]}
+              {users[i]["alliances"]["red"]["team_keys"][0].replace("frc", "")}
             </Button>
             <Button
               style={{
@@ -139,7 +139,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["red"]["team_keys"][1]}
+              {users[i]["alliances"]["red"]["team_keys"][1].replace("frc", "")}
             </Button>
             <Button
               style={{
@@ -151,7 +151,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["red"]["team_keys"][2]}
+              {users[i]["alliances"]["red"]["team_keys"][2].replace("frc", "")}
             </Button>
             <Button
               color="blue"
@@ -176,7 +176,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["blue"]["team_keys"][0]}
+              {users[i]["alliances"]["blue"]["team_keys"][0].replace("frc", "")}
             </Button>
             <Button
               style={{
@@ -188,7 +188,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["blue"]["team_keys"][1]}
+              {users[i]["alliances"]["blue"]["team_keys"][1].replace("frc", "")}
             </Button>
             <Button
               style={{
@@ -200,7 +200,7 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              {users[i]["alliances"]["blue"]["team_keys"][2]}
+              {users[i]["alliances"]["blue"]["team_keys"][2].replace("frc", "")}
             </Button>
 
             <Card.Content
