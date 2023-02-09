@@ -29,6 +29,14 @@ const MatchScoutSubjective = () => {
   const [teamNumber2, setTeamNumber2] = useState("");
   const [teamNumber3, setTeamNumber3] = useState("");
 
+  const [defense1, setDefense1] = useState("");
+  const [defense2, setDefense2] = useState("");
+  const [defense3, setDefense3] = useState("");
+
+  const [driverCapacity1, setDriverCapacity1] = useState("");
+  const [driverCapacity2, setDriverCapacity2] = useState("");
+  const [driverCapacity3, setDriverCapacity3] = useState("");
+
   const [color, setColor] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -90,6 +98,12 @@ const MatchScoutSubjective = () => {
     teamNumber1,
     teamNumber2,
     teamNumber3,
+    defense1,
+    defense2,
+    defense3,
+    driverCapacity1,
+    driverCapacity2,
+    driverCapacity3,
   };
 
   const resetForm = () => {
@@ -99,6 +113,14 @@ const MatchScoutSubjective = () => {
     setTeamNumber2("");
     setTeamNumber3("");
   };
+
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
 
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
@@ -162,8 +184,8 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-          <Form.Field style={{ marginLeft: "10px", marginBottom: "10px" }}>
-              <label style={{ color: "white" }}>Team #*</label>
+          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+              <label style={{ color: "white" }}>Team 1 #*</label>
               <Input
                 fluid
                 size="medium"
@@ -173,20 +195,14 @@ const MatchScoutSubjective = () => {
                 onChange={(e) => setTeamNumber1(e.target.value)}
               />
             </Form.Field>
-            <Form.Group style={{ margin: "auto"}}>
-              <Form.Field>
+            <Form.Group>
+              <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDefense1(e.target.value)}></Form.TextArea>
               </Form.Field>
               <Form.Field>
                 <label style={{ color: "white" }}>Driver Capacity</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDriverCapacity1(e.target.value)}></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
@@ -194,8 +210,8 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
           
           <Form.Group>
-          <Form.Field>
-              <label style={{ color: "white" }}>Team #*</label>
+          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+              <label style={{ color: "white" }}>Team 2 #*</label>
               <Input
                 fluid
                 size="medium"
@@ -206,19 +222,13 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field>
+              <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDefense2(e.target.value)}></Form.TextArea>
               </Form.Field>
               <Form.Field>
                 <label style={{ color: "white" }}>Driver Capacity</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDriverCapacity2(e.target.value)}></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
@@ -226,8 +236,8 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-          <Form.Field>
-              <label style={{ color: "white" }}>Team #*</label>
+          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+              <label style={{ color: "white" }}>Team 3 #*</label>
               <Input
                 fluid
                 size="medium"
@@ -238,19 +248,13 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field>
+              <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDefense3(e.target.value)}></Form.TextArea>
               </Form.Field>
               <Form.Field>
                 <label style={{ color: "white" }}>Driver Capacity</label>
-                <Input
-                placeholder=""
-                size="small"
-                />
+                <Form.TextArea onChange={(e) => setDriverCapacity3(e.target.value)}></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
@@ -261,9 +265,6 @@ const MatchScoutSubjective = () => {
               <Button color="instagram" type="submit" onClick={save}>
                 Submit / Save
               </Button>
-            <Button type="submit" color="grey" onClick={resetForm}>
-              Clear
-            </Button>
             <Link to="/">
               {" "}
               <Button color="white">Back to Home</Button>
@@ -299,6 +300,10 @@ const MatchScoutSubjective = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
+            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
+              Math.floor(Math.random() * randomCompliments.length)
+            ]}</h4>
           </Modal.Content>
         </Modal>
       </Container>

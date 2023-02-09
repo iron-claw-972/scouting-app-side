@@ -530,6 +530,14 @@ const MatchScout = () => {
     );
   };
 
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
+
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
@@ -1081,6 +1089,10 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
+            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
+              Math.floor(Math.random() * randomCompliments.length)
+            ]}</h4>
           </Modal.Content>
         </Modal>
       </Container>
