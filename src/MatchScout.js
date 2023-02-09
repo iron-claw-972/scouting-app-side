@@ -251,7 +251,6 @@ const MatchScout = () => {
 
   /*Search these tags on semantic ui website for info
   Eventually, I'll make these modular and easier to make
-
   Near the bottom of return() we use a library to generate a qr code containing
   all the form data once you submit it
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
@@ -543,13 +542,13 @@ const MatchScout = () => {
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 2 }}>
             <Form.Field>
-              <label style={{ color: "white" }}>-Your Initials-</label>
+              <label style={{ color: "white" }}>Your Initials</label>
               <Input
                 fluid
                 size="medium"
                 placeholder=""
                 value={name}
-                onChange={(e) => setTeamNumber(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Field>
 
@@ -557,26 +556,21 @@ const MatchScout = () => {
               <label style={{ color: "white" }}>Match #*</label>
               <Input
                 fluid
-                size="small"
-                margin="4px"
-                color="red"
-                onClick={() => setColor(true)}
-              />
-            </Form.Field>
-            <Form.Field
-              size="medium"
+                size="medium"
               placeholder=""
               value={MatchNo}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Field>
+              onChange={(e) => setMatchNo(e.target.value)}
+              />
+            </Form.Field>
+
             <Form.Field>
-              <label style={{ color: "white" }}>---Team #*---</label>
+              <label style={{ color: "white" }}>Team #*</label>
               <Input
                 fluid
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => setMatchNo(e.target.value)}
+                onChange={(e) => setTeamNumber(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
@@ -790,14 +784,13 @@ const MatchScout = () => {
                       Dock
                     </Button>
                   ) : (
-                    <Button
-                      size="medium"
-                      color="white"
+                    <button
+                      class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
                       onClick={() => setDocked(true)}
                     >
                       Dock
-                    </Button>
+                    </button>
                   )}
                   {engaged ? (
                     <Button
@@ -809,14 +802,13 @@ const MatchScout = () => {
                       Engage
                     </Button>
                   ) : (
-                    <Button
-                      size="medium"
-                      color="white"
+                    <button
+                      class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
                       onClick={() => setEngaged(true)}
                     >
                       Engage
-                    </Button>
+                    </button>
                   )}
                 </Form.Group>
                 <Form.Group style={{ marginTop: 20 }}>
@@ -1039,11 +1031,9 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Link to="/">
               <Button color="instagram" type="submit" onClick={save}>
                 Submit / Save
               </Button>
-            </Link>
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./Home";
 import MatchScout from "./MatchScout";
+import MatchScoutSubjective from "./MatchScoutSubjective";
 import PitScout from "./PitScout";
 import NewTeamPages from "./NewTeamPage";
 import PitDisplay from "./PitDisplay";
@@ -24,6 +25,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="matchscout" element={<MatchScout />} />
+      <Route path="matchscoutsubjective" element={<MatchScoutSubjective />} />
       <Route path="pitscout" element={<PitScout />} />
       <Route path="teampages" element={<NewTeamPages />} />
       <Route path="rawmatchtable" element={<RawMatchTable />} />

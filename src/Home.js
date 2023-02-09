@@ -35,6 +35,17 @@ const Home = () => (
         </Card>
       </Link>
 
+      <Link to="/matchscoutsubjective" style={{ margin: 10 }}>
+        <Card color="orange">
+          <Card.Content>
+            <Card.Header>Match Scout (Subjective)</Card.Header>
+            <Card.Description>
+              Collect subjective data on an alliance during a match
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      </Link>
+
       <Link to="/pitscout" style={{ margin: 10 }}>
         <Card color="orange">
           <Card.Content>
