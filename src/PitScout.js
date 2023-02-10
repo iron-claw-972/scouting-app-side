@@ -208,7 +208,10 @@ const PitScout = () => {
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
-        <Header as="h1" style={{ textAlign: "center", marginTop: "10px", color: "white" }}>
+        <Header
+          as="h1"
+          style={{ textAlign: "center", marginTop: "10px", color: "white" }}
+        >
           Pit Scout
         </Header>
 
@@ -225,12 +228,12 @@ const PitScout = () => {
             </Form.Field>
 
             <Form.Field inline>
-              <label style={{ color: "white" }}>Robot pic</label>
+              <label style={{ color: "white" }}>Picture</label>
               <Button
                 fluid
                 icon="camera retro"
                 size="medium"
-                style={{ marginTop: "5px"}}
+                style={{ marginTop: "5px" }}
                 onClick={() => {
                   setShowCamera(true);
                 }}
@@ -269,7 +272,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setClimb(false)}
                 >
-                  Ground Intake
+                  Ground itke
                 </Button>
               ) : (
                 <button
@@ -277,7 +280,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setClimb(true)}
                 >
-                  Ground Intake
+                  Ground itke
                 </button>
               )}
             </Form.Field>
@@ -288,7 +291,7 @@ const PitScout = () => {
                   size="huge"
                   fluid
                   color="green"
-                  style={{ alignSelf: "right"}}
+                  style={{ alignSelf: "right" }}
                   onClick={() => setVision(false)}
                 >
                   Vision
@@ -297,7 +300,7 @@ const PitScout = () => {
                 <button
                   class="ui inverted huge white button"
                   fluid
-                  style={{ alignSelf: "right"}}
+                  style={{ alignSelf: "right" }}
                   onClick={() => setVision(true)}
                 >
                   Vision
@@ -306,7 +309,7 @@ const PitScout = () => {
             </Form.Field>
           </Form.Group>
           <Divider hidden></Divider>
-          <Form.Group style={{ textAlign: "center", margin: "auto"  }}>
+          <Form.Group style={{ textAlign: "center", margin: "auto" }}>
             <Form.Field>
               {shelfIntake ? (
                 <Button
@@ -315,7 +318,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
-                  Shelf Intake
+                  Shelf itke
                 </Button>
               ) : (
                 <button
@@ -323,7 +326,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
-                  Shelf Intake
+                  Shelf itke
                 </button>
               )}
             </Form.Field>
@@ -404,7 +407,11 @@ const PitScout = () => {
           </Form.Group>
         </Form>
 
-        <Modal size="small" open={showModal} onClose={() => setShowModal(false)}>
+        <Modal
+          size="small"
+          open={showModal}
+          onClose={() => setShowModal(false)}
+        >
           <Modal.Header>Some fields are blank</Modal.Header>
           <Modal.Content>
             <p>Please check some required fields with (*) are not entered</p>
@@ -424,10 +431,16 @@ const PitScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(pitData)} />
-            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
-            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
-              Math.floor(Math.random() * randomCompliments.length)
-            ]}</h4>
+            <h3 style={{ margin: "0px" }}>
+              Thank you for submitting! Here's a compliment:
+            </h3>
+            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
+              {
+                randomCompliments[
+                  Math.floor(Math.random() * randomCompliments.length)
+                ]
+              }
+            </h4>
           </Modal.Content>
         </Modal>
       </Container>

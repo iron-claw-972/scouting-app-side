@@ -75,7 +75,7 @@ const MatchScout = () => {
   const [MatchNo, setMatchNo] = useState("");
   const [name, setName] = useState("");
 
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState(false);
 
   const [docked, setDocked] = useState("");
   const [engaged, setEngaged] = useState("");
@@ -125,21 +125,23 @@ const MatchScout = () => {
     position: "bottom",
   };
   const matchData = {
-    MatchNo,
     name,
-    AutoLH,
-    AutoUH,
-    AutoC,
-    TeleopLH,
-    TeleopUH,
-    TeleopC,
-    Hangar,
-    ClimbTime,
-    EndgameC,
-    teamName,
+    MatchNo,
     teamNumber,
     color,
-    docRefId,
+    mousePos,
+    autoHighCubeCount,
+    autoMidCubeCount,
+    autoLowCubeCount,
+    autoHighConeCount,
+    autoMidConeCount,
+    autoLowConeCount,
+    teleHighCubeCount,
+    teleMidCubeCount,
+    teleLowCubeCount,
+    teleHighConeCount,
+    teleMidConeCount,
+    teleLowConeCount,
     docked,
     engaged,
     groundIntakes,
@@ -203,7 +205,7 @@ const MatchScout = () => {
     //And then saves into the database
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "match_svr", docRefId);
+    const docRef = doc(db, "test", docRefId);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -246,7 +248,7 @@ const MatchScout = () => {
   //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
-    setDocRefId(uuidv4());
+    setDocRefId(teamNumber + "_" + MatchNo);
   };
 
   /*Search these tags on semantic ui website for info
@@ -299,14 +301,14 @@ const MatchScout = () => {
 
   const ShowCanvas = () => {
     setCanvas(true);
-  }
+  };
 
   const HideCanvas = () => {
     setCanvas(false);
-  }
+  };
 
   const HighUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoHighCubeCount(autoHighCubeCount + 1);
       }
@@ -314,7 +316,7 @@ const MatchScout = () => {
         setAutoHighConeCount(autoHighConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleHighCubeCount(teleHighCubeCount + 1);
       }
@@ -324,7 +326,7 @@ const MatchScout = () => {
     }
   };
   const HighDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoHighCubeCount(autoHighCubeCount - 1);
       }
@@ -332,7 +334,7 @@ const MatchScout = () => {
         setAutoHighConeCount(autoHighConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleHighCubeCount(teleHighCubeCount - 1);
       }
@@ -343,7 +345,7 @@ const MatchScout = () => {
   };
 
   const MidUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoMidCubeCount(autoMidCubeCount + 1);
       }
@@ -351,7 +353,7 @@ const MatchScout = () => {
         setAutoMidConeCount(autoMidConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleMidCubeCount(teleMidCubeCount + 1);
       }
@@ -361,7 +363,7 @@ const MatchScout = () => {
     }
   };
   const MidDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoMidCubeCount(autoMidCubeCount - 1);
       }
@@ -369,7 +371,7 @@ const MatchScout = () => {
         setAutoMidConeCount(autoMidConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleMidCubeCount(teleMidCubeCount - 1);
       }
@@ -380,7 +382,7 @@ const MatchScout = () => {
   };
 
   const LowUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoLowCubeCount(autoLowCubeCount + 1);
       }
@@ -388,7 +390,7 @@ const MatchScout = () => {
         setAutoLowConeCount(autoLowConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleLowCubeCount(teleLowCubeCount + 1);
       }
@@ -398,7 +400,7 @@ const MatchScout = () => {
     }
   };
   const LowDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoLowCubeCount(autoLowCubeCount - 1);
       }
@@ -406,7 +408,7 @@ const MatchScout = () => {
         setAutoLowConeCount(autoLowConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleLowCubeCount(teleLowCubeCount - 1);
       }
@@ -565,14 +567,16 @@ const MatchScout = () => {
               <Input
                 fluid
                 size="medium"
-              placeholder=""
-              value={MatchNo}
-              onChange={(e) => setMatchNo(e.target.value)}
+                placeholder=""
+                value={MatchNo}
+                onChange={(e) => setMatchNo(e.target.value)}
+
               />
             </Form.Field>
 
             <Form.Field>
-              <label style={{ color: "white" }}>Team #*</label>
+
+              <label style={{ color: "white" }}>-Team #*-</label>
               <Input
                 fluid
                 size="medium"
@@ -608,19 +612,11 @@ const MatchScout = () => {
           </Form.Group>
 
           <Divider></Divider>
-          { mode ? (
-          <Form.Field style={{ marginTop: "10px" }}>
-            <Button
-            icon="map"
-            onClick={ShowCanvas}
-            >
-            </Button>
-            <Button
-            icon="compress"
-            onClick={HideCanvas}
-            >
-            </Button>
-          </Form.Field>
+          {mode ? (
+            <Form.Field style={{ marginTop: "10px" }}>
+              <Button icon="map" onClick={ShowCanvas}></Button>
+              <Button icon="compress" onClick={HideCanvas}></Button>
+            </Form.Field>
           ) : (
             <Form.Field></Form.Field>
           )}
@@ -1042,6 +1038,7 @@ const MatchScout = () => {
               <Button color="instagram" type="submit" onClick={save}>
                 Submit / Save
               </Button>
+
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
