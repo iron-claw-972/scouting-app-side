@@ -248,7 +248,7 @@ const MatchScout = () => {
   //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
-    setDocRefId(uuidv4());
+    setDocRefId(teamNumber + "_" + MatchNo);
   };
 
   /*Search these tags on semantic ui website for info
@@ -1026,11 +1026,9 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Link to="/">
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
-            </Link>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
