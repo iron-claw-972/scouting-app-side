@@ -253,7 +253,6 @@ const MatchScout = () => {
 
   /*Search these tags on semantic ui website for info
   Eventually, I'll make these modular and easier to make
-
   Near the bottom of return() we use a library to generate a qr code containing
   all the form data once you submit it
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
@@ -533,6 +532,14 @@ const MatchScout = () => {
     );
   };
 
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
+
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
@@ -545,7 +552,7 @@ const MatchScout = () => {
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 2 }}>
             <Form.Field>
-              <label style={{ color: "white" }}>-Your Initials-</label>
+              <label style={{ color: "white" }}>Your Initials</label>
               <Input
                 fluid
                 size="medium"
@@ -563,10 +570,12 @@ const MatchScout = () => {
                 placeholder=""
                 value={MatchNo}
                 onChange={(e) => setMatchNo(e.target.value)}
+
               />
             </Form.Field>
 
             <Form.Field>
+
               <label style={{ color: "white" }}>-Team #*-</label>
               <Input
                 fluid
@@ -1026,9 +1035,10 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Button color="instagram" type="submit" onClick={save}>
-              Submit / Save
-            </Button>
+              <Button color="instagram" type="submit" onClick={save}>
+                Submit / Save
+              </Button>
+
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
@@ -1076,6 +1086,10 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
+            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
+              Math.floor(Math.random() * randomCompliments.length)
+            ]}</h4>
           </Modal.Content>
         </Modal>
       </Container>
