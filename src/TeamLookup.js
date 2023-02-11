@@ -64,13 +64,14 @@ const TeamLookup = () => {
     const matchDataArr = [];
     const db = getFirestore();
     const q = query(
-      collection(db, "match_svr"),
+      collection(db, "test"),
       where("teamNumber", "==", queryTeam)
     );
     const matchSnapshot = await getDocs(q);
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
+    console.log(matchDataArr)
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
