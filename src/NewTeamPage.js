@@ -13,7 +13,45 @@ import {
   Table,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
+
 const NewTeamPages = () => {
+  const [queryTeam, setQueryTeam] = useState("");
+  const [matchNumber, setMatchNumber] = useState("");
+  const matchDataArr = [];
+  useEffect(async () => {
+    if (queryTeam === "") return;
+
+    const db = getFirestore();
+    const q = query(collection(db, "test"), where("MatchNo", "==", queryTeam));
+    const matchSnapshot = await getDocs(q);
+    matchSnapshot.forEach((match) => {
+      matchDataArr.push(match.data());
+    });
+    console.log(matchDataArr);
+  }, [queryTeam]);
+  const redlst = [{}, {}, {}];
+  const redind = 0;
+  const blueind = 0;
+  const bluelst = [{}, {}, {}];
+  for (let i = 0; i < matchDataArr.length; i++) {
+    if (matchDataArr[i].color == false) {
+      redlst[redind] = matchDataArr[i];
+      redind = redind + 1;
+    }
+    if (matchDataArr[i].color == true) {
+      bluelst[blueind] = matchDataArr[i];
+      blueind = blueind + 1;
+    }
+  }
+
   return (
     <Container>
       <Header style={{ textAlign: "center", margin: "2px" }} as="h1">
@@ -24,7 +62,15 @@ const NewTeamPages = () => {
       </Header>
       <Divider hidden></Divider>
       <label> Match# </label>
-      <Input size="small" placeholder="" />
+      <Input
+        value={matchNumber}
+        size="small"
+        placeholder=""
+        onChange={(e) => setMatchNumber(e.target.value)}
+      />
+      <Button type="submit" onClick={() => setQueryTeam(matchNumber)}>
+        Search
+      </Button>
       <Divider></Divider>
       <Container style={{ display: "flex" }}>
         <Container>
