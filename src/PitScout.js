@@ -48,7 +48,7 @@ const PitScout = () => {
   */
 
   const [teamNumber, setTeamNumber] = useState("");
-  const [climb, setClimb] = useState(false);
+  const [gintake, setgintake] = useState(false);
   const [shelfIntake, setShelfIntake] = useState(false);
   const [organization, setOrg] = useState("");
   const [drive, setDrive] = useState("");
@@ -69,7 +69,7 @@ const PitScout = () => {
   //This function sets everything back to the default values
   const resetForm = () => {
     setTeamNumber("");
-    setClimb(false);
+    setgintake(false);
     setOrg("");
     setDrive("");
     setMotors(0);
@@ -86,17 +86,18 @@ const PitScout = () => {
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
-  }, [teamNumber, climb, organization, drive, vision, balance]);
+  }, [teamNumber, gintake, organization, drive, vision, balance]);
 
   //We put all the variables declared previously into an array, this is our full team data
 
   const pitData = {
     teamNumber,
-    climb,
-    organization,
+    gintake,
     drive,
     vision,
     balance,
+    shelfIntake,
+    motors,
   };
 
   //checks if we at least filled out team number
@@ -119,7 +120,7 @@ const PitScout = () => {
       // doc.data() is never undefined for query doc snapshots
       const { teamNumber, scouterName, organization, lang, notes } = doc.data();
       setTeamNumber(teamNumber || "");
-      setClimb(climb || false);
+      setgintake(gintake || false);
       setOrg(organization || "");
       setDrive(drive || "");
       setDrive(balance || false);
@@ -265,12 +266,12 @@ const PitScout = () => {
           <Divider></Divider>
           <Form.Group style={{ textAlign: "center", margin: "auto" }}>
             <Form.Field>
-              {climb ? (
+              {gintake ? (
                 <Button
                   size="huge"
                   color="green"
                   fluid
-                  onClick={() => setClimb(false)}
+                  onClick={() => setgintake(false)}
                 >
                   Ground itke
                 </Button>
@@ -278,7 +279,7 @@ const PitScout = () => {
                 <button
                   class="ui inverted huge white button"
                   fluid
-                  onClick={() => setClimb(true)}
+                  onClick={() => setgintake(true)}
                 >
                   Ground itke
                 </button>
