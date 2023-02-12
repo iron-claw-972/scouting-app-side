@@ -19,9 +19,7 @@ import {
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-
 const MatchScoutSubjective = () => {
-
   const [MatchNo, setMatchNo] = useState("");
   const [name, setName] = useState("");
 
@@ -60,7 +58,7 @@ const MatchScoutSubjective = () => {
     //And then saves into the database
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "match_svr", docRefId);
+    const docRef = doc(db, "test_s", docRefId);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -87,9 +85,9 @@ const MatchScoutSubjective = () => {
   //This saves the data in the form
   //setDocRefId is using a library that generates a unique ID
   //REMEMBER, docRefId being changed triggers the useEffect() function!
-  const save = async () => {
+  const save = (asynbility) => {
     if (!validate()) return;
-    setDocRefId(uuidv4());
+    setDocRefId(MatchNo);
   };
 
   const matchData = {
@@ -133,7 +131,7 @@ const MatchScoutSubjective = () => {
         </Header>
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 2 }}>
-          <Form.Field>
+            <Form.Field>
               <label style={{ color: "white" }}>Your Initials</label>
               <Input
                 fluid
@@ -149,9 +147,9 @@ const MatchScoutSubjective = () => {
               <Input
                 fluid
                 size="medium"
-              placeholder=""
-              value={MatchNo}
-              onChange={(e) => setMatchNo(e.target.value)}
+                placeholder=""
+                value={MatchNo}
+                onChange={(e) => setMatchNo(e.target.value)}
               />
             </Form.Field>
 
@@ -184,7 +182,7 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 1 #*</label>
               <Input
                 fluid
@@ -198,19 +196,23 @@ const MatchScoutSubjective = () => {
             <Form.Group>
               <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea onChange={(e) => setDefense1(e.target.value)}></Form.TextArea>
+                <Form.TextArea
+                  onChange={(e) => setDefense1(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capacity</label>
-                <Form.TextArea onChange={(e) => setDriverCapacity1(e.target.value)}></Form.TextArea>
+                <label style={{ color: "white" }}>Driver Capability</label>
+                <Form.TextArea
+                  onChange={(e) => setDriverCapacity1(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
 
           <Divider></Divider>
-          
+
           <Form.Group>
-          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 2 #*</label>
               <Input
                 fluid
@@ -224,11 +226,15 @@ const MatchScoutSubjective = () => {
             <Form.Group>
               <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea onChange={(e) => setDefense2(e.target.value)}></Form.TextArea>
+                <Form.TextArea
+                  onChange={(e) => setDefense2(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capacity</label>
-                <Form.TextArea onChange={(e) => setDriverCapacity2(e.target.value)}></Form.TextArea>
+                <label style={{ color: "white" }}>Driver Capability</label>
+                <Form.TextArea
+                  onChange={(e) => setDriverCapacity2(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
@@ -236,7 +242,7 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-          <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 3 #*</label>
               <Input
                 fluid
@@ -250,21 +256,25 @@ const MatchScoutSubjective = () => {
             <Form.Group>
               <Form.Field style={{ marginLeft: "10px" }}>
                 <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea onChange={(e) => setDefense3(e.target.value)}></Form.TextArea>
+                <Form.TextArea
+                  onChange={(e) => setDefense3(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capacity</label>
-                <Form.TextArea onChange={(e) => setDriverCapacity3(e.target.value)}></Form.TextArea>
+                <label style={{ color: "white" }}>Driver Capability</label>
+                <Form.TextArea
+                  onChange={(e) => setDriverCapacity3(e.target.value)}
+                ></Form.TextArea>
               </Form.Field>
             </Form.Group>
           </Form.Group>
 
           <Divider></Divider>
-          
+
           <Form.Group widths="equal">
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
             <Link to="/">
               {" "}
               <Button color="white">Back to Home</Button>
@@ -300,10 +310,16 @@ const MatchScoutSubjective = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
-            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
-            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
-              Math.floor(Math.random() * randomCompliments.length)
-            ]}</h4>
+            <h3 style={{ margin: "0px" }}>
+              Thank you for submitting! Here's a compliment:
+            </h3>
+            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
+              {
+                randomCompliments[
+                  Math.floor(Math.random() * randomCompliments.length)
+                ]
+              }
+            </h4>
           </Modal.Content>
         </Modal>
       </Container>
