@@ -77,8 +77,8 @@ const MatchScout = () => {
 
   const [color, setColor] = useState(false);
 
-  const [docked, setDocked] = useState("");
-  const [engaged, setEngaged] = useState("");
+  const [docked, setDocked] = useState(false);
+  const [engaged, setEngaged] = useState(false);
 
   const [autolevelSelected, setautolevelSelected] = useState(false);
   const [telelevelSelected, settelelevelSelected] = useState(false);
@@ -570,12 +570,10 @@ const MatchScout = () => {
                 placeholder=""
                 value={MatchNo}
                 onChange={(e) => setMatchNo(e.target.value)}
-
               />
             </Form.Field>
 
             <Form.Field>
-
               <label style={{ color: "white" }}>-Team #*-</label>
               <Input
                 fluid
@@ -1035,9 +1033,9 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
 
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
@@ -1086,10 +1084,16 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
-            <h3 style = {{ margin: "0px" }}>Thank you for submitting! Here's a compliment:</h3>
-            <h4 style = {{ margin: "0px", color: "rgb(105,105,105)" }}>{randomCompliments[
-              Math.floor(Math.random() * randomCompliments.length)
-            ]}</h4>
+            <h3 style={{ margin: "0px" }}>
+              Thank you for submitting! Here's a compliment:
+            </h3>
+            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
+              {
+                randomCompliments[
+                  Math.floor(Math.random() * randomCompliments.length)
+                ]
+              }
+            </h4>
           </Modal.Content>
         </Modal>
       </Container>
