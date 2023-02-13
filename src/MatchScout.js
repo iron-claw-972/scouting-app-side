@@ -75,10 +75,10 @@ const MatchScout = () => {
   const [MatchNo, setMatchNo] = useState("");
   const [name, setName] = useState("");
 
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState(false);
 
-  const [docked, setDocked] = useState("");
-  const [engaged, setEngaged] = useState("");
+  const [docked, setDocked] = useState(false);
+  const [engaged, setEngaged] = useState(false);
 
   const [autolevelSelected, setautolevelSelected] = useState(false);
   const [telelevelSelected, settelelevelSelected] = useState(false);
@@ -125,21 +125,23 @@ const MatchScout = () => {
     position: "bottom",
   };
   const matchData = {
-    MatchNo,
     name,
-    AutoLH,
-    AutoUH,
-    AutoC,
-    TeleopLH,
-    TeleopUH,
-    TeleopC,
-    Hangar,
-    ClimbTime,
-    EndgameC,
-    teamName,
+    MatchNo,
     teamNumber,
     color,
-    docRefId,
+    mousePos,
+    autoHighCubeCount,
+    autoMidCubeCount,
+    autoLowCubeCount,
+    autoHighConeCount,
+    autoMidConeCount,
+    autoLowConeCount,
+    teleHighCubeCount,
+    teleMidCubeCount,
+    teleLowCubeCount,
+    teleHighConeCount,
+    teleMidConeCount,
+    teleLowConeCount,
     docked,
     engaged,
     groundIntakes,
@@ -203,7 +205,7 @@ const MatchScout = () => {
     //And then saves into the database
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "match_svr", docRefId);
+    const docRef = doc(db, "test", docRefId);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -246,12 +248,11 @@ const MatchScout = () => {
   //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
     if (!validate()) return;
-    setDocRefId(uuidv4());
+    setDocRefId(teamNumber + "_" + MatchNo);
   };
 
   /*Search these tags on semantic ui website for info
   Eventually, I'll make these modular and easier to make
-
   Near the bottom of return() we use a library to generate a qr code containing
   all the form data once you submit it
   This is necessary if we want to transfer data without wifi or with sketchy comp wifi
@@ -300,14 +301,14 @@ const MatchScout = () => {
 
   const ShowCanvas = () => {
     setCanvas(true);
-  }
+  };
 
   const HideCanvas = () => {
     setCanvas(false);
-  }
+  };
 
   const HighUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoHighCubeCount(autoHighCubeCount + 1);
       }
@@ -315,7 +316,7 @@ const MatchScout = () => {
         setAutoHighConeCount(autoHighConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleHighCubeCount(teleHighCubeCount + 1);
       }
@@ -325,7 +326,7 @@ const MatchScout = () => {
     }
   };
   const HighDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoHighCubeCount(autoHighCubeCount - 1);
       }
@@ -333,7 +334,7 @@ const MatchScout = () => {
         setAutoHighConeCount(autoHighConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleHighCubeCount(teleHighCubeCount - 1);
       }
@@ -344,7 +345,7 @@ const MatchScout = () => {
   };
 
   const MidUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoMidCubeCount(autoMidCubeCount + 1);
       }
@@ -352,7 +353,7 @@ const MatchScout = () => {
         setAutoMidConeCount(autoMidConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleMidCubeCount(teleMidCubeCount + 1);
       }
@@ -362,7 +363,7 @@ const MatchScout = () => {
     }
   };
   const MidDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoMidCubeCount(autoMidCubeCount - 1);
       }
@@ -370,7 +371,7 @@ const MatchScout = () => {
         setAutoMidConeCount(autoMidConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleMidCubeCount(teleMidCubeCount - 1);
       }
@@ -381,7 +382,7 @@ const MatchScout = () => {
   };
 
   const LowUp = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoLowCubeCount(autoLowCubeCount + 1);
       }
@@ -389,7 +390,7 @@ const MatchScout = () => {
         setAutoLowConeCount(autoLowConeCount + 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleLowCubeCount(teleLowCubeCount + 1);
       }
@@ -399,7 +400,7 @@ const MatchScout = () => {
     }
   };
   const LowDown = () => {
-    if (setMode) {
+    if (mode) {
       if (cubeButton) {
         setAutoLowCubeCount(autoLowCubeCount - 1);
       }
@@ -407,7 +408,7 @@ const MatchScout = () => {
         setAutoLowConeCount(autoLowConeCount - 1);
       }
     }
-    if (!setMode) {
+    if (!mode) {
       if (cubeButton) {
         setTeleLowCubeCount(teleLowCubeCount - 1);
       }
@@ -531,6 +532,14 @@ const MatchScout = () => {
     );
   };
 
+  const randomCompliments = [
+    "You look great, scouter! Got any beauty tips?",
+    "Your hustle is admirable! (feed... me... data..)",
+    "Nice fit, scouter!... (im not jealous)",
+    "I can't think of a better person to get data from!",
+    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+  ];
+
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
@@ -543,13 +552,13 @@ const MatchScout = () => {
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 2 }}>
             <Form.Field>
-              <label style={{ color: "white" }}>-Your Initials-</label>
+              <label style={{ color: "white" }}>Your Initials</label>
               <Input
                 fluid
                 size="medium"
                 placeholder=""
                 value={name}
-                onChange={(e) => setTeamNumber(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Form.Field>
 
@@ -557,18 +566,13 @@ const MatchScout = () => {
               <label style={{ color: "white" }}>Match #*</label>
               <Input
                 fluid
-                size="small"
-                margin="4px"
-                color="red"
-                onClick={() => setColor(true)}
+                size="medium"
+                placeholder=""
+                value={MatchNo}
+                onChange={(e) => setMatchNo(e.target.value)}
               />
             </Form.Field>
-            <Form.Field
-              size="medium"
-              placeholder=""
-              value={MatchNo}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Field>
+
             <Form.Field>
               <label style={{ color: "white" }}>-Team #*-</label>
               <Input
@@ -576,7 +580,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => setMatchNo(e.target.value)}
+                onChange={(e) => setTeamNumber(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
@@ -606,19 +610,11 @@ const MatchScout = () => {
           </Form.Group>
 
           <Divider></Divider>
-          { mode ? (
-          <Form.Field style={{ marginTop: "10px" }}>
-            <Button
-            icon="map"
-            onClick={ShowCanvas}
-            >
-            </Button>
-            <Button
-            icon="compress"
-            onClick={HideCanvas}
-            >
-            </Button>
-          </Form.Field>
+          {mode ? (
+            <Form.Field style={{ marginTop: "10px" }}>
+              <Button icon="map" onClick={ShowCanvas}></Button>
+              <Button icon="compress" onClick={HideCanvas}></Button>
+            </Form.Field>
           ) : (
             <Form.Field></Form.Field>
           )}
@@ -1037,11 +1033,10 @@ const MatchScout = () => {
 
           <Divider></Divider>
           <Form.Group widths="equal">
-            <Link to="/">
-              <Button color="instagram" type="submit" onClick={save}>
-                Submit / Save
-              </Button>
-            </Link>
+            <Button color="instagram" type="submit" onClick={save}>
+              Submit / Save
+            </Button>
+
             <Button type="submit" color="grey" onClick={resetForm}>
               Clear
             </Button>
@@ -1089,6 +1084,16 @@ const MatchScout = () => {
         >
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
+            <h3 style={{ margin: "0px" }}>
+              Thank you for submitting! Here's a compliment:
+            </h3>
+            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
+              {
+                randomCompliments[
+                  Math.floor(Math.random() * randomCompliments.length)
+                ]
+              }
+            </h4>
           </Modal.Content>
         </Modal>
       </Container>

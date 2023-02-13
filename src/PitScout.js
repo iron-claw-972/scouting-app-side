@@ -48,7 +48,7 @@ const PitScout = () => {
   */
 
   const [teamNumber, setTeamNumber] = useState("");
-  const [climb, setClimb] = useState(false);
+  const [gintake, setgintake] = useState(false);
   const [shelfIntake, setShelfIntake] = useState(false);
   const [organization, setOrg] = useState("");
   const [drive, setDrive] = useState("");
@@ -69,7 +69,7 @@ const PitScout = () => {
   //This function sets everything back to the default values
   const resetForm = () => {
     setTeamNumber("");
-    setClimb(false);
+    setgintake(false);
     setOrg("");
     setDrive("");
     setMotors(0);
@@ -86,17 +86,18 @@ const PitScout = () => {
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
-  }, [teamNumber, climb, organization, drive, vision, balance]);
+  }, [teamNumber, gintake, organization, drive, vision, balance]);
 
   //We put all the variables declared previously into an array, this is our full team data
 
   const pitData = {
     teamNumber,
-    climb,
-    organization,
+    gintake,
     drive,
     vision,
     balance,
+    shelfIntake,
+    motors,
   };
 
   //checks if we at least filled out team number
@@ -112,14 +113,14 @@ const PitScout = () => {
   //This is the function for autofill if you've already filled out part of the form
   const lookupTeamIfExists = async () => {
     const db = getFirestore();
-    const teamsRef = collection(db, "teams_svr");
+    const teamsRef = collection(db, "test-p");
     const q = query(teamsRef, where("teamNumber", "==", teamNumber));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       const { teamNumber, scouterName, organization, lang, notes } = doc.data();
       setTeamNumber(teamNumber || "");
-      setClimb(climb || false);
+      setgintake(gintake || false);
       setOrg(organization || "");
       setDrive(drive || "");
       setDrive(balance || false);
@@ -152,7 +153,7 @@ const PitScout = () => {
     if (!validate()) return;
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "teams_svr", teamNumber);
+    const docRef = doc(db, "test-p", teamNumber);
     setDoc(docRef, pitData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -265,12 +266,12 @@ const PitScout = () => {
           <Divider></Divider>
           <Form.Group style={{ textAlign: "center", margin: "auto" }}>
             <Form.Field>
-              {climb ? (
+              {gintake ? (
                 <Button
                   size="huge"
                   color="green"
                   fluid
-                  onClick={() => setClimb(false)}
+                  onClick={() => setgintake(false)}
                 >
                   Ground itke
                 </Button>
@@ -278,7 +279,7 @@ const PitScout = () => {
                 <button
                   class="ui inverted huge white button"
                   fluid
-                  onClick={() => setClimb(true)}
+                  onClick={() => setgintake(true)}
                 >
                   Ground itke
                 </button>
