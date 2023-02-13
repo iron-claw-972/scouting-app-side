@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import field_image from "./img/field_image.png";
+import field_image from "../img/field_image.png";
 
 const CanvasChooser = ({setMouseCoord, getMouseCoord}) => {
 

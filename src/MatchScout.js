@@ -17,7 +17,7 @@ import {
   Input,
 } from "semantic-ui-react";
 
-import CanvasChooser from "./CanvasChooser";
+import CanvasChooser from "./components/CanvasChooser";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 

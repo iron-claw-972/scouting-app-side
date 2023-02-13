@@ -22,7 +22,7 @@ import {
 import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
-import CanvasChooser from "./CanvasChooser";
+import CanvasChooser from "./components/CanvasChooser";
 
 function exampleReducer(state, action) {
   switch (action.type) {
