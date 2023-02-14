@@ -71,7 +71,7 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
-    console.log(matchDataArr)
+    console.log(matchDataArr);
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
@@ -142,19 +142,31 @@ const TeamLookup = () => {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  H {} M {} L {}
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Dock</Table.Cell>
