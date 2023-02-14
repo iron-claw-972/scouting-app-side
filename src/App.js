@@ -14,6 +14,8 @@ import TeamLookup from "./TeamLookup";
 import TeamList from "./TeamList";
 import MatchList from "./MatchList";
 
+// Testing
+import CanvasDisplay from "./components/CanvasDisplay";
 
 //setting up main page
 //The element= causes all the content of the pages to show
@@ -33,6 +35,9 @@ const App = () => {
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
       <Route path="scanpitscoutdata" element={<ScanPitScoutDataQR />} />
       <Route path="matchlist" element={<MatchList />} />
+      
+      <Route path="display" element={<CanvasDisplay />} />
+
     </Routes>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import field_image from "./img/field_image.png";
+import field_image from "../img/field_image.png";
 
-const CanvasDisplay = ({setMouseCoord, getMouseCoord}) => {
+const CanvasDisplay = ({data}) => {
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -11,29 +11,32 @@ const CanvasDisplay = ({setMouseCoord, getMouseCoord}) => {
         
         field_background.src = field_image;
 
-        const draw = (event = null) => {
-            if (event != null) {
-                let rect = canvas.getBoundingClientRect();
-                let xCoord = event.clientX - rect.left;
-                let yCoord = event.clientY - rect.top;
-        
-                ctx.clearRect(0, 0, 360, 180);
-                ctx.drawImage(field_background, 0, 0, 360, 180);
-                
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.strokeStyle = 'lime';
-                ctx.arc(xCoord, yCoord, 8, 0, Math.PI*2);
-                ctx.stroke();
-                setMouseCoord({x: xCoord, y: yCoord});
-                // console.log("Coordinate x: " + Math.round(xCoord), "Coordinate y: " + Math.round(yCoord); // For debugging
-            } else {
-                ctx.drawImage(field_background, 0, 0, 360, 180);  
-            }  
+        const sample_data = [{x:3, y:100}, {x:20, y:40}];
+
+        const draw = () => {
+
+            for (let coords of data) {
+
+            }
+            let rect = canvas.getBoundingClientRect();
+            // let xCoord = data.mousePos.clientX - rect.left;
+            // let yCoord = data.mousePos.clientY - rect.top;
+    
+            // ctx.clearRect(0, 0, 360, 180);
+            ctx.drawImage(field_background, 0, 0, 360, 180);
+            
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(10, 30, 5, 0, Math.PI*2);
+            ctx.fill();
+            
+            // console.log("Coordinate x: " + Math.round(xCoord), "Coordinate y: " + Math.round(yCoord); // For debugging  
         };
 
         field_background.addEventListener('load', () => draw());
-        canvas.addEventListener('mousedown', (e) => draw(e));
+        // canvas.addEventListener('mousedown', (e) => draw(e));
+
     }, []);
 
     return(
@@ -42,3 +45,5 @@ const CanvasDisplay = ({setMouseCoord, getMouseCoord}) => {
         </div>
     )
 }
+
+export default CanvasDisplay;
