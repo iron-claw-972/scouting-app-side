@@ -10,6 +10,7 @@ import {
   Divider,
   Radio,
   Segment,
+  Image,
 } from "semantic-ui-react";
 import {
   getFirestore,
@@ -58,10 +59,14 @@ const TeamLookup = () => {
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const [pitData, setPitData] = useState([{}]);
+
   useEffect(async () => {
     console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
     const matchDataArr = [];
+    const pitDataArr = [];
+
     const db = getFirestore();
     const q = query(
       collection(db, "test"),
@@ -71,7 +76,17 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
-    console.log(matchDataArr);
+    const pitq = query(
+      collection(db, "test-p"),
+      where("teamNumber", "==", queryTeam)
+    );
+    const pitSnapshot = await getDocs(pitq);
+    pitSnapshot.forEach((match) => {
+      pitDataArr.push(match.data());
+    });
+    setPitData(pitDataArr);
+    console.log(pitData);
+
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
@@ -133,12 +148,12 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData[0].shelfIntake)}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData[0].vision)}</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData[0].balance)}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
@@ -180,7 +195,7 @@ const TeamLookup = () => {
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{pitData[0].motors}</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
@@ -211,12 +226,14 @@ const TeamLookup = () => {
           </Segment>
         </Container>
         <Container>
-          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
+          <Header>Auto Starts</Header>
           <CanvasChooser
             setMouseCoord={mousePos}
             getMouseCoord={{ x: 0, y: 0 }}
             style={{ marginLeft: 10 }}
           />
+          <Divider></Divider>
+          <Image src={pitData[0].dataUri}></Image>
         </Container>
       </Container>
       <Container>
