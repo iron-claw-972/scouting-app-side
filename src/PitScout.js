@@ -98,6 +98,7 @@ const PitScout = () => {
     balance,
     shelfIntake,
     motors,
+    dataUri,
   };
 
   //checks if we at least filled out team number
@@ -166,7 +167,7 @@ const PitScout = () => {
   };
 
   function handleTakePhoto(dataUri) {
-    console.log("takePhoto");
+    console.log(dataUri);
     setDataUri(dataUri);
     setShowCamera(false);
   }
@@ -254,6 +255,7 @@ const PitScout = () => {
             <Form.Field style={{ marginTop: 10 }}>
               {showCamera ? (
                 <Camera
+                  sizeFactor={0.4}
                   onTakePhoto={(dataUri) => {
                     handleTakePhoto(dataUri);
                   }}
@@ -429,21 +431,7 @@ const PitScout = () => {
           open={showQrCode}
           size="fullscreen"
           onClose={() => setShowQrCode(false)}
-        >
-          <Modal.Content>
-            <QRCode value={JSON.stringify(pitData)} />
-            <h3 style={{ margin: "0px" }}>
-              Thank you for submitting! Here's a compliment:
-            </h3>
-            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
-              {
-                randomCompliments[
-                  Math.floor(Math.random() * randomCompliments.length)
-                ]
-              }
-            </h4>
-          </Modal.Content>
-        </Modal>
+        ></Modal>
       </Container>
     </body>
   );
