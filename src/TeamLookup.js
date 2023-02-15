@@ -53,11 +53,17 @@ function exampleReducer(state, action) {
 }
 
 const TeamLookup = () => {
+  var matchDataArr = []
   const [mousePos, setMousePos] = useState({});
 
   const [teamNumber, setTeamNumber] = useState("");
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [avgData, setAvgData] = useState({})
+  useEffect(async () => {
+    console.log("in useEffect queryTeam is ", queryTeam);
+    if (queryTeam === "") return;
+    matchDataArr = [];
 
   const [pitData, setPitData] = useState([{}]);
 
@@ -76,6 +82,7 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
+
     const pitq = query(
       collection(db, "test-p"),
       where("teamNumber", "==", queryTeam)
@@ -90,7 +97,24 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
+    console.log(JSON.stringify(matchDataArr))
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") }})
+
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") }})
+    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") }})
+    // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
     dispatch({ type: "ADD_DATA", data: matchDataArr });
+
+
   }, [queryTeam]);
 
   const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -100,26 +124,15 @@ const TeamLookup = () => {
   });
 
   const { column, data, direction } = state;
-
-  let AutoLHData = {};
-  let AutoUHData = {};
-  let TeleopLHData = {};
-  let TeleopUHData = {};
-  let ClimbTimeData = {};
-  for (let i = 0; i < data.length; i++) {
-    const { MatchNo, AutoLH, AutoUH, TeleopLH, TeleopUH, ClimbTime } = data[i];
-    AutoLHData = { ...AutoLHData, [MatchNo]: AutoLH };
-    AutoUHData = { ...AutoUHData, [MatchNo]: AutoUH };
-    TeleopLHData = { ...TeleopLHData, [MatchNo]: TeleopLH };
-    TeleopUHData = { ...TeleopUHData, [MatchNo]: TeleopUH };
-    ClimbTimeData = { ...ClimbTimeData, [MatchNo]: ClimbTime };
+  function search(data, param) {
+    var avg = 0
+    for (let i = 0; i < data.length; i++) {
+      avg += data[i][param]
+    }
+    return avg / data.length
   }
   const chartData = [
-    { name: "AutoLH", data: AutoLHData },
-    { name: "AutoUH", data: AutoUHData },
-    { name: "TeleopLH", data: TeleopLHData },
-    { name: "TeleopUH", data: TeleopUHData },
-    { name: "ClimbTime", data: ClimbTimeData },
+
   ];
   return (
     <Container>
@@ -148,6 +161,7 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
+
                 <Table.Cell>{String(pitData[0].shelfIntake)}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
@@ -158,47 +172,48 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                  H {avgData["Avg_Cones_Auto_H"]} M {avgData["Avg_Cones_Auto_M"]} L {avgData["Avg_Cones_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                  H { } M { } L { }
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Dock</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
                 <Table.Cell>Avg Engage</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
 
                 <Table.Cell>Ranking</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
+
                 <Table.Cell>{pitData[0].motors}</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
