@@ -59,7 +59,10 @@ const TeamLookup = () => {
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [avgData, setAvgData] = useState({})
+  const [totalScore, setTotalScore] = useState()
   useEffect(async () => {
+    console.log(JSON.stringify(matchDataArr))
+
     console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
     matchDataArr = [];
@@ -76,20 +79,22 @@ const TeamLookup = () => {
       setShowModal(true);
     }
     console.log(JSON.stringify(matchDataArr))
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") }})
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") } })
 
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") }})
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") } })
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
+    setTotalScore(total(matchDataArr))
+    console.log(total(matchDataArr))
     dispatch({ type: "ADD_DATA", data: matchDataArr });
 
 
@@ -108,6 +113,32 @@ const TeamLookup = () => {
       avg += data[i][param]
     }
     return avg / data.length
+  }
+  function total(data) {
+    var out = 0
+    var values = {
+      "autoHighCubeCount":1,
+      "autoMidCubeCount":1,
+      "autoLowCubeCount":1,
+      "autoHighConeCount":1,
+      "autoMidConeCount":1,
+      "autoLowConeCount":1,
+      "teleHighCubeCount":1,
+      "teleMidCubeCount":1,
+      "teleLowCubeCount":1,
+      "teleHighConeCount":1,
+      "teleMidConeCount":1,
+      "teleLowConeCount":1,
+    }
+    for (let i = 0; i < data.length; i++) {
+      var k = Object.keys(data[i])
+      for (let j = 0; j < k.length; j++) {
+        if (Object.keys(values).indexOf(k[j]) != -1) {
+          out += data[i][k[j]] * values[k[j]]
+        }
+      }
+    }
+    return out
   }
   const chartData = [
 
@@ -153,21 +184,21 @@ const TeamLookup = () => {
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                  H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
+                  H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell>
