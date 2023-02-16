@@ -53,17 +53,20 @@ function exampleReducer(state, action) {
 }
 
 const TeamLookup = () => {
-  var matchDataArr = []
+  var matchDataArr = [];
   const [mousePos, setMousePos] = useState({});
 
   const [teamNumber, setTeamNumber] = useState("");
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [avgData, setAvgData] = useState({})
+  const [avgData, setAvgData] = useState({});
+  const [realDocked, setrealDocked] = useState(0);
+  const [realEngaged, setrealEngaged] = useState(0);
   useEffect(async () => {
     console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
     matchDataArr = [];
+  });
 
   const [pitData, setPitData] = useState([{}]);
 
@@ -78,6 +81,7 @@ const TeamLookup = () => {
       collection(db, "test"),
       where("teamNumber", "==", queryTeam)
     );
+
     const matchSnapshot = await getDocs(q);
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
@@ -87,6 +91,7 @@ const TeamLookup = () => {
       collection(db, "test-p"),
       where("teamNumber", "==", queryTeam)
     );
+
     const pitSnapshot = await getDocs(pitq);
     pitSnapshot.forEach((match) => {
       pitDataArr.push(match.data());
@@ -97,24 +102,98 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
-    console.log(JSON.stringify(matchDataArr))
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") }})
 
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") }})
-    setAvgData(prevData => {return {...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") }})
+    console.log(JSON.stringify(matchDataArr));
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount"),
+      };
+    });
+
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
+      };
+    });
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
     dispatch({ type: "ADD_DATA", data: matchDataArr });
+    var docks = 0;
+    var engage = 0;
+    for (let i = 0; i < matchDataArr.length; i++) {
+      if (matchDataArr[i].docked) {
+        docks = docks + 1;
+      }
 
+      if (matchDataArr[i].engage) {
+        engage = engage + 1;
+      }
+    }
 
+    setrealDocked(Math.round((docks / matchDataArr.length) * 100) / 100);
+    setrealEngaged(Math.round((engage / matchDataArr.length) * 100) / 100);
+    console.log(realDocked);
   }, [queryTeam]);
 
   const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -125,15 +204,13 @@ const TeamLookup = () => {
 
   const { column, data, direction } = state;
   function search(data, param) {
-    var avg = 0
+    var avg = 0;
     for (let i = 0; i < data.length; i++) {
-      avg += data[i][param]
+      avg += data[i][param];
     }
-    return avg / data.length
+    return avg / data.length;
   }
-  const chartData = [
-
-  ];
+  const chartData = [];
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
@@ -172,39 +249,44 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Auto_H"]} M {avgData["Avg_Cones_Auto_M"]} L {avgData["Avg_Cones_Auto_L"]}
+                  H {avgData["Avg_Cones_Auto_H"]} M{" "}
+                  {avgData["Avg_Cones_Auto_M"]} L {avgData["Avg_Cones_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                  H {avgData["Avg_Cubes_Auto_H"]} M{" "}
+                  {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} M{" "}
+                  {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} M{" "}
+                  {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
+                  H {avgData["Avg_Cubes_Tele_H"]} M{" "}
+                  {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell>
-                  H { } M { } L { }
+                  H {} M {} L {}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Dock</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{realDocked}</Table.Cell>
                 <Table.Cell>Avg Engage</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{realEngaged}</Table.Cell>
 
                 <Table.Cell>Ranking</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
               </Table.Row>
 
               <Table.Row>
@@ -213,7 +295,7 @@ const TeamLookup = () => {
                 <Table.Cell>{pitData[0].motors}</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
