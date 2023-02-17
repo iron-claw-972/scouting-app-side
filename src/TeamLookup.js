@@ -10,7 +10,6 @@ import {
   Divider,
   Radio,
   Segment,
-  Image,
 } from "semantic-ui-react";
 import {
   getFirestore,
@@ -59,6 +58,10 @@ const TeamLookup = () => {
   const [teamNumber, setTeamNumber] = useState("");
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [avgData, setAvgData] = useState({})
+  const [totalScore, setTotalScore] = useState()
+  useEffect(async () => {
+    console.log(JSON.stringify(matchDataArr))
   const [avgData, setAvgData] = useState({});
   const [realDocked, setrealDocked] = useState(0);
   const [realEngaged, setrealEngaged] = useState(0);
@@ -70,12 +73,9 @@ const TeamLookup = () => {
 
   const [pitData, setPitData] = useState([{}]);
 
-  useEffect(async () => {
     console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
-    const matchDataArr = [];
-    const pitDataArr = [];
-
+    matchDataArr = [];
     const db = getFirestore();
     const q = query(
       collection(db, "test"),
@@ -86,6 +86,23 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
+    if (matchDataArr.length === 0) {
+      setShowModal(true);
+    }
+    console.log(JSON.stringify(matchDataArr))
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") } })
+
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") } })
+    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") } })
 
     const pitq = query(
       collection(db, "test-p"),
@@ -178,6 +195,8 @@ const TeamLookup = () => {
       };
     });
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
+    setTotalScore(total(matchDataArr))
+    console.log(total(matchDataArr))
     dispatch({ type: "ADD_DATA", data: matchDataArr });
     var docks = 0;
     var engage = 0;
@@ -210,6 +229,35 @@ const TeamLookup = () => {
     }
     return avg / data.length;
   }
+  function total(data) {
+    var out = 0
+    var values = {
+      "autoHighCubeCount":1,
+      "autoMidCubeCount":1,
+      "autoLowCubeCount":1,
+      "autoHighConeCount":1,
+      "autoMidConeCount":1,
+      "autoLowConeCount":1,
+      "teleHighCubeCount":1,
+      "teleMidCubeCount":1,
+      "teleLowCubeCount":1,
+      "teleHighConeCount":1,
+      "teleMidConeCount":1,
+      "teleLowConeCount":1,
+    }
+    for (let i = 0; i < data.length; i++) {
+      var k = Object.keys(data[i])
+      for (let j = 0; j < k.length; j++) {
+        if (Object.keys(values).indexOf(k[j]) != -1) {
+          out += data[i][k[j]] * values[k[j]]
+        }
+      }
+    }
+    return out
+  }
+  const chartData = [
+
+  ];
   const chartData = [];
   return (
     <Container>
@@ -238,13 +286,12 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
-
-                <Table.Cell>{String(pitData[0].shelfIntake)}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{String(pitData[0].vision)}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{String(pitData[0].balance)}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
@@ -254,6 +301,11 @@ const TeamLookup = () => {
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
+                  H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                </Table.Cell>
+                <Table.Cell>Avg Cones Tele</Table.Cell>
+                <Table.Cell>
+                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                   H {avgData["Avg_Cubes_Auto_H"]} M{" "}
                   {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
@@ -266,6 +318,12 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
+                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                </Table.Cell>
+                <Table.Cell>Avg Cubes Tele</Table.Cell>
+                <Table.Cell>
+                  H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
+
                   H {avgData["Avg_Cones_Tele_H"]} M{" "}
                   {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
@@ -291,8 +349,7 @@ const TeamLookup = () => {
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
-
-                <Table.Cell>{pitData[0].motors}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
@@ -323,14 +380,12 @@ const TeamLookup = () => {
           </Segment>
         </Container>
         <Container>
-          <Header>Auto Starts</Header>
+          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
           <CanvasChooser
             setMouseCoord={mousePos}
             getMouseCoord={{ x: 0, y: 0 }}
             style={{ marginLeft: 10 }}
           />
-          <Divider></Divider>
-          <Image src={pitData[0].dataUri}></Image>
         </Container>
       </Container>
       <Container>
