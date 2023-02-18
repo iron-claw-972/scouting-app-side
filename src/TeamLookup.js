@@ -78,8 +78,7 @@ const TeamLookup = () => {
 
   function handleChart(graph) {
     //iterate thtough match data array
-    //
-    var exampledict = { "69 (match number)": 4 };
+    var exampledict = { 69: 4, 1: 5 };
   }
 
   useEffect(async () => {
@@ -101,7 +100,7 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
-    console.log(JSON.stringify(matchDataArr));
+    console.log(matchDataArr);
     setAvgData((prevData) => {
       return {
         ...prevData,
@@ -421,7 +420,7 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{pitData.shelfIntake}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
