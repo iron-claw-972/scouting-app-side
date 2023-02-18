@@ -43,6 +43,7 @@ const CanvasChooser = ({setMouseCoord, getMouseCoord}) => {
                 ctx.beginPath();
                 ctx.strokeStyle = 'lime';
                 ctx.arc(getMouseCoord().x, getMouseCoord().y, 8, 0, Math.PI*2);
+                console.log(getMouseCoord().x, getMouseCoord().y);
                 ctx.stroke();
             } else {
                 ctx.drawImage(field_background, 0, 0, 360, 180);

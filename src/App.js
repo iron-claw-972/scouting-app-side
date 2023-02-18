@@ -35,9 +35,6 @@ const App = () => {
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
       <Route path="scanpitscoutdata" element={<ScanPitScoutDataQR />} />
       <Route path="matchlist" element={<MatchList />} />
-      
-      <Route path="display" element={<CanvasDisplay />} />
-
     </Routes>
   );
 };
