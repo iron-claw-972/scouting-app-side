@@ -72,13 +72,34 @@ const TeamLookup = () => {
   const [realDocked, setrealDocked] = useState(0);
   const [realEngaged, setrealEngaged] = useState(0);
   const [pitData, setPitData] = useState([{}]);
+  const [matchData, setMatchData] = useState([{}]);
+
   const [realDriver, setRealDriver] = useState("");
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
 
   function handleChart(graph) {
-    //iterate thtough match data array
-    var exampledict = { 69: 4, 1: 5 };
+    try {
+      var q = (graph.querySelector('span').textContent)
+    } catch (error) {
+      var q = (graph.textContent)
+    }
+    var output = {}
+    // console.log(q)
+    // console.log(JSON.stringify(matchData))
+    // console.log(q)
+    // console.log(matchData)
+    for (let i = 0; i < matchData.length; i++) {
+      let type = q.split(/(\s+)/)[2].toLowerCase() + q.split(/(\s+)/)[4] + q.split(/(\s+)/)[0] + "Count"
+      type.replace('s', '')
+
+      console.log(type)
+      output[matchData[i]["MatchNo"]] = matchData[i][type]
+    }
+    console.log(output)
+    // return output
+    setChartData(output)
+    setGraph(q)
   }
 
   useEffect(async () => {
@@ -101,6 +122,7 @@ const TeamLookup = () => {
       setShowModal(true);
     }
     console.log(matchDataArr);
+    setMatchData(matchDataArr)
     setAvgData((prevData) => {
       return {
         ...prevData,
@@ -423,9 +445,9 @@ const TeamLookup = () => {
                 <Table.Cell>{pitData.shelfIntake}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
@@ -475,15 +497,15 @@ const TeamLookup = () => {
                 <Table.Cell>{realEngaged}</Table.Cell>
 
                 <Table.Cell>Ranking</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{ }</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
@@ -518,7 +540,7 @@ const TeamLookup = () => {
       <Form.Select
         value={graph}
         options={graphOptions}
-        onChange={(graph) => handleChart(graph)}
+        onChange={(e) => handleChart(e.target)}
       ></Form.Select>
       <LineChart data={chartData} curve={false} />
       <Modal
