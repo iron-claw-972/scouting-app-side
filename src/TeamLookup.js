@@ -23,6 +23,14 @@ import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
 import CanvasChooser from "./CanvasChooser";
+import {
+  colorOptions,
+  driveOptions,
+  cvOptions,
+  autoOptions,
+  yesNoOptions,
+  graphOptions,
+} from "./AllOptions";
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -56,22 +64,22 @@ const TeamLookup = () => {
   const [mousePos, setMousePos] = useState({});
 
   const [teamNumber, setTeamNumber] = useState("");
+  const [graph, setGraph] = useState("");
   const [queryTeam, setQueryTeam] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [avgData, setAvgData] = useState({})
-  const [totalScore, setTotalScore] = useState()
-  useEffect(async () => {
-    console.log(JSON.stringify(matchDataArr))
   const [avgData, setAvgData] = useState({});
+  const [totalScore, setTotalScore] = useState();
   const [realDocked, setrealDocked] = useState(0);
   const [realEngaged, setrealEngaged] = useState(0);
-  useEffect(async () => {
-    console.log("in useEffect queryTeam is ", queryTeam);
-    if (queryTeam === "") return;
-    matchDataArr = [];
-  });
-
   const [pitData, setPitData] = useState([{}]);
+  const [realDriver, setRealDriver] = useState("");
+  const [realDefense, setRealDefense] = useState("");
+  const [chartData, setChartData] = useState({});
+
+  function handleChart(graph) {}
+
+  useEffect(async () => {
+    console.log(JSON.stringify(matchDataArr));
 
     console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
@@ -89,37 +97,6 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
-    console.log(JSON.stringify(matchDataArr))
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount") } })
-
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount") } })
-    setAvgData(prevData => { return { ...prevData, Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount") } })
-
-    const pitq = query(
-      collection(db, "test-p"),
-      where("teamNumber", "==", queryTeam)
-    );
-
-    const pitSnapshot = await getDocs(pitq);
-    pitSnapshot.forEach((match) => {
-      pitDataArr.push(match.data());
-    });
-    setPitData(pitDataArr);
-    console.log(pitData);
-
-    if (matchDataArr.length === 0) {
-      setShowModal(true);
-    }
-
     console.log(JSON.stringify(matchDataArr));
     setAvgData((prevData) => {
       return {
@@ -194,9 +171,167 @@ const TeamLookup = () => {
         Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
       };
     });
+
+    const pitq = query(
+      collection(db, "test-p"),
+      where("teamNumber", "==", queryTeam)
+    );
+
+    const pitSnapshot = await getDocs(pitq);
+    var pitDataArr = [];
+    pitSnapshot.forEach((match) => {
+      pitDataArr.push(match.data());
+    });
+    setPitData(pitDataArr);
+    console.log(pitData);
+
+    if (matchDataArr.length === 0) {
+      setShowModal(true);
+    }
+
+    var subsnap1 = query(
+      collection(db, "test_s"),
+      where("teamNumber1", "==", queryTeam)
+    );
+    subsnap1 = await getDocs(subsnap1);
+
+    var subq1 = [];
+
+    subsnap1.forEach((match) => {
+      subq1.push(match.data());
+    });
+    console.log(subq1);
+
+    var subq2 = [];
+    var subsnap2 = query(
+      collection(db, "test_s"),
+      where("teamNumber2", "==", queryTeam)
+    );
+    subsnap2 = await getDocs(subsnap2);
+
+    subsnap2.forEach((match) => {
+      subq2.push(match.data());
+    });
+
+    var subq3 = [];
+
+    var subsnap3 = query(
+      collection(db, "test_s"),
+      where("teamNumber3", "==", queryTeam)
+    );
+
+    subsnap3 = await getDocs(subsnap3);
+
+    subsnap3.forEach((match) => {
+      subq3.push(match.data());
+    });
+
+    var defenseStr = "";
+    var driverStr = "";
+
+    for (let i = 0; i < subq1.length; i++) {
+      defenseStr = defenseStr + subq1[i].name + ": ";
+      defenseStr = defenseStr + subq1[i].defense1 + " / ";
+
+      driverStr = driverStr + subq1[i].name + ": ";
+      driverStr = driverStr + subq1[i].driverCapacity1 + " / ";
+    }
+
+    for (let i = 0; i < subq2.length; i++) {
+      defenseStr = defenseStr + subq2[i].name + ": ";
+      defenseStr = defenseStr + subq2[i].defense2 + "\n";
+
+      driverStr = driverStr + subq2[i].name + ": ";
+      driverStr = driverStr + subq2[i].driverCapacity2 + "\n";
+    }
+
+    for (let i = 0; i < subq3.length; i++) {
+      defenseStr = defenseStr + subq3[i].name + ": ";
+      defenseStr = defenseStr + subq3[i].defense3 + "\n";
+
+      driverStr = driverStr + subq3[i].name + ": ";
+      driverStr = driverStr + subq3[i].driverCapacity3 + "\n";
+    }
+
+    setRealDefense(defenseStr);
+    setRealDriver(driverStr);
+    console.log(defenseStr);
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount"),
+      };
+    });
+
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
+      };
+    });
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
-    setTotalScore(total(matchDataArr))
-    console.log(total(matchDataArr))
+    setTotalScore(total(matchDataArr));
+    console.log(total(matchDataArr));
     dispatch({ type: "ADD_DATA", data: matchDataArr });
     var docks = 0;
     var engage = 0;
@@ -230,35 +365,31 @@ const TeamLookup = () => {
     return avg / data.length;
   }
   function total(data) {
-    var out = 0
+    var out = 0;
     var values = {
-      "autoHighCubeCount":1,
-      "autoMidCubeCount":1,
-      "autoLowCubeCount":1,
-      "autoHighConeCount":1,
-      "autoMidConeCount":1,
-      "autoLowConeCount":1,
-      "teleHighCubeCount":1,
-      "teleMidCubeCount":1,
-      "teleLowCubeCount":1,
-      "teleHighConeCount":1,
-      "teleMidConeCount":1,
-      "teleLowConeCount":1,
-    }
+      autoHighCubeCount: 1,
+      autoMidCubeCount: 1,
+      autoLowCubeCount: 1,
+      autoHighConeCount: 1,
+      autoMidConeCount: 1,
+      autoLowConeCount: 1,
+      teleHighCubeCount: 1,
+      teleMidCubeCount: 1,
+      teleLowCubeCount: 1,
+      teleHighConeCount: 1,
+      teleMidConeCount: 1,
+      teleLowConeCount: 1,
+    };
     for (let i = 0; i < data.length; i++) {
-      var k = Object.keys(data[i])
+      var k = Object.keys(data[i]);
       for (let j = 0; j < k.length; j++) {
         if (Object.keys(values).indexOf(k[j]) != -1) {
-          out += data[i][k[j]] * values[k[j]]
+          out += data[i][k[j]] * values[k[j]];
         }
       }
     }
-    return out
+    return out;
   }
-  const chartData = [
-
-  ];
-  const chartData = [];
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
@@ -286,12 +417,12 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
@@ -301,13 +432,13 @@ const TeamLookup = () => {
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cubes_Auto_H"]} M {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                  H {avgData["Avg_Cubes_Auto_H"]} M{" "}
+                  {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
-                  H {avgData["Avg_Cubes_Auto_H"]} M{" "}
-                  {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} M{avgData["Avg_Cones_Tele_M"]}{" "}
+                  L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
@@ -318,12 +449,6 @@ const TeamLookup = () => {
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} M {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cubes Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cubes_Tele_H"]} M {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
-
                   H {avgData["Avg_Cones_Tele_H"]} M{" "}
                   {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
@@ -332,10 +457,13 @@ const TeamLookup = () => {
                   H {avgData["Avg_Cubes_Tele_H"]} M{" "}
                   {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
-                <Table.Cell>Avg Ground Intake</Table.Cell>
+                <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                  H {} M {} L {}
+                  H {avgData["Avg_Cubes_Tele_H"]} M{" "}
+                  {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
+                <Table.Cell>Avg Ground Intake</Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Dock</Table.Cell>
@@ -349,7 +477,7 @@ const TeamLookup = () => {
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
-                <Table.Cell>{ }</Table.Cell>
+                <Table.Cell>{}</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{}</Table.Cell>
@@ -364,20 +492,11 @@ const TeamLookup = () => {
           <Header style={{ marginLeft: 10 }} as="h5">
             defense
           </Header>
-          <Segment style={{ marginLeft: 10 }}>
-            {" "}
-            lorem impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
-            impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
-            impsum dolor lorem impsum dolor lorem impsum dolor lorem lorem
-            impsum dolor lorem impsum dolor lorem impsum dolor lorem
-          </Segment>
+          <Segment style={{ marginLeft: 10 }}>{realDefense}</Segment>
           <Header style={{ marginLeft: 10 }} as="h5">
-            driver skillz
+            driver skills
           </Header>
-          <Segment style={{ marginLeft: 10 }}>
-            lorem impsum dolor lorem impsum dolor lorem impsum dolor lorem
-            impsum dolor lorem impsum dolor
-          </Segment>
+          <Segment style={{ marginLeft: 10 }}>{realDriver}</Segment>
         </Container>
         <Container>
           <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
@@ -393,7 +512,11 @@ const TeamLookup = () => {
       </Container>
       <Divider></Divider>
       <label>what to graph</label>
-      <Form.Select></Form.Select>
+      <Form.Select
+        value={graph}
+        options={graphOptions}
+        onChange={(graph) => handleChart(graph)}
+      ></Form.Select>
       <LineChart data={chartData} curve={false} />
       <Modal
         size="mini"
