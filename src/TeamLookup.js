@@ -76,7 +76,11 @@ const TeamLookup = () => {
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
 
-  function handleChart(graph) {}
+  function handleChart(graph) {
+    //iterate thtough match data array
+    //
+    var exampledict = { "69 (match number)": 4 };
+  }
 
   useEffect(async () => {
     console.log(JSON.stringify(matchDataArr));
