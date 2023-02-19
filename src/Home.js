@@ -13,10 +13,8 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      TV972:BREAKING NEWS - upcoming scouters
-    </Header>
-    <Header as="h4" style={{ textAlign: "center" }}>
-      {}: {} {}: {} {}: {} {}: {} {}: {} {}: {} {}: {} {}: {}
+      BULLETIN: *clickity click click click* the scouting app is under
+      construction!
     </Header>
     <Card.Group
       centered

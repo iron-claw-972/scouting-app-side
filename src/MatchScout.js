@@ -102,6 +102,8 @@ const MatchScout = () => {
 
   const [groundIntakes, setGroundIntakes] = useState(0);
   const [mousePos, setMousePos] = useState({});
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
 
   const [canvas, setCanvas] = useState(false);
 
@@ -158,6 +160,7 @@ const MatchScout = () => {
   //This function sets everything back to the default values
   const resetForm = () => {
     setMatchNo("");
+    setMousePos({});
     setTeamNumber("");
     setAutoLH(0);
     setAutoUH(0);
@@ -213,6 +216,8 @@ const MatchScout = () => {
     setShowQrCode(true);
     const db = getFirestore();
     const docRef = doc(db, "test", docRefId);
+    setMouseX(mousePos.x);
+    setMouseY(mousePos.y);
     setDoc(docRef, matchData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -230,13 +235,14 @@ const MatchScout = () => {
     var subjective = true;
     var scoutTeam = teamNumber;
     var scoutMatch = MatchNo;
-    name = name.toLowerCase();
+    setName(name.toLowerCase());
     setDoc(
       adocRef,
       { done, scoutMatch, scoutTeam, subjective, name },
       { merge: true }
     );
     resetForm();
+    setName(name.toUpperCase());
   }, [docRefId]);
 
   let climbInterval = null;
@@ -264,18 +270,6 @@ const MatchScout = () => {
       setTeamNumber(assData.scoutTeam);
     }
   });
-  useEffect(() => {
-    if (timerRunning) {
-      if (!climbInterval)
-        climbInterval = setInterval(
-          () => setClimbTime((ClimbTime) => ClimbTime + 1),
-          1000
-        );
-    } else {
-      clearInterval(climbInterval);
-    }
-    return () => clearInterval(climbInterval);
-  }, [timerRunning]);
 
   //This function has an array called requiredFields
   //And it checks whether they've been filled out
@@ -585,7 +579,7 @@ const MatchScout = () => {
     "I can't think of a better person to get data from!",
     "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
   ];
-
+  console.log(mousePos);
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>

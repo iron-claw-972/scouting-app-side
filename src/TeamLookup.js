@@ -26,6 +26,8 @@ import { LineChart, PieChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
 import CanvasChooser from "./CanvasChooser";
+import CanvasDisplay from "./CanvasDisplay";
+
 import {
   colorOptions,
   driveOptions,
@@ -76,6 +78,7 @@ const TeamLookup = () => {
   const [realEngaged, setrealEngaged] = useState(0);
   const [pitData, setPitData] = useState([{}]);
   const [matchData, setMatchData] = useState([{}]);
+  const [coords, setCoords] = useState([{}]);
 
   const [realDriver, setRealDriver] = useState("");
   const [realDefense, setRealDefense] = useState("");
@@ -98,21 +101,23 @@ const TeamLookup = () => {
         q.split(/(\s+)/)[4] +
         q.split(/(\s+)/)[0] +
         "Count";
-      type.replace("s", "");
+      function replaceLast(x, y, z) {
+        var a = x.split("");
+        a[x.lastIndexOf(y)] = z;
+        return a.join("");
+      }
+      if (type.includes("Cone")) {
+        type = replaceLast(type, "s", "");
+      }
 
-      console.log(type);
       output[matchData[i]["MatchNo"]] = matchData[i][type];
     }
-    console.log(output);
     // return output
     setChartData(output);
     setGraph(q);
   }
 
   useEffect(async () => {
-    console.log(JSON.stringify(matchDataArr));
-
-    console.log("in useEffect queryTeam is ", queryTeam);
     if (queryTeam === "") return;
     matchDataArr = [];
     const db = getFirestore();
@@ -130,6 +135,12 @@ const TeamLookup = () => {
       setShowModal(true);
     }
     setMatchData(matchDataArr);
+
+    var initcoords = [];
+    matchData.forEach((match) => initcoords.push(match.mousePos));
+    console.log(initcoords);
+    setCoords(initcoords);
+
     setAvgData((prevData) => {
       return {
         ...prevData,
@@ -214,9 +225,9 @@ const TeamLookup = () => {
     pitSnapshot.forEach((match) => {
       pitDataArr.push(match.data());
     });
-
-    setPitData(pitDataArr[0]);
-    console.log(pitData[0]);
+    if (pitDataArr.length > 0) {
+      setPitData(pitDataArr[0]);
+    }
 
     if (matchDataArr.length === 0) {
       setShowModal(true);
@@ -233,7 +244,6 @@ const TeamLookup = () => {
     subsnap1.forEach((match) => {
       subq1.push(match.data());
     });
-    console.log(subq1);
 
     var subq2 = [];
     var subsnap2 = query(
@@ -288,7 +298,6 @@ const TeamLookup = () => {
 
     setRealDefense(defenseStr);
     setRealDriver(driverStr);
-    console.log(defenseStr);
     setAvgData((prevData) => {
       return {
         ...prevData,
@@ -299,6 +308,12 @@ const TeamLookup = () => {
       return {
         ...prevData,
         Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount"),
+      };
+    });
+    setAvgData((prevData) => {
+      return {
+        ...prevData,
+        Ground_Intake: search(matchDataArr, "groundIntakes"),
       };
     });
     setAvgData((prevData) => {
@@ -364,7 +379,6 @@ const TeamLookup = () => {
     });
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
     setTotalScore(total(matchDataArr));
-    console.log(total(matchDataArr));
     dispatch({ type: "ADD_DATA", data: matchDataArr });
     var docks = 0;
     var engage = 0;
@@ -380,7 +394,6 @@ const TeamLookup = () => {
 
     setrealDocked(Math.round((docks / matchDataArr.length) * 100) / 100);
     setrealEngaged(Math.round((engage / matchDataArr.length) * 100) / 100);
-    console.log(realDocked);
   }, [queryTeam]);
 
   const [state, dispatch] = React.useReducer(exampleReducer, {
@@ -421,9 +434,8 @@ const TeamLookup = () => {
         }
       }
     }
-    setTotalScore(avgData);
+    setTotalScore(out);
   }
-  total(matchData);
 
   return (
     <Container>
@@ -505,7 +517,7 @@ const TeamLookup = () => {
                   {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
-                <Table.Cell></Table.Cell>
+                <Table.Cell>{avgData["Ground_Intake"]}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Dock</Table.Cell>
@@ -542,11 +554,7 @@ const TeamLookup = () => {
         </Container>
         <Container>
           <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
-          <CanvasChooser
-            setMouseCoord={mousePos}
-            getMouseCoord={{ x: 0, y: 0 }}
-            style={{ marginLeft: 10 }}
-          />
+          <CanvasDisplay data={coords}></CanvasDisplay>
         </Container>
       </Container>
       <Container>

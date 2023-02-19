@@ -2,16 +2,13 @@ import React, { useEffect, useRef } from "react";
 import field_image from "./field_image.png";
 
 // Sample data for testing
-const sample_data = [
-  { x: 3, y: 100 },
-  { x: 180, y: 40 },
-];
 
 const CanvasDisplay = ({ data }) => {
   // Setup ref for canvas
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    console.log("load again?");
     // Setup canvas element and get context
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -58,7 +55,8 @@ const CanvasDisplay = ({ data }) => {
      * @see{@link draw}
      */
     field_background.addEventListener("load", () => {
-      draw(sample_data);
+      console.log(data);
+      draw(data);
     });
   }, []);
 
