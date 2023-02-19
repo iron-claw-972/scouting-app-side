@@ -16,8 +16,7 @@ import TeamList from "./TeamList";
 import MatchList from "./MatchList";
 
 // Testing
-import CanvasDisplay from "./components/CanvasDisplay";
-import MatchList from "./ListMatch";
+import CanvasDisplay from "./CanvasDisplay";
 
 import CanvasChooser from "./CanvasChooser";
 
