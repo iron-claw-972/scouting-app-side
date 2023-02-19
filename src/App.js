@@ -13,6 +13,10 @@ import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
 import RawMatchTable from "./RawMatchTable";
 import TeamLookup from "./TeamLookup";
 import TeamList from "./TeamList";
+import MatchList from "./MatchList";
+
+// Testing
+import CanvasDisplay from "./components/CanvasDisplay";
 import MatchList from "./ListMatch";
 
 import CanvasChooser from "./CanvasChooser";
