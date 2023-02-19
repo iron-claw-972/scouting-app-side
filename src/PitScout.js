@@ -124,7 +124,6 @@ const PitScout = () => {
       setgintake(gintake || false);
       setOrg(organization || "");
       setDrive(drive || "");
-      setDrive(balance || false);
       setVision(vision || false);
     });
   };

@@ -214,8 +214,9 @@ const TeamLookup = () => {
     pitSnapshot.forEach((match) => {
       pitDataArr.push(match.data());
     });
-    setPitData(pitDataArr);
-    console.log(pitData);
+
+    setPitData(pitDataArr[0]);
+    console.log(pitData[0]);
 
     if (matchDataArr.length === 0) {
       setShowModal(true);
@@ -399,18 +400,18 @@ const TeamLookup = () => {
   function total(data) {
     var out = 0;
     var values = {
-      autoHighCubeCount: 1,
-      autoMidCubeCount: 1,
-      autoLowCubeCount: 1,
-      autoHighConeCount: 1,
-      autoMidConeCount: 1,
-      autoLowConeCount: 1,
-      teleHighCubeCount: 1,
-      teleMidCubeCount: 1,
-      teleLowCubeCount: 1,
-      teleHighConeCount: 1,
-      teleMidConeCount: 1,
-      teleLowConeCount: 1,
+      autoHighCubeCount: 6,
+      autoMidCubeCount: 4,
+      autoLowCubeCount: 3,
+      autoHighConeCount: 6,
+      autoMidConeCount: 4,
+      autoLowConeCount: 3,
+      teleHighCubeCount: 5,
+      teleMidCubeCount: 3,
+      teleLowCubeCount: 2,
+      teleHighConeCount: 5,
+      teleMidConeCount: 3,
+      teleLowConeCount: 2,
     };
     for (let i = 0; i < data.length; i++) {
       var k = Object.keys(data[i]);
@@ -420,8 +421,9 @@ const TeamLookup = () => {
         }
       }
     }
-    return out;
+    setTotalScore(avgData);
   }
+  total(matchData);
 
   return (
     <Container>
@@ -450,50 +452,57 @@ const TeamLookup = () => {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
-                <Table.Cell>{pitData.shelfIntake}</Table.Cell>
+                <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
 
                 <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData.vision)}</Table.Cell>
                 <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData.balance)}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Auto</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Auto_H"]} M{" "}
-                  {avgData["Avg_Cones_Auto_M"]} L {avgData["Avg_Cones_Auto_L"]}
+                  H {avgData["Avg_Cones_Auto_H"]} / M{" "}
+                  {avgData["Avg_Cones_Auto_M"]} / L{" "}
+                  {avgData["Avg_Cones_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Auto</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cubes_Auto_H"]} M{" "}
-                  {avgData["Avg_Cubes_Auto_M"]} L {avgData["Avg_Cubes_Auto_L"]}
+                  H {avgData["Avg_Cubes_Auto_H"]} / M
+                  {avgData["Avg_Cubes_Auto_M"]} / L{" "}
+                  {avgData["Avg_Cubes_Auto_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} M{avgData["Avg_Cones_Tele_M"]}{" "}
-                  L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
+                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
+                  {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} M{" "}
-                  {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
+                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
+                  {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Avg Cones Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} M{" "}
-                  {avgData["Avg_Cones_Tele_M"]} L {avgData["Avg_Cones_Tele_L"]}
+                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
+                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
+                  {avgData["Avg_Cones_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cubes_Tele_H"]} M{" "}
-                  {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
+                  H {avgData["Avg_Cubes_Tele_H"]} / M{" "}
+                  {avgData["Avg_Cubes_Tele_M"]} / L{" "}
+                  {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Cubes Tele</Table.Cell>
                 <Table.Cell>
-                  H {avgData["Avg_Cubes_Tele_H"]} M{" "}
-                  {avgData["Avg_Cubes_Tele_M"]} L {avgData["Avg_Cubes_Tele_L"]}
+                  H {avgData["Avg_Cubes_Tele_H"]} / M{" "}
+                  {avgData["Avg_Cubes_Tele_M"]} / L{" "}
+                  {avgData["Avg_Cubes_Tele_L"]}
                 </Table.Cell>
                 <Table.Cell>Avg Ground Intake</Table.Cell>
                 <Table.Cell></Table.Cell>
@@ -505,15 +514,15 @@ const TeamLookup = () => {
                 <Table.Cell>{realEngaged}</Table.Cell>
 
                 <Table.Cell>Ranking</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
 
               <Table.Row>
                 <Table.Cell># of Motors</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{String(pitData.motors)}</Table.Cell>
 
                 <Table.Cell>Drivetrain</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>{pitData.drive}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
