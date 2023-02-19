@@ -48,7 +48,7 @@ const PitScout = () => {
   */
 
   const [teamNumber, setTeamNumber] = useState("");
-  const [climb, setClimb] = useState(false);
+  const [gintake, setgintake] = useState(false);
   const [shelfIntake, setShelfIntake] = useState(false);
   const [organization, setOrg] = useState("");
   const [drive, setDrive] = useState("");
@@ -69,7 +69,7 @@ const PitScout = () => {
   //This function sets everything back to the default values
   const resetForm = () => {
     setTeamNumber("");
-    setClimb(false);
+    setgintake(false);
     setOrg("");
     setDrive("");
     setMotors(0);
@@ -86,17 +86,19 @@ const PitScout = () => {
   useEffect(() => {
     setShowSuccess(false);
     setShowError(false);
-  }, [teamNumber, climb, organization, drive, vision, balance]);
+  }, [teamNumber, gintake, organization, drive, vision, balance]);
 
   //We put all the variables declared previously into an array, this is our full team data
 
   const pitData = {
     teamNumber,
-    climb,
-    organization,
+    gintake,
     drive,
     vision,
     balance,
+    shelfIntake,
+    motors,
+    dataUri,
   };
 
   //checks if we at least filled out team number
@@ -112,14 +114,14 @@ const PitScout = () => {
   //This is the function for autofill if you've already filled out part of the form
   const lookupTeamIfExists = async () => {
     const db = getFirestore();
-    const teamsRef = collection(db, "teams_svr");
+    const teamsRef = collection(db, "test-p");
     const q = query(teamsRef, where("teamNumber", "==", teamNumber));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       const { teamNumber, scouterName, organization, lang, notes } = doc.data();
       setTeamNumber(teamNumber || "");
-      setClimb(climb || false);
+      setgintake(gintake || false);
       setOrg(organization || "");
       setDrive(drive || "");
       setDrive(balance || false);
@@ -152,7 +154,7 @@ const PitScout = () => {
     if (!validate()) return;
     setShowQrCode(true);
     const db = getFirestore();
-    const docRef = doc(db, "teams_svr", teamNumber);
+    const docRef = doc(db, "test-p", teamNumber);
     setDoc(docRef, pitData, { merge: true })
       .then(() => {
         setShowSuccess(true);
@@ -165,7 +167,7 @@ const PitScout = () => {
   };
 
   function handleTakePhoto(dataUri) {
-    console.log("takePhoto");
+    console.log(dataUri);
     setDataUri(dataUri);
     setShowCamera(false);
   }
@@ -253,6 +255,7 @@ const PitScout = () => {
             <Form.Field style={{ marginTop: 10 }}>
               {showCamera ? (
                 <Camera
+                  sizeFactor={0.4}
                   onTakePhoto={(dataUri) => {
                     handleTakePhoto(dataUri);
                   }}
@@ -265,22 +268,22 @@ const PitScout = () => {
           <Divider></Divider>
           <Form.Group style={{ textAlign: "center", margin: "auto" }}>
             <Form.Field>
-              {climb ? (
+              {gintake ? (
                 <Button
                   size="huge"
                   color="green"
                   fluid
-                  onClick={() => setClimb(false)}
+                  onClick={() => setgintake(false)}
                 >
-                  Gron Itke
+                  Ground itke
                 </Button>
               ) : (
                 <button
                   class="ui inverted huge white button"
                   fluid
-                  onClick={() => setClimb(true)}
+                  onClick={() => setgintake(true)}
                 >
-                  Ground Itke
+                  Ground itke
                 </button>
               )}
             </Form.Field>
@@ -318,7 +321,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
-                  Shelf Itke
+                  Shelf itke
                 </Button>
               ) : (
                 <button
@@ -326,7 +329,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
-                  Shelf Itke
+                  Shelf itke
                 </button>
               )}
             </Form.Field>
@@ -428,21 +431,7 @@ const PitScout = () => {
           open={showQrCode}
           size="fullscreen"
           onClose={() => setShowQrCode(false)}
-        >
-          <Modal.Content>
-            <QRCode value={JSON.stringify(pitData)} />
-            <h3 style={{ margin: "0px" }}>
-              Thank you for submitting! Here's a compliment:
-            </h3>
-            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
-              {
-                randomCompliments[
-                  Math.floor(Math.random() * randomCompliments.length)
-                ]
-              }
-            </h4>
-          </Modal.Content>
-        </Modal>
+        ></Modal>
       </Container>
     </body>
   );

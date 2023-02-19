@@ -35,6 +35,17 @@ const Home = () => (
         </Card>
       </Link>
 
+      <Link to="/matchscoutsubjective" style={{ margin: 10 }}>
+        <Card color="orange">
+          <Card.Content>
+            <Card.Header>Match Scout (Subjective)</Card.Header>
+            <Card.Description>
+              Collect subjective data on an alliance during a match
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      </Link>
+
       <Link to="/pitscout" style={{ margin: 10 }}>
         <Card color="orange">
           <Card.Content>
@@ -48,10 +59,10 @@ const Home = () => (
     <Divider section />
 
     <Card.Group
-    centered
-    stackable
-    textAlign="center"
-    style={{ margin: "10px" }}
+      centered
+      stackable
+      textAlign="center"
+      style={{ margin: "10px" }}
     >
       <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
         <Card>
@@ -74,10 +85,10 @@ const Home = () => (
     <Divider section />
 
     <Card.Group
-    centered
-    stackable
-    textAlign="center"
-    style={{ margin: "10px" }}
+      centered
+      stackable
+      textAlign="center"
+      style={{ margin: "10px" }}
     >
       <Link to="/teamlist" style={{ margin: 10 }}>
         <Card>
@@ -116,10 +127,7 @@ const Home = () => (
 
       <Link to="/matchlist" style={{ margin: 10 }}>
         <Card>
-          <Card.Content
-            header="Match List"
-            description="TBD"
-          />
+          <Card.Content header="Match List" description="TBD" />
         </Card>
       </Link>
 

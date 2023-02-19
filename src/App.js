@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./Home";
 import MatchScout from "./MatchScout";
+import MatchScoutSubjective from "./MatchScoutSubjective";
 import PitScout from "./PitScout";
 import NewTeamPages from "./NewTeamPage";
 import PitDisplay from "./PitDisplay";
@@ -16,6 +17,9 @@ import MatchList from "./MatchList";
 
 // Testing
 import CanvasDisplay from "./components/CanvasDisplay";
+import MatchList from "./ListMatch";
+
+import CanvasChooser from "./CanvasChooser";
 
 //setting up main page
 //The element= causes all the content of the pages to show
@@ -24,17 +28,19 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="matchscout" element={<MatchScout />} />
+      <Route path="matchscoutsubjective" element={<MatchScoutSubjective />} />
       <Route path="pitscout" element={<PitScout />} />
       <Route path="teampages" element={<NewTeamPages />} />
       <Route path="rawmatchtable" element={<RawMatchTable />} />
       <Route path="/teamlist" element={<TeamList />} />
       <Route path="/teamlookup" element={<TeamLookup />} />
 
-      <Route path="pitdisplay" element={<PitDisplay />} />
+      <Route path="/pitdisplay" element={<PitDisplay />} />
+
       <Route path="datadisplay" element={<DataDisplay />} />
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
       <Route path="scanpitscoutdata" element={<ScanPitScoutDataQR />} />
-      <Route path="matchlist" element={<MatchList />} />
+      <Route path="/matchlist" element={<MatchList />} />
     </Routes>
   );
 };

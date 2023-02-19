@@ -21,7 +21,68 @@ const colorOptions = [
     image: { avatar: true, src: "/assets/blue.png" },
   },
 ];
-
+const graphOptions = [
+  {
+    key: "1",
+    text: "Cones Auto High",
+    value: "Cones Auto High",
+  },
+  {
+    key: "2",
+    text: "Cones Auto Mid",
+    value: "Cones Auto Mid",
+  },
+  {
+    key: "3",
+    text: "Cones Auto Low",
+    value: "Cones Auto Low",
+  },
+  {
+    key: "4",
+    text: "Cube Auto High",
+    value: "Cube Auto High",
+  },
+  {
+    key: "5",
+    text: "Cube Auto Mid",
+    value: "Cube Auto Mid",
+  },
+  {
+    key: "6",
+    text: "Cube Auto Low",
+    value: "Cube Auto Low",
+  },
+  {
+    key: "7",
+    text: "Cones Tele High",
+    value: "Cones Tele High",
+  },
+  {
+    key: "8",
+    text: "Cones Tele Mid",
+    value: "Cones Tele Mid",
+  },
+  {
+    key: "9",
+    text: "Cones Tele Low",
+    value: "Cones Tele Low",
+  },
+  {
+    key: "10",
+    text: "Cube Tele High",
+    value: "Cube Tele High",
+  },
+  {
+    key: "11",
+    text: "Cube Tele Mid",
+    value: "Cube Tele Mid",
+  },
+  {
+    key: "12",
+    text: "Cones Tele Low",
+    value: "Cones Tele Low",
+  },
+];
 const driveTrainOptions = [
   {
     key: 1,
@@ -106,4 +167,5 @@ export {
   yesNoOptions,
   driveOptions,
   abilityOptions,
+  graphOptions,
 };

@@ -17,6 +17,7 @@ import { LineChart, PieChart } from "react-chartkick";
 import { Link } from "react-router-dom";
 
 const TeamTab = ({ teamdata, oprs, team }) => {
+  const [teamList, setTeamList] = useState({});
   const record =
     teamdata.qual.ranking.record.losses +
     "-" +
@@ -34,7 +35,7 @@ const TeamTab = ({ teamdata, oprs, team }) => {
             </Link>
           </Table.Cell>
           <Table.Cell>{teamdata.qual.ranking.qual_average}</Table.Cell>
-          <Table.Cell>smth else</Table.Cell>
+          <Table.Cell></Table.Cell>
           <Table.Cell>Auto</Table.Cell>
           <Table.Cell>{record}</Table.Cell>
           <Table.Cell>{teamdata.qual.ranking.matches_played}</Table.Cell>
@@ -45,9 +46,7 @@ const TeamTab = ({ teamdata, oprs, team }) => {
 };
 const TeamList = () => {
   var res;
-  fetch(
-    "https://www.thebluealliance.com/api/v3/event/casj2022/teams/statuses"
-  ).then((res) => res.json()); // the .json() method parses the JSON response into a JS object literal
+  fetch(8).then((res) => res.json()); // the .json() method parses the JSON response into a JS object literal
   console.log(res);
 
   return (
