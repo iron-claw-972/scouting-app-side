@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
+
 import {
   Table,
   Container,
@@ -13,6 +14,8 @@ import {
 } from "semantic-ui-react";
 import {
   getFirestore,
+  setDoc,
+  doc,
   collection,
   query,
   where,
@@ -97,10 +100,10 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
+
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
-    console.log(matchDataArr);
     setAvgData((prevData) => {
       return {
         ...prevData,
@@ -393,6 +396,7 @@ const TeamLookup = () => {
     }
     return out;
   }
+
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>

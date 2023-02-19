@@ -19,8 +19,16 @@ import {
 
 import CanvasChooser from "./CanvasChooser";
 
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { colorOptions } from "./AllOptions";
 import { truncate } from "lodash";
 
@@ -150,7 +158,6 @@ const MatchScout = () => {
   //This function sets everything back to the default values
   const resetForm = () => {
     setMatchNo("");
-    setName("");
     setTeamNumber("");
     setAutoLH(0);
     setAutoUH(0);
@@ -214,10 +221,49 @@ const MatchScout = () => {
         console.error("Error adding document: ", e);
         setShowError(true);
       });
+    const adocRef = doc(
+      db,
+      "test-a",
+      String(teamNumber) + "_" + String(MatchNo)
+    );
+    var done = true;
+    var subjective = true;
+    var scoutTeam = teamNumber;
+    var scoutMatch = MatchNo;
+    name = name.toLowerCase();
+    setDoc(
+      adocRef,
+      { done, scoutMatch, scoutTeam, subjective, name },
+      { merge: true }
+    );
     resetForm();
   }, [docRefId]);
 
   let climbInterval = null;
+
+  useEffect(async () => {
+    const db = getFirestore();
+    const assq = query(
+      collection(db, "test-a"),
+
+      where("name", "==", name.toLowerCase()),
+      where("done", "==", false),
+      where("subjective", "==", true),
+      orderBy("scoutMatch")
+    );
+
+    const assSnapshot = await getDocs(assq);
+    var assList = [];
+    assSnapshot.forEach((match) => {
+      assList.push(match.data());
+    });
+    console.log(assList);
+    if (assList.length > 0) {
+      const assData = assList[0];
+      setMatchNo(assData.scoutMatch);
+      setTeamNumber(assData.scoutTeam);
+    }
+  });
   useEffect(() => {
     if (timerRunning) {
       if (!climbInterval)
