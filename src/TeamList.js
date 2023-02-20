@@ -11,8 +11,26 @@ import {
   Form,
   Input,
 } from "semantic-ui-react";
-
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { LineChart, PieChart } from "react-chartkick";
+
+import {
+  colorOptions,
+  driveOptions,
+  cvOptions,
+  autoOptions,
+  yesNoOptions,
+  graphOptions,
+} from "./AllOptions";
 
 import { Link } from "react-router-dom";
 
@@ -45,9 +63,130 @@ const TeamTab = ({ teamdata, oprs, team }) => {
   );
 };
 const TeamList = () => {
-  var res;
-  fetch(8).then((res) => res.json()); // the .json() method parses the JSON response into a JS object literal
-  console.log(res);
+  const [team1, setTeam1] = useState("");
+  const [team2, setTeam2] = useState("");
+  const [team3, setTeam3] = useState("");
+  const [graph, setGraph] = useState("");
+  const [team1data, setTeam1data] = useState([{}]);
+  const [team2data, setTeam2data] = useState([{}]);
+  const [team3data, setTeam3data] = useState([{}]);
+  const [chartData, setChartData] = useState([{}]);
+
+  function handleChart(graph) {
+    try {
+      var q = graph.querySelector("span").textContent;
+    } catch (error) {
+      var q = graph.textContent;
+    }
+    var output1 = {};
+    // console.log(q)
+    // console.log(JSON.stringify(matchData))
+    // console.log(q)
+    // console.log(matchData)
+    for (let i = 0; i < team1data.length; i++) {
+      let type =
+        q.split(/(\s+)/)[2].toLowerCase() +
+        q.split(/(\s+)/)[4] +
+        q.split(/(\s+)/)[0] +
+        "Count";
+      function replaceLast(x, y, z) {
+        var a = x.split("");
+        a[x.lastIndexOf(y)] = z;
+        return a.join("");
+      }
+      if (type.includes("Cone")) {
+        type = replaceLast(type, "s", "");
+      }
+
+      output1[i + 1] = team1data[i][type];
+    }
+
+    var output2 = {};
+    // console.log(q)
+    // console.log(JSON.stringify(matchData))
+    // console.log(q)
+    // console.log(matchData)
+    for (let i = 0; i < team2data.length; i++) {
+      let type =
+        q.split(/(\s+)/)[2].toLowerCase() +
+        q.split(/(\s+)/)[4] +
+        q.split(/(\s+)/)[0] +
+        "Count";
+      function replaceLast(x, y, z) {
+        var a = x.split("");
+        a[x.lastIndexOf(y)] = z;
+        return a.join("");
+      }
+      if (type.includes("Cone")) {
+        type = replaceLast(type, "s", "");
+      }
+
+      output2[i + 1] = team2data[i][type];
+    }
+
+    var output3 = {};
+
+    for (let i = 0; i < team3data.length; i++) {
+      let type =
+        q.split(/(\s+)/)[2].toLowerCase() +
+        q.split(/(\s+)/)[4] +
+        q.split(/(\s+)/)[0] +
+        "Count";
+      function replaceLast(x, y, z) {
+        var a = x.split("");
+        a[x.lastIndexOf(y)] = z;
+        return a.join("");
+      }
+      if (type.includes("Cone")) {
+        type = replaceLast(type, "s", "");
+      }
+
+      output3[i + 1] = team3data[i][type];
+    }
+
+    // return output
+    var graph1 = { name: team1, data: output1 };
+    var graph2 = { name: team2, data: output2 };
+    var graph3 = { name: team3, data: output3 };
+
+    setChartData([graph1, graph2, graph3]);
+    console.log("deez");
+    console.log(chartData);
+    console.log("nuts");
+    setGraph(q);
+  }
+
+  useEffect(async () => {
+    const db = getFirestore();
+    const q1 = query(collection(db, "test"), where("teamNumber", "==", team1));
+    var matchDataArr1 = [];
+    console.log(team1);
+    console.log(team2);
+
+    console.log(team3);
+    const matchSnapshot = await getDocs(q1);
+    matchSnapshot.forEach((match) => {
+      matchDataArr1.push(match.data());
+    });
+
+    const q2 = query(collection(db, "test"), where("teamNumber", "==", team2));
+    var matchDataArr2 = [];
+    const matchSnapshot2 = await getDocs(q2);
+    matchSnapshot2.forEach((match) => {
+      matchDataArr2.push(match.data());
+    });
+
+    const q3 = query(collection(db, "test"), where("teamNumber", "==", team3));
+    var matchDataArr3 = [];
+    const matchSnapshot3 = await getDocs(q3);
+    matchSnapshot3.forEach((match) => {
+      matchDataArr3.push(match.data());
+    });
+
+    setTeam1data(matchDataArr1);
+    setTeam2data(matchDataArr2);
+    setTeam3data(matchDataArr3);
+  }, []);
 
   return (
     <Container>
@@ -58,18 +197,34 @@ const TeamList = () => {
         (Rankings are ~2 matches behind real rankings during comp)
       </Header>
 
-      <label> -Team 1-</label>
-      <Input size="small" placeholder="" />
+      <label>-Team 1-</label>
+      <Input
+        value={team1}
+        onChange={(e) => setTeam1(e.target.value)}
+        size="small"
+      />
       <label> -Team 2-</label>
-      <Input size="small" placeholder="" />
+      <Input
+        value={team2}
+        onChange={(e) => setTeam2(e.target.value)}
+        size="small"
+      />
       <label> -Team 3-</label>
-      <Input size="small" placeholder="" />
+      <Input
+        value={team3}
+        onChange={(e) => setTeam3(e.target.value)}
+        size="small"
+      />
 
       <Divider hidden></Divider>
       <label>what to graph</label>
 
-      <Form.Select></Form.Select>
-      <LineChart></LineChart>
+      <Form.Select
+        value={graph}
+        options={graphOptions}
+        onChange={(e) => handleChart(e.target)}
+      ></Form.Select>
+      <LineChart data={chartData} curve={false} />
       <Divider></Divider>
       <Header as="h3">Picklist:</Header>
       <Divider></Divider>

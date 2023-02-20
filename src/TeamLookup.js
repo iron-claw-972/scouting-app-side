@@ -22,7 +22,7 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
-import { LineChart, PieChart } from "react-chartkick";
+import { LineChart, BarChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
 import CanvasChooser from "./CanvasChooser";
