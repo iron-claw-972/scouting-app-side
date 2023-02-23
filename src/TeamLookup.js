@@ -116,7 +116,12 @@ const TeamLookup = () => {
     setChartData(output);
     setGraph(q);
   }
+  const queryParameters = new URLSearchParams(window.location.search);
 
+  useEffect(() => {
+    const team = queryParameters.get("team");
+    setTeamNumber(team);
+  }, []);
   useEffect(async () => {
     if (queryTeam === "") return;
     matchDataArr = [];

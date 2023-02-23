@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Header, Container, Divider } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 /*The main page
 Pretty intuitive thanks to semantic-ui-react, which gives most of the
 tags I've used below.
@@ -96,11 +95,11 @@ const Home = () => (
           />
         </Card>
       </Link>
-      <Link to="/teampages" style={{ margin: 10 }}>
+      <Link to={`/teampages`} style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Team Pages"
-            description="View scouting and TBA data about FRC teams"
+            header="Match Display"
+            description="All you want to know about a match"
           />
         </Card>
       </Link>
@@ -114,10 +113,10 @@ const Home = () => (
         </Card>
       </Link>
 
-      <Link to="/teamlookup" style={{ margin: 10 }}>
+      <Link to={`/teamlookup/`} style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Graphs and Tables"
+            header="Team Lookup"
             description="Data Visualization by team "
           />
         </Card>
@@ -137,7 +136,7 @@ const Home = () => (
           />
         </Card>
       </Link>
-      <Link to="/datadisplay" style={{ margin: 10 }}>
+      <Link to="/teamlookup?team=972" style={{ margin: 10 }}>
         <Card>
           <Card.Content
             header="Credits and Notes"
@@ -147,7 +146,7 @@ const Home = () => (
       </Link>
 
       <Link style={{ margin: 10 }}>
-        <Card href={"https://www.thebluealliance.com/event/2022casj#rankings"}>
+        <Card href={"https://www.thebluealliance.com/event/2023caph#rankings"}>
           <Card.Content
             header="Rankings and Averages"
             description="The Blue Alliance has lots of useful data, dont miss it"

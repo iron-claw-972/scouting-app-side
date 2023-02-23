@@ -114,3 +114,5 @@ var assignments = new Object();
       );
     }
   }
+
+  export {initials}

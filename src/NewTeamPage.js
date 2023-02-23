@@ -12,7 +12,13 @@ import {
   Form,
   Table,
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import {
   getFirestore,
   collection,
@@ -37,6 +43,12 @@ const NewTeamPages = () => {
   var autoScores = [0, 0, 0, 0, 0, 0];
   var teleScores = [0, 0, 0, 0, 0, 0];
   var endScores = [0, 0, 0, 0, 0, 0];
+  const queryParameters = new URLSearchParams(window.location.search);
+
+  useEffect(() => {
+    const match = queryParameters.get("match");
+    setMatchNumber(match);
+  }, []);
 
   useEffect(async () => {
     if (queryTeam === "") return;

@@ -47,7 +47,13 @@ const MatchList = () => {
       controller,
       "https://www.thebluealliance.com/api/v3/event/2022casj/matches"
     ).then((data) => {
-      setUsers(data);
+      let rdata = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i]["comp_level"] === "qm") {
+          rdata.push(data[i]);
+        }
+      }
+      setUsers(rdata);
       console.log(data);
     });
     return () => controller.abort();
@@ -92,16 +98,18 @@ const MatchList = () => {
               textAlign: "center",
             }}
           >
-            <Button
-              style={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "5%",
-                zIndex: "999",
-              }}
-            >
-              {"#" + (i + 1)}
-            </Button>
+            <Link to={"/teampages?match=" + (i + 1)}>
+              <Button
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "5%",
+                  zIndex: "999",
+                }}
+              >
+                {"#" + (i + 1)}
+              </Button>
+            </Link>
 
             <Button
               color="red"
@@ -115,44 +123,74 @@ const MatchList = () => {
                 background: "#d16f69",
               }}
             >
-              Red Alliance
+              Red
             </Button>
-            <Button
-              style={{
-                position: "absolute",
-                left: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "35%",
-                width: "10%",
-              }}
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["red"]["team_keys"][0].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["red"]["team_keys"][0].replace("frc", "")}
-            </Button>
-            <Button
-              style={{
-                position: "absolute",
-                left: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "55%",
-                width: "10%",
-              }}
+              <Button
+                style={{
+                  position: "absolute",
+                  left: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "35%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["red"]["team_keys"][0].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["red"]["team_keys"][1].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["red"]["team_keys"][1].replace("frc", "")}
-            </Button>
-            <Button
-              style={{
-                position: "absolute",
-                left: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "75%",
-                width: "10%",
-              }}
+              <Button
+                style={{
+                  position: "absolute",
+                  left: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "55%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["red"]["team_keys"][1].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["red"]["team_keys"][2].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["red"]["team_keys"][2].replace("frc", "")}
-            </Button>
+              <Button
+                style={{
+                  position: "absolute",
+                  left: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "75%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["red"]["team_keys"][2].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
             <Button
               color="blue"
               style={{
@@ -164,44 +202,74 @@ const MatchList = () => {
                 width: "10%",
               }}
             >
-              Blue Alliance
+              Blue
             </Button>
-            <Button
-              style={{
-                position: "absolute",
-                right: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "35%",
-                width: "10%",
-              }}
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["blue"]["team_keys"][0].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["blue"]["team_keys"][0].replace("frc", "")}
-            </Button>
-            <Button
-              style={{
-                position: "absolute",
-                right: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "55%",
-                width: "10%",
-              }}
+              <Button
+                style={{
+                  position: "absolute",
+                  right: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "35%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["blue"]["team_keys"][0].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["blue"]["team_keys"][1].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["blue"]["team_keys"][1].replace("frc", "")}
-            </Button>
-            <Button
-              style={{
-                position: "absolute",
-                right: "5%",
-                margin: "0px",
-                padding: "0px",
-                top: "75%",
-                width: "10%",
-              }}
+              <Button
+                style={{
+                  position: "absolute",
+                  right: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "55%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["blue"]["team_keys"][1].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
+            <Link
+              to={
+                "/teamlookup?team=" +
+                users[i]["alliances"]["blue"]["team_keys"][2].replace("frc", "")
+              }
             >
-              {users[i]["alliances"]["blue"]["team_keys"][2].replace("frc", "")}
-            </Button>
+              <Button
+                style={{
+                  position: "absolute",
+                  right: "5%",
+                  margin: "0px",
+                  padding: "0px",
+                  top: "75%",
+                  width: "10%",
+                }}
+              >
+                {users[i]["alliances"]["blue"]["team_keys"][2].replace(
+                  "frc",
+                  ""
+                )}
+              </Button>
+            </Link>
 
             <Card.Content
               style={{
@@ -211,7 +279,7 @@ const MatchList = () => {
                 padding: "0px",
                 top: "50%",
               }}
-              description="Ranking Points"
+              description="RP"
             ></Card.Content>
             <Card.Content
               style={{
@@ -277,7 +345,7 @@ const MatchList = () => {
                 padding: "0px",
                 top: "50%",
               }}
-              description="Ranking Points"
+              description="RP"
             ></Card.Content>
             <Card.Content
               style={{

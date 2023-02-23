@@ -13,7 +13,7 @@ import ScanPitScoutDataQR from "./ScanPitScoutDataQR";
 import RawMatchTable from "./RawMatchTable";
 import TeamLookup from "./TeamLookup";
 import TeamList from "./TeamList";
-import MatchList from "./MatchList";
+import MatchList from "./ListMatch";
 
 // Testing
 import CanvasDisplay from "./CanvasDisplay";
@@ -29,10 +29,10 @@ const App = () => {
       <Route path="matchscout" element={<MatchScout />} />
       <Route path="matchscoutsubjective" element={<MatchScoutSubjective />} />
       <Route path="pitscout" element={<PitScout />} />
-      <Route path="teampages" element={<NewTeamPages />} />
+      <Route path="/teampages/" element={<NewTeamPages />} />
       <Route path="rawmatchtable" element={<RawMatchTable />} />
       <Route path="/teamlist" element={<TeamList />} />
-      <Route path="/teamlookup" element={<TeamLookup />} />
+      <Route path="/teamlookup/" element={<TeamLookup />} />
 
       <Route path="/pitdisplay" element={<PitDisplay />} />
 
