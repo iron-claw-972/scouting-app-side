@@ -36,7 +36,6 @@ import {
   yesNoOptions,
   graphOptions,
 } from "./AllOptions";
-
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -276,28 +275,83 @@ const TeamLookup = () => {
 
     var defenseStr = "";
     var driverStr = "";
+    var initials = new Object();
+    initials = {
+      "jc": "Julio",
+      "jd": "Joshua D",
+      "lf": "Leah",
+      "af": "Anthony",
+      "lg": "Leison",
+      "emh": "Emi",
+      "jj": "Jake",
+      "mk": "Michael K",
+      "tl": "Teo(dor)",
+      "cm": "Cole M",
+      "jm": "Joushua M",
+      "fr": "Faris",
+      "ms": "Max",
+      "os": "Om",
+      "as": "Angela",
+      "rt": "Richie",
+      "rv": "Robert(o)",
+      "az": "Allan",
+      "tz": "Tony",
+      "tb": "Theadin",
+      "tc": "Tyrus",
+      "yd": "Yichen",
+      "jud": "Julia",
+      "ad": "Andrea",
+      "ee": "Eliot",
+      "ch": "Cole H",
+      "ep": "Elisa",
+      "ar": "Ashir",
+      "ns": "Nicole",
+      "gt": "Gavin",
+      "aw": "Ani",
+      "sa": "Sahil",
+      "la": "Laksh(ya)",
+      "mc": "Michael C",
+      "ld": "Leo",
+      "ke": "Kyle",
+      "pg": "Paola",
+      "elh": "Ellery",
+      "eh": "Edwin",
+      "ih": "Ian",
+      "hh": "Ian",
+      "hl": "Henry",
+      "cn": "Cameron",
+      "ap": "Arnav",
+      "cs": "Cici",
+      "rs": "Cici",
+      "ay": "Adam",
+      "ac": "Alex",
+      "joj": "Johann",
+      "sp": "Saara",
+      "mes": "Mehaan",
+      "kt": "Kaushik",
+    };
 
     for (let i = 0; i < subq1.length; i++) {
-      defenseStr = defenseStr + subq1[i].name + ": ";
-      defenseStr = defenseStr + subq1[i].defense1 + " / ";
+      defenseStr = defenseStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
+      defenseStr = defenseStr + subq1[i].defense1 + " // ";
 
-      driverStr = driverStr + subq1[i].name + ": ";
-      driverStr = driverStr + subq1[i].driverCapacity1 + " / ";
+      driverStr = driverStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
+      driverStr = driverStr + subq1[i].driverCapacity1 + " // ";
     }
 
     for (let i = 0; i < subq2.length; i++) {
-      defenseStr = defenseStr + subq2[i].name + ": ";
+      defenseStr = defenseStr + initials[subq2[i].name.toLowerCase()]  + " (" + subq2[i].MatchNo + "): ";
       defenseStr = defenseStr + subq2[i].defense2 + "\n";
 
-      driverStr = driverStr + subq2[i].name + ": ";
+      driverStr = driverStr + initials[subq2[i].name.toLowerCase()] +  " (" + subq2[i].MatchNo + "): ";
       driverStr = driverStr + subq2[i].driverCapacity2 + "\n";
     }
 
     for (let i = 0; i < subq3.length; i++) {
-      defenseStr = defenseStr + subq3[i].name + ": ";
+      defenseStr = defenseStr + initials[subq3[i].name.toLowerCase()] + " (" + subq3[i].MatchNo + "): ";
       defenseStr = defenseStr + subq3[i].defense3 + "\n";
 
-      driverStr = driverStr + subq3[i].name + ": ";
+      driverStr = driverStr + initials[subq3[i].name.toLowerCase()]  + " (" + subq3[i].MatchNo + "): ";
       driverStr = driverStr + subq3[i].driverCapacity3 + "\n";
     }
 
@@ -413,7 +467,7 @@ const TeamLookup = () => {
     for (let i = 0; i < data.length; i++) {
       avg += data[i][param];
     }
-    return avg / data.length;
+    return (avg / data.length).toFixed(1);
   }
   function total(data) {
     var out = 0;
@@ -439,7 +493,7 @@ const TeamLookup = () => {
         }
       }
     }
-    setTotalScore(out);
+    setTotalScore((out / data.length).toFixed(1));
   }
 
   return (
