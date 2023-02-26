@@ -25,7 +25,6 @@ import {
 import { LineChart, BarChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
-import CanvasChooser from "./CanvasChooser";
 import CanvasDisplay from "./CanvasDisplay";
 
 import {
@@ -36,6 +35,8 @@ import {
   yesNoOptions,
   graphOptions,
 } from "./AllOptions";
+
+var initcoords = [];
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -116,13 +117,16 @@ const TeamLookup = () => {
     setChartData(output);
     setGraph(q);
   }
+
   const queryParameters = new URLSearchParams(window.location.search);
 
   useEffect(() => {
     const team = queryParameters.get("team");
     setTeamNumber(team);
   }, []);
+
   useEffect(async () => {
+    console.log("UseEffect called")
     if (queryTeam === "") return;
     matchDataArr = [];
     const db = getFirestore();
@@ -139,11 +143,14 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
+
     setMatchData(matchDataArr);
 
-    var initcoords = [];
-    matchData.forEach((match) => initcoords.push(match.mousePos));
-    console.log(initcoords);
+    // var initcoords = [];
+    // console.log("matchData: ");
+    // console.log(matchData);
+    
+    console.log("hello");
     setCoords(initcoords);
 
     setAvgData((prevData) => {
@@ -442,6 +449,18 @@ const TeamLookup = () => {
     setTotalScore(out);
   }
 
+  console.log("matchData: ");
+  console.log(matchData);
+
+  matchData.forEach((match) => {
+    initcoords.push({x: match.mousePos.x, y: match.mousePos.y});  
+    console.log("Match: ");
+    console.log(match);
+  });
+  
+  console.log("initcoords:");
+  console.log(initcoords);
+
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
@@ -559,7 +578,7 @@ const TeamLookup = () => {
         </Container>
         <Container>
           <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
-          <CanvasDisplay data={coords}></CanvasDisplay>
+          <CanvasDisplay data={initcoords}></CanvasDisplay>
         </Container>
       </Container>
       <Container>
