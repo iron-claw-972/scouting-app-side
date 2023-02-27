@@ -508,7 +508,7 @@ const TeamLookup = () => {
             onChange={(e) => setTeamNumber(e.target.value)}
           />
           <Form.Field style={{ alignSelf: "flexEnd" }}>
-            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>
+            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>names
               Search
             </Button>
           </Form.Field>
@@ -599,22 +599,22 @@ const TeamLookup = () => {
           </Table>
         </Container>
         <Container>
-          <Header style={{ marginLeft: 10 }} as="h3">
+          <Header style={{ marginLeft: 20 }} as="h3">
             comments
           </Header>
-          <Header style={{ marginLeft: 10 }} as="h5">
+          <Header style={{ marginLeft: 20 }} as="h5">
             defense
           </Header>
-          <Segment style={{ marginLeft: 10 }}>{realDefense}</Segment>
-          <Header style={{ marginLeft: 10 }} as="h5">
+          <Segment style={{ marginLeft: 20 }}>{realDefense}</Segment>
+          <Header style={{ marginLeft: 20 }} as="h5">
             driver skills
           </Header>
-          <Segment style={{ marginLeft: 10 }}>{realDriver}</Segment>
+          <Segment style={{ marginLeft: 20 }}>{realDriver}</Segment>
         </Container>
-        <Container>
-          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
+        <Form.Group style={{ marginLeft: 20 }}>
+          <Header style={{ marginLeft: 20 }}>Auto Starts</Header>
           <CanvasDisplay data={coords}></CanvasDisplay>
-        </Container>
+        </Form.Group>
       </Container>
       <Container>
         <Header as="h3">Matches:</Header>
