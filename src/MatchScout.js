@@ -636,6 +636,7 @@ const MatchScout = () => {
                   size="small"
                   margin="4px"
                   color="blue"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(false)}
                 >
                   Blue
@@ -646,6 +647,7 @@ const MatchScout = () => {
                   size="small"
                   margin="4px"
                   color="red"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(true)}
                 >
                   Red

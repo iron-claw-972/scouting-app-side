@@ -631,7 +631,7 @@ const TeamLookup = () => {
         </Form.Group>
       </Container>
       <Container>
-        <Header as="h3">Matches:</Header>
+        <Header style={{ marginTop:"20px" }} as="h3">Matches:</Header>
       </Container>
       <Divider></Divider>
       <label>what to graph</label>
