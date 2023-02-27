@@ -83,6 +83,9 @@ const TeamLookup = () => {
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
 
+  const [namesList, setNamesList] = useState([]);
+
+
   function handleChart(graph) {
     try {
       var q = graph.querySelector("span").textContent;
@@ -139,6 +142,15 @@ const TeamLookup = () => {
       setShowModal(true);
     }
     setMatchData(matchDataArr);
+
+    
+    var names = [];
+
+    for (let i = 0; i < matchDataArr.length; i++) {
+      names.push(matchDataArr[i].name)
+    }
+
+    setNamesList(names);
 
     var initcoords = [];
     matchData.forEach((match) => initcoords.push(match.mousePos));
@@ -454,7 +466,7 @@ const TeamLookup = () => {
     setrealDocked(Math.round((docks / matchDataArr.length) * 100) / 100);
     setrealEngaged(Math.round((engage / matchDataArr.length) * 100) / 100);
   }, [queryTeam]);
-
+  
   const [state, dispatch] = React.useReducer(exampleReducer, {
     column: null,
     data: [],
@@ -519,6 +531,8 @@ const TeamLookup = () => {
           <Header style={{ marginLeft: 10 }} as="h3">
             stats
           </Header>
+          <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
+          </label>
           <Table celled small collapsing basic stackable>
             <Table.Body>
               <Table.Row>

@@ -339,6 +339,11 @@ const MatchScout = () => {
     settelelevelSelected(true);
   };
 
+  const ToTele = () => {
+    setMode(false);
+    setCanvas(false);
+  }
+
   const ShowCanvas = () => {
     setCanvas(true);
   };
@@ -871,7 +876,7 @@ const MatchScout = () => {
                     size="medium"
                     color="blue"
                     style={{ margin: "10px" }}
-                    onClick={() => setMode(false)}
+                    onClick={ToTele}
                   >
                     To tele
                   </Button>
@@ -944,67 +949,35 @@ const MatchScout = () => {
               </Form.Field>
               <Form.Group>
                 <Form.Field>
-                  {TeleHRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                    >
-                      High
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px" }}
-                      size="medium"
-                      fluid
-                      onClick={autoHRClick}
-                    >
-                      High
-                    </Button>
-                  )}
+                  <Button
+                    color="grey"
+                    style={{ marginDown: "5px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoHRClick}
+                  >
+                    High
+                  </Button>
 
-                  {TeleMRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Mid
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={teleMRClick}
-                    >
-                      Mid
-                    </Button>
-                  )}
-                  {TeleLRSelected ? (
-                    <Button
-                      color="orange"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                    >
-                      Low
-                    </Button>
-                  ) : (
-                    <Button
-                      color="white"
-                      style={{ marginDown: "5px", marginTop: "10px" }}
-                      size="medium"
-                      fluid
-                      onClick={teleLRClick}
-                    >
-                      Low
-                    </Button>
-                  )}
+                  <Button
+                    color="grey"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoMRClick}
+                  >
+                    Mid
+                  </Button>
+
+                  <Button
+                    color="grey"
+                    style={{ marginDown: "5px", marginTop: "10px" }}
+                    size="medium"
+                    fluid
+                    onClick={autoLRClick}
+                  >
+                    Low
+                  </Button>
                 </Form.Field>
 
                 <Form.Group style={{ marginTop: "7px", marginLeft: "24px" }}>
