@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
+
 import {
   Divider,
   Label,
@@ -33,35 +35,33 @@ import {
 } from "./AllOptions";
 
 import { Link } from "react-router-dom";
+function exampleReducer(state, action) {
+  switch (action.type) {
+    case "CHANGE_SORT":
+      if (state.column === action.column) {
+        return {
+          ...state,
+          data: state.data.slice().reverse(),
+          direction:
+            state.direction === "ascending" ? "descending" : "ascending",
+        };
+      }
 
-const TeamTab = ({ teamdata, oprs, team }) => {
-  const [teamList, setTeamList] = useState({});
-  const record =
-    teamdata.qual.ranking.record.losses +
-    "-" +
-    teamdata.qual.ranking.record.wins +
-    "-" +
-    teamdata.qual.ranking.record.losses;
-  return (
-    <Container>
-      <Table basic compact small>
-        <Table.Row>
-          <Table.Cell>{teamdata.qual.ranking.rank}</Table.Cell>
-          <Table.Cell>
-            <Link to="/teampage">
-              <Button>{team}</Button>
-            </Link>
-          </Table.Cell>
-          <Table.Cell>{teamdata.qual.ranking.qual_average}</Table.Cell>
-          <Table.Cell></Table.Cell>
-          <Table.Cell>Auto</Table.Cell>
-          <Table.Cell>{record}</Table.Cell>
-          <Table.Cell>{teamdata.qual.ranking.matches_played}</Table.Cell>
-        </Table.Row>
-      </Table>
-    </Container>
-  );
-};
+      return {
+        column: action.column,
+        data: _.sortBy(state.data, [action.column]),
+        direction: "ascending",
+      };
+    case "ADD_DATA":
+      return {
+        ...state,
+        data: action.data,
+      };
+    default:
+      throw new Error();
+  }
+}
+
 const TeamList = () => {
   const [team1, setTeam1] = useState("");
   const [team2, setTeam2] = useState("");
@@ -71,8 +71,7 @@ const TeamList = () => {
   const [team2data, setTeam2data] = useState([{}]);
   const [team3data, setTeam3data] = useState([{}]);
   const [chartData, setChartData] = useState([{}]);
-  const [tabData, setTabData] = useState([]);
-
+  const [loaded, setLoaded] = useState(false);
   function handleChart(graph) {
     try {
       var q = graph.querySelector("span").textContent;
@@ -176,20 +175,30 @@ const TeamList = () => {
       "https://www.thebluealliance.com/api/v3/event/2023week0/teams/statuses"
     ).then((data) => {
       for (let i = 0; i < teamlst.length; i++) {
-        var temptempdata = [];
-        temptempdata[0] = data[teamlst[i]]["qual"]["ranking"]["rank"];
-        temptempdata[1] = teamlst[i].replace("frc", "");
-        temptempdata[2] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][1];
-        temptempdata[3] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][2];
-        temptempdata[4] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][3];
+        var temptempdata = {};
+        temptempdata["rank"] = data[teamlst[i]]["qual"]["ranking"]["rank"];
+        temptempdata["team"] = teamlst[i].replace("frc", "");
+        temptempdata["match_avg"] =
+          data[teamlst[i]]["qual"]["ranking"]["sort_orders"][1];
+        temptempdata["charge_avg"] =
+          data[teamlst[i]]["qual"]["ranking"]["sort_orders"][2];
+        temptempdata["auto_avg"] =
+          data[teamlst[i]]["qual"]["ranking"]["sort_orders"][3];
 
-        temptempdata[5] = data[teamlst[i]]["qual"]["ranking"]["record"]["wins"];
-        temptempdata[6] =
+        temptempdata["win"] =
+          data[teamlst[i]]["qual"]["ranking"]["record"]["wins"];
+        temptempdata["loss"] =
           data[teamlst[i]]["qual"]["ranking"]["record"]["losses"];
-        temptempdata[7] = data[teamlst[i]]["qual"]["ranking"]["record"]["ties"];
+        temptempdata["tie"] =
+          data[teamlst[i]]["qual"]["ranking"]["record"]["ties"];
         tempdata.push(temptempdata);
       }
-      setTabData(tempdata);
+      console.log(tempdata);
+      if (!loaded) {
+        console.log("attempt");
+        dispatch({ type: "ADD_DATA", data: tempdata });
+        setLoaded(true);
+      }
     }, []);
     async function get_url(controller, url) {
       const response = await fetch(url, {
@@ -204,6 +213,12 @@ const TeamList = () => {
       return response.json();
     }
   });
+  const [state, dispatch] = React.useReducer(exampleReducer, {
+    column: null,
+    data: [],
+    direction: null,
+  });
+  const { column, data, direction } = state;
   useEffect(async () => {
     const db = getFirestore();
     const q1 = query(collection(db, "test"), where("teamNumber", "==", team1));
@@ -276,19 +291,66 @@ const TeamList = () => {
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Rank</Table.HeaderCell>
-            <Table.HeaderCell>Team</Table.HeaderCell>
-            <Table.HeaderCell>Avg Match</Table.HeaderCell>
-            <Table.HeaderCell>Avg Charge</Table.HeaderCell>
-            <Table.HeaderCell>Avg Auto</Table.HeaderCell>
-            <Table.HeaderCell>Win</Table.HeaderCell>
-            <Table.HeaderCell>Loss</Table.HeaderCell>
-            <Table.HeaderCell>Ties</Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "rank" ? direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "rank" })}
+            >
+              Rank
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "team" ? direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "team" })}
+            >
+              Team
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "match_avg" ? direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "match_avg" })
+              }
+            >
+              Avg Match
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "charge_avg" ? direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "charge_avg" })
+              }
+            >
+              {" "}
+              Avg Charge
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "auto_avg" ? direction : null}
+              onClick={() =>
+                dispatch({ type: "CHANGE_SORT", column: "auto_avg" })
+              }
+            >
+              Avg Auto
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "win" ? direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "win" })}
+            >
+              Win
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "loss" ? direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "loss" })}
+            >
+              Loss
+            </Table.HeaderCell>
+            <Table.HeaderCell
+              sorted={column === "tie" ? direction : null}
+              onClick={() => dispatch({ type: "CHANGE_SORT", column: "tie" })}
+            >
+              Ties
+            </Table.HeaderCell>
             <Table.HeaderCell>Add 2 Picklist</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {tabData.map(
+          {data.map(
             ({
               rank,
               team,
@@ -299,7 +361,7 @@ const TeamList = () => {
               loss,
               tie,
             }) => (
-              <Table.Row key={team}>
+              <Table.Row key={Math.random()}>
                 <Table.Cell>{rank}</Table.Cell>
                 <Table.Cell>{team}</Table.Cell>
                 <Table.Cell>{match_avg}</Table.Cell>

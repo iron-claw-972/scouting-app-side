@@ -1,6 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import Home from "./Home";
 import MatchScout from "./MatchScout";
 import MatchScoutSubjective from "./MatchScoutSubjective";

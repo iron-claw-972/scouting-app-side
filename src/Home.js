@@ -12,8 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      BULLETIN: *clickity click click click* the scouting app is under
-      construction!
+      The Demonic Demo
     </Header>
     <Card.Group
       centered

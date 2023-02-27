@@ -149,11 +149,67 @@ const TeamLookup = () => {
     setMatchData(matchDataArr);
 
 
-    
+    var initials = new Object();
+    initials = {
+      "jc": "Julio",
+      "jd": "Joshua D",
+      "lf": "Leah",
+      "af": "Anthony",
+      "lg": "Leison",
+      "emh": "Emi",
+      "jj": "Jake",
+      "mk": "Michael K",
+      "tl": "Teo(dor)",
+      "cm": "Cole M",
+      "jm": "Joushua M",
+      "fr": "Faris",
+      "ms": "Max",
+      "os": "Om",
+      "as": "Angela",
+      "rt": "Richie",
+      "rv": "Robert(o)",
+      "az": "Allan",
+      "tz": "Tony",
+      "tb": "Theadin",
+      "tc": "Tyrus",
+      "yd": "Yichen",
+      "jud": "Julia",
+      "ad": "Andrea",
+      "ee": "Eliot",
+      "ch": "Cole H",
+      "ep": "Elisa",
+      "ar": "Ashir",
+      "ns": "Nicole",
+      "gt": "Gavin",
+      "aw": "Ani",
+      "sa": "Sahil",
+      "la": "Laksh(ya)",
+      "mc": "Michael C",
+      "ld": "Leo",
+      "ke": "Kyle",
+      "pg": "Paola",
+      "elh": "Ellery",
+      "eh": "Edwin",
+      "ih": "Ian",
+      "hh": "Ian",
+      "hl": "Henry",
+      "cn": "Cameron",
+      "ap": "Arnav",
+      "cs": "Cici",
+      "rs": "Cici",
+      "ay": "Adam",
+      "ac": "Alex",
+      "joj": "Johann",
+      "sp": "Saara",
+      "mes": "Mehaan",
+      "kt": "Kaushik",
+    };
     var names = [];
 
     for (let i = 0; i < matchDataArr.length; i++) {
-      names.push(matchDataArr[i].name)
+      if (!names.includes(initials[matchDataArr[i].name.toLowerCase()])){
+        names.push(initials[matchDataArr[i].name.toLowerCase()])
+      }
     }
 
     setNamesList(names);
@@ -251,6 +307,8 @@ const TeamLookup = () => {
       setPitData(pitDataArr[0]);
     }
 
+    console.log(pitData)
+
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
@@ -293,68 +351,14 @@ const TeamLookup = () => {
 
     var defenseStr = "";
     var driverStr = "";
-    var initials = new Object();
-    initials = {
-      "jc": "Julio",
-      "jd": "Joshua D",
-      "lf": "Leah",
-      "af": "Anthony",
-      "lg": "Leison",
-      "emh": "Emi",
-      "jj": "Jake",
-      "mk": "Michael K",
-      "tl": "Teo(dor)",
-      "cm": "Cole M",
-      "jm": "Joushua M",
-      "fr": "Faris",
-      "ms": "Max",
-      "os": "Om",
-      "as": "Angela",
-      "rt": "Richie",
-      "rv": "Robert(o)",
-      "az": "Allan",
-      "tz": "Tony",
-      "tb": "Theadin",
-      "tc": "Tyrus",
-      "yd": "Yichen",
-      "jud": "Julia",
-      "ad": "Andrea",
-      "ee": "Eliot",
-      "ch": "Cole H",
-      "ep": "Elisa",
-      "ar": "Ashir",
-      "ns": "Nicole",
-      "gt": "Gavin",
-      "aw": "Ani",
-      "sa": "Sahil",
-      "la": "Laksh(ya)",
-      "mc": "Michael C",
-      "ld": "Leo",
-      "ke": "Kyle",
-      "pg": "Paola",
-      "elh": "Ellery",
-      "eh": "Edwin",
-      "ih": "Ian",
-      "hh": "Ian",
-      "hl": "Henry",
-      "cn": "Cameron",
-      "ap": "Arnav",
-      "cs": "Cici",
-      "rs": "Cici",
-      "ay": "Adam",
-      "ac": "Alex",
-      "joj": "Johann",
-      "sp": "Saara",
-      "mes": "Mehaan",
-      "kt": "Kaushik",
-    };
+    
 
     for (let i = 0; i < subq1.length; i++) {
       defenseStr = defenseStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
-      defenseStr = defenseStr + subq1[i].defense1 + " // ";
+      defenseStr = defenseStr + subq1[i].defense1 + " \n ";
 
       driverStr = driverStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
-      driverStr = driverStr + subq1[i].driverCapacity1 + " // ";
+      driverStr = driverStr + subq1[i].driverCapacity1 + " \n ";
     }
 
     for (let i = 0; i < subq2.length; i++) {
@@ -536,7 +540,7 @@ const TeamLookup = () => {
             onChange={(e) => setTeamNumber(e.target.value)}
           />
           <Form.Field style={{ alignSelf: "flexEnd" }}>
-            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>names
+            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>
               Search
             </Button>
             <Button type="submit" onClick={() => window.open('https://www.thebluealliance.com/team/'+teamNumber+'/2023', '_blank').focus()}>
@@ -547,7 +551,7 @@ const TeamLookup = () => {
       </Form>
       <Container style={{ display: "flex" }}>
         <Container>
-          <Header style={{ marginLeft: 10 }} as="h3">
+          <Header  as="h3">
             stats
           </Header>
           <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
@@ -633,27 +637,34 @@ const TeamLookup = () => {
             </Table.Body>
           </Table>
         </Container>
-        <Container>
+        <Container style={{ minWidth: 300}}>
           <Header style={{ marginLeft: 20 }} as="h3">
             comments
           </Header>
           <Header style={{ marginLeft: 20 }} as="h5">
             defense
           </Header>
-          <Segment style={{ marginLeft: 20 }}>{realDefense}</Segment>
+          <Form.Group><Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment></Form.Group>
+          
           <Header style={{ marginLeft: 20 }} as="h5">
             driver skills
           </Header>
-          <Segment style={{ marginLeft: 20 }}>{realDriver}</Segment>
+          <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
         </Container>
-        <Container>
-          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
-          <CanvasDisplay data={initcoords}></CanvasDisplay>
+        <Container >
+          <Form.Group style={{ marginLeft: 60 }}>
+             <Header >Auto Starts</Header>
+              <CanvasDisplay 
+                data={initcoords}>
+              </CanvasDisplay>
+            </Form.Group>
+            <Form.Group style={{ margin: 60 }}><Container ><img src={pitData.dataUri}></img></Container></Form.Group>
+            
         </Container>
+        
+          
       </Container>
-      <Container>
-        <Header as="h3">Matches:</Header>
-      </Container>
+     
       <Divider></Divider>
       <label>what to graph</label>
       <Form.Select
