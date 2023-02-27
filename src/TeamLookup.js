@@ -511,6 +511,9 @@ const TeamLookup = () => {
             <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>names
               Search
             </Button>
+            <Button type="submit" onClick={() => window.open('https://www.thebluealliance.com/team/'+teamNumber+'/2023', '_blank').focus()}>
+              To TBA
+            </Button>
           </Form.Field>
         </Form.Group>
       </Form>

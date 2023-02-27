@@ -159,7 +159,51 @@ const TeamList = () => {
     console.log(chartData);
     setGraph(q);
   }
+  useEffect(() => {
+    var tempdata = [];
+    var teamlst = [];
+    const controller = new AbortController();
+    var t = get_url(
+      controller,
+      "https://www.thebluealliance.com/api/v3/event/2023week0/teams"
+    ).then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        teamlst.push("frc" + data[i]["team_number"]);
+      }
+    });
+    var a = get_url(
+      controller,
+      "https://www.thebluealliance.com/api/v3/event/2023week0/teams/statuses"
+    ).then((data) => {
+      for (let i = 0; i < teamlst.length; i++) {
+        var temptempdata = [];
+        temptempdata[0] = data[teamlst[i]]["qual"]["ranking"]["rank"];
+        temptempdata[1] = teamlst[i].replace("frc", "");
+        temptempdata[2] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][1];
+        temptempdata[3] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][2];
+        temptempdata[4] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][3];
 
+        temptempdata[5] = data[teamlst[i]]["qual"]["ranking"]["record"]["wins"];
+        temptempdata[6] =
+          data[teamlst[i]]["qual"]["ranking"]["record"]["losses"];
+        temptempdata[7] = data[teamlst[i]]["qual"]["ranking"]["record"]["ties"];
+        tempdata.push(temptempdata);
+      }
+      setTabData(tempdata);
+    }, []);
+    async function get_url(controller, url) {
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "X-TBA-Auth-Key":
+            "BPNgGnZjbEKimUE3vZUl4lwQxyVRVvGsTamHIawG5CMQWpM0DzG8wLhxu1BqCPCO",
+        },
+        signal: controller.signal,
+      });
+      return response.json();
+    }
+  });
   useEffect(async () => {
     const db = getFirestore();
     const q1 = query(collection(db, "test"), where("teamNumber", "==", team1));
@@ -185,52 +229,8 @@ const TeamList = () => {
     });
 
     setTeam1data(matchDataArr1);
-    console.log(team1data);
     setTeam2data(matchDataArr2);
     setTeam3data(matchDataArr3);
-    var tempdata = [];
-    var teamlst = [];
-    const controller = new AbortController();
-    var t = get_url(
-      controller,
-      "https://www.thebluealliance.com/api/v3/event/2023week0/teams"
-    ).then((data) => {
-      for (let i = 0; i < data.length; i++) {
-        teamlst.push("frc" + data[i]["team_number"]);
-      }
-    });
-    console.log(tempdata);
-    var a = get_url(
-      controller,
-      "https://www.thebluealliance.com/api/v3/event/2023week0/teams/statuses"
-    ).then((data) => {
-      for (let i = 0; i < teamlst.length; i++) {
-        tempdata[0] = data[teamlst[i]]["qual"]["ranking"]["rank"];
-        tempdata[1] = teamlst[i].replace("frc", "");
-        tempdata[2] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][1];
-        tempdata[3] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][2];
-        tempdata[4] = data[teamlst[i]]["qual"]["ranking"]["sort_orders"][3];
-
-        tempdata[5] = data[teamlst[i]]["qual"]["ranking"]["record"]["wins"];
-        tempdata[6] = data[teamlst[i]]["qual"]["ranking"]["record"]["losses"];
-        tempdata[7] = data[teamlst[i]]["qual"]["ranking"]["record"]["ties"];
-      }
-    });
-
-    console.log(tempdata);
-    setTabData(tempdata);
-    async function get_url(controller, url) {
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "X-TBA-Auth-Key":
-            "BPNgGnZjbEKimUE3vZUl4lwQxyVRVvGsTamHIawG5CMQWpM0DzG8wLhxu1BqCPCO",
-        },
-        signal: controller.signal,
-      });
-      return response.json();
-    }
   }, [team1, team2, team3]);
 
   return (
