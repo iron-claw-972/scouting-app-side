@@ -36,8 +36,6 @@ import {
   graphOptions,
 } from "./AllOptions";
 
-
-
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -86,6 +84,8 @@ const TeamLookup = () => {
   const [chartData, setChartData] = useState({});
 
   let initcoords = [];
+  const [namesList, setNamesList] = useState([]);
+
 
   function handleChart(graph) {
     try {
@@ -148,11 +148,19 @@ const TeamLookup = () => {
 
     setMatchData(matchDataArr);
 
-    // var initcoords = [];
-    // console.log("matchData: ");
-    // console.log(matchData);
+
     
-    console.log("hello");
+    var names = [];
+
+    for (let i = 0; i < matchDataArr.length; i++) {
+      names.push(matchDataArr[i].name)
+    }
+
+    setNamesList(names);
+
+    var initcoords = [];
+    matchData.forEach((match) => initcoords.push(match.mousePos));
+    console.log(initcoords);
     setCoords(initcoords);
 
     setAvgData((prevData) => {
@@ -285,28 +293,83 @@ const TeamLookup = () => {
 
     var defenseStr = "";
     var driverStr = "";
+    var initials = new Object();
+    initials = {
+      "jc": "Julio",
+      "jd": "Joshua D",
+      "lf": "Leah",
+      "af": "Anthony",
+      "lg": "Leison",
+      "emh": "Emi",
+      "jj": "Jake",
+      "mk": "Michael K",
+      "tl": "Teo(dor)",
+      "cm": "Cole M",
+      "jm": "Joushua M",
+      "fr": "Faris",
+      "ms": "Max",
+      "os": "Om",
+      "as": "Angela",
+      "rt": "Richie",
+      "rv": "Robert(o)",
+      "az": "Allan",
+      "tz": "Tony",
+      "tb": "Theadin",
+      "tc": "Tyrus",
+      "yd": "Yichen",
+      "jud": "Julia",
+      "ad": "Andrea",
+      "ee": "Eliot",
+      "ch": "Cole H",
+      "ep": "Elisa",
+      "ar": "Ashir",
+      "ns": "Nicole",
+      "gt": "Gavin",
+      "aw": "Ani",
+      "sa": "Sahil",
+      "la": "Laksh(ya)",
+      "mc": "Michael C",
+      "ld": "Leo",
+      "ke": "Kyle",
+      "pg": "Paola",
+      "elh": "Ellery",
+      "eh": "Edwin",
+      "ih": "Ian",
+      "hh": "Ian",
+      "hl": "Henry",
+      "cn": "Cameron",
+      "ap": "Arnav",
+      "cs": "Cici",
+      "rs": "Cici",
+      "ay": "Adam",
+      "ac": "Alex",
+      "joj": "Johann",
+      "sp": "Saara",
+      "mes": "Mehaan",
+      "kt": "Kaushik",
+    };
 
     for (let i = 0; i < subq1.length; i++) {
-      defenseStr = defenseStr + subq1[i].name + ": ";
-      defenseStr = defenseStr + subq1[i].defense1 + " / ";
+      defenseStr = defenseStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
+      defenseStr = defenseStr + subq1[i].defense1 + " // ";
 
-      driverStr = driverStr + subq1[i].name + ": ";
-      driverStr = driverStr + subq1[i].driverCapacity1 + " / ";
+      driverStr = driverStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
+      driverStr = driverStr + subq1[i].driverCapacity1 + " // ";
     }
 
     for (let i = 0; i < subq2.length; i++) {
-      defenseStr = defenseStr + subq2[i].name + ": ";
+      defenseStr = defenseStr + initials[subq2[i].name.toLowerCase()]  + " (" + subq2[i].MatchNo + "): ";
       defenseStr = defenseStr + subq2[i].defense2 + "\n";
 
-      driverStr = driverStr + subq2[i].name + ": ";
+      driverStr = driverStr + initials[subq2[i].name.toLowerCase()] +  " (" + subq2[i].MatchNo + "): ";
       driverStr = driverStr + subq2[i].driverCapacity2 + "\n";
     }
 
     for (let i = 0; i < subq3.length; i++) {
-      defenseStr = defenseStr + subq3[i].name + ": ";
+      defenseStr = defenseStr + initials[subq3[i].name.toLowerCase()] + " (" + subq3[i].MatchNo + "): ";
       defenseStr = defenseStr + subq3[i].defense3 + "\n";
 
-      driverStr = driverStr + subq3[i].name + ": ";
+      driverStr = driverStr + initials[subq3[i].name.toLowerCase()]  + " (" + subq3[i].MatchNo + "): ";
       driverStr = driverStr + subq3[i].driverCapacity3 + "\n";
     }
 
@@ -409,7 +472,7 @@ const TeamLookup = () => {
     setrealDocked(Math.round((docks / matchDataArr.length) * 100) / 100);
     setrealEngaged(Math.round((engage / matchDataArr.length) * 100) / 100);
   }, [queryTeam]);
-
+  
   const [state, dispatch] = React.useReducer(exampleReducer, {
     column: null,
     data: [],
@@ -422,7 +485,7 @@ const TeamLookup = () => {
     for (let i = 0; i < data.length; i++) {
       avg += data[i][param];
     }
-    return avg / data.length;
+    return (avg / data.length).toFixed(1);
   }
   function total(data) {
     var out = 0;
@@ -448,7 +511,7 @@ const TeamLookup = () => {
         }
       }
     }
-    setTotalScore(out);
+    setTotalScore((out / data.length).toFixed(1));
   }
 
 
@@ -473,8 +536,11 @@ const TeamLookup = () => {
             onChange={(e) => setTeamNumber(e.target.value)}
           />
           <Form.Field style={{ alignSelf: "flexEnd" }}>
-            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>
+            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>names
               Search
+            </Button>
+            <Button type="submit" onClick={() => window.open('https://www.thebluealliance.com/team/'+teamNumber+'/2023', '_blank').focus()}>
+              To TBA
             </Button>
           </Form.Field>
         </Form.Group>
@@ -484,6 +550,8 @@ const TeamLookup = () => {
           <Header style={{ marginLeft: 10 }} as="h3">
             stats
           </Header>
+          <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
+          </label>
           <Table celled small collapsing basic stackable>
             <Table.Body>
               <Table.Row>
@@ -559,22 +627,24 @@ const TeamLookup = () => {
 
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{pitData.drive}</Table.Cell>
+                <Table.Cell>Avg Total Score</Table.Cell>
+                <Table.Cell>{totalScore}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
         </Container>
         <Container>
-          <Header style={{ marginLeft: 10 }} as="h3">
+          <Header style={{ marginLeft: 20 }} as="h3">
             comments
           </Header>
-          <Header style={{ marginLeft: 10 }} as="h5">
+          <Header style={{ marginLeft: 20 }} as="h5">
             defense
           </Header>
-          <Segment style={{ marginLeft: 10 }}>{realDefense}</Segment>
-          <Header style={{ marginLeft: 10 }} as="h5">
+          <Segment style={{ marginLeft: 20 }}>{realDefense}</Segment>
+          <Header style={{ marginLeft: 20 }} as="h5">
             driver skills
           </Header>
-          <Segment style={{ marginLeft: 10 }}>{realDriver}</Segment>
+          <Segment style={{ marginLeft: 20 }}>{realDriver}</Segment>
         </Container>
         <Container>
           <Header style={{ marginLeft: 10 }}>Auto Starts</Header>

@@ -36,6 +36,24 @@ const NewTeamPages = () => {
   const [scoreAuto, setScoreAuto] = useState([0, 0, 0, 0, 0, 0]);
   const [scoreTele, setScoreTele] = useState([0, 0, 0, 0, 0, 0]);
   const [scoreEnd, setScoreEnd] = useState([0, 0, 0, 0, 0, 0]);
+  const [users, setUsers] = useState([
+    {
+      score_breakdown: {
+        red: {
+          totalPoints: 0,
+          activationBonusAchieved: 0,
+          sustainabilityBonusAchieved: 0,
+          links: [],
+        },
+        blue: {
+          totalPoints: 0,
+          activationBonusAchieved: 0,
+          sustainabilityBonusAchieved: 0,
+          links: [],
+        },
+      },
+    },
+  ]);
 
   const matchDataArr = [];
   var redlst = [{}, {}, {}];
@@ -48,6 +66,26 @@ const NewTeamPages = () => {
   useEffect(() => {
     const match = queryParameters.get("match");
     setMatchNumber(match);
+    if (users.length === 0) {
+      setUsers([
+        {
+          score_breakdown: {
+            red: {
+              totalPoints: 0,
+              activationBonusAchieved: 0,
+              sustainabilityBonusAchieved: 0,
+              links: [],
+            },
+            blue: {
+              totalPoints: 0,
+              activationBonusAchieved: 0,
+              sustainabilityBonusAchieved: 0,
+              links: [],
+            },
+          },
+        },
+      ]);
+    }
   }, []);
 
   useEffect(async () => {
@@ -154,10 +192,84 @@ const NewTeamPages = () => {
       (bluelst[2].teleHighConeCount + bluelst[2].teleHighCubeCount) * 6 +
       (bluelst[2].teleMidConeCount + bluelst[2].teleMidCubeCount) * 4 +
       (bluelst[2].teleLowConeCount + bluelst[2].teleLowCubeCount) * 3;
+    const controller = new AbortController();
+    var a = get_url(
+      controller,
+      "https://www.thebluealliance.com/api/v3/event/2023week0/matches"
+    ).then((data) => {
+      let rdata = [];
+      for (let i = 0; i < data.length; i++) {
+        console.log(data[i]["match_number"]);
+        console.log(data[i]["comp_level"]);
+
+        if (
+          data[i]["comp_level"] === "qm" &&
+          String(data[i]["match_number"]) === String(queryTeam)
+        ) {
+          console.log(data[i]);
+          console.log("deez");
+          rdata.push(data[i]);
+          break;
+        }
+      }
+      if (rdata.length == 0) {
+        rdata = [
+          {
+            red: {
+              totalPoints: 0,
+              activationBonusAchieved: 0,
+              sustainabilityBonusAchieved: 0,
+            },
+            blue: {
+              totalPoints: 0,
+              activationBonusAchieved: 0,
+              sustainabilityBonusAchieved: 0,
+            },
+          },
+        ];
+      }
+      console.log(rdata);
+
+      setUsers(rdata);
+      if (users.length === 0) {
+        setUsers([
+          {
+            score_breakdown: {
+              red: {
+                totalPoints: 0,
+                activationBonusAchieved: 0,
+                sustainabilityBonusAchieved: 0,
+                links: [],
+              },
+              blue: {
+                totalPoints: 0,
+                activationBonusAchieved: 0,
+                sustainabilityBonusAchieved: 0,
+                links: [],
+              },
+            },
+          },
+        ]);
+      }
+    });
+    console.log("deez");
+    console.log(users);
     setScoreAuto(autoScores);
-    console.log(autoScores);
     setScoreTele(teleScores);
+    return () => controller.abort();
   }, [queryTeam]);
+  async function get_url(controller, url) {
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "X-TBA-Auth-Key":
+          "BPNgGnZjbEKimUE3vZUl4lwQxyVRVvGsTamHIawG5CMQWpM0DzG8wLhxu1BqCPCO",
+      },
+      signal: controller.signal,
+    });
+    return response.json();
+  }
 
   return (
     <Container>
@@ -178,7 +290,16 @@ const NewTeamPages = () => {
       <Button type="submit" onClick={() => setQueryTeam(matchNumber)}>
         Search
       </Button>
+      <a
+        href={
+          "https://www.thebluealliance.com/match/2023week0_qm" + matchNumber
+        }
+      >
+        <Button>To TBA</Button>
+      </a>
+
       <Divider></Divider>
+
       <Container style={{ display: "flex" }}>
         <Container>
           <Header as="h3">at a glance</Header>
@@ -196,23 +317,46 @@ const NewTeamPages = () => {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Score</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["red"]["totalPoints"]}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["blue"]["totalPoints"]}
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Sustain RP</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  {String(
+                    users[0]["score_breakdown"]["red"][
+                      "sustainabilityBonusAchieved"
+                    ]
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {String(
+                    users[0]["score_breakdown"]["blue"][
+                      "sustainabilityBonusAchieved"
+                    ]
+                  )}
+                </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Charging RP</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Predicted Score</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
-                <Table.Cell>{}</Table.Cell>
+                <Table.Cell>
+                  {String(
+                    users[0]["score_breakdown"]["red"][
+                      "activationBonusAchieved"
+                    ]
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {String(
+                    users[0]["score_breakdown"]["blue"][
+                      "activationBonusAchieved"
+                    ]
+                  )}
+                </Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
@@ -255,6 +399,27 @@ const NewTeamPages = () => {
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
+                <Table.Cell>Links</Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["red"]["links"].length}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["red"]["links"].length}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["red"]["links"].length}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["blue"]["links"].length}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["blue"]["links"].length}
+                </Table.Cell>
+                <Table.Cell>
+                  {users[0]["score_breakdown"]["blue"]["links"].length}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
                 <Table.Cell>Total Score</Table.Cell>
                 <Table.Cell>{scoreAuto[0] + scoreTele[0]}</Table.Cell>
                 <Table.Cell>{scoreAuto[1] + scoreTele[1]}</Table.Cell>
@@ -269,8 +434,8 @@ const NewTeamPages = () => {
                 <Table.Cell>{redlist[1].groundIntakes}</Table.Cell>
                 <Table.Cell>{redlist[2].groundIntakes}</Table.Cell>
                 <Table.Cell>{bluelist[0].groundIntakes}</Table.Cell>
-                <Table.Cell>{bluelist[0].groundIntakes}</Table.Cell>
-                <Table.Cell>{bluelist[0].groundIntakes}</Table.Cell>
+                <Table.Cell>{bluelist[1].groundIntakes}</Table.Cell>
+                <Table.Cell>{bluelist[2].groundIntakes}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>{}</Table.Cell>

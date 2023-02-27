@@ -1,32 +1,47 @@
-/*This isnt even a data display
-Its credits and notes
-In other words, this file is inaccurately named
-Change it if you want.
-Use this to preserve the legacy of the brave programmers who dared to
-venture into the land of the webpage, far from the familiar lands
-of WPI Lib and their robot-programming comrades.*/
+/*
+This isnt even a data display
+-2022
+It's the credits and version notes file
+Use this to preserve the history of the scouting app
+And honor the scouters. 
+-2023
+*/
 
 export default function DataDisplay() {
   return (
     <div>
-      <h1>Thanks for using the app!</h1>
-      <h3 style={{ marginLeft: 10 }}>Worked on by:</h3>
-      <h5 style={{ marginLeft: 10 }}>Ashir Rao, Richie Tan</h5>
-      <h3 style={{ marginLeft: 10 }}>Thanks to:</h3>
-      <h5 style={{ marginLeft: 10 }}>
-        Our Scouting and Strategy Team, our industrious scouters, Ashir's Dad,
-        and our amazing mentors!
+      <h1 style={{ textAlign: "center", margin: 10 }}>
+        Thanks for using the app!
+      </h1>
+      <h2 style={{ textAlign: "center", margin: 5, marginLeft: 10 }}>
+        Worked on by:
+      </h2>
+      <h5 style={{ textAlign: "center", margin: 10 }}>
+        Ashir Rao, Elisa Pan, Edwin Hou, Johann Jacob (2023)
       </h5>
-      <h2>------</h2>
-      <h3 style={{ marginLeft: 10 }}>Notes</h3>
-      <h5 style={{ marginLeft: 10 }}>
-        Use this in future years, you likely won't have to change much.
+      <h5 style={{ textAlign: "center", margin: 10 }}>
+        Ashir Rao, Richie Tan (2022)
       </h5>
-      <h4>Trans rights are a good.</h4>
-      <h5 style={{ marginLeft: 10 }}>
-        From Team 972 - Iron Claw at Los Gatos High School :)
+      <h2 style={{ textAlign: "center", margin: 10 }}>Thanks to:</h2>
+      <h5 style={{ textAlign: "center", margin: 10 }}>
+        Scouting/Strategy team, the scouters, and most of all -- the mentors!
       </h5>
-      <h4 style={{ textAlign: "center" }}>Water Game ... some day</h4>
+      <h2 style={{ textAlign: "center", margin: 10 }}>------</h2>
+      <h3 style={{ textAlign: "center", margin: 10 }}>Version Notes:</h3>
+      <h5 style={{ textAlign: "center", margin: 15 }}>
+        -added match scout subjective, focused on button based design, dark
+        mode, more graphs and charts, integration with API, more readable UI
+        (2023)
+      </h5>
+      <h5 style={{ textAlign: "center", margin: 15 }}>
+        Version notes not implemented in 2022. Cope. (2022)
+      </h5>
+      <h2 style={{ textAlign: "center", margin: 10 }}>------</h2>
+
+      <h5 style={{ textAlign: "center", margin: 10 }}>
+        Team 972 - Iron Claw at Los Gatos High School :)
+      </h5>
+      <h4 style={{ textAlign: "center" }}>W A T E R G A M E ... some day</h4>
     </div>
   );
 }
