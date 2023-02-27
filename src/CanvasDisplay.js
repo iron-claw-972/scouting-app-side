@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import field_image from "./field_image.png";
 
-// Sample data for testing
 
 const CanvasDisplay = ({ data }) => {
   // Setup ref for canvas
   const canvasRef = useRef(null);
+
 
   useEffect(() => {
     console.log("load again?");
@@ -34,8 +34,9 @@ const CanvasDisplay = ({ data }) => {
     /**
      * Draws a point on field from coordinates
      * @param {object} coordinates
+     * Example:
      * ```javascript
-     * {x: 3, y: 100}
+     * drawPoint({x: 3, y: 100});
      * ```
      */
 
@@ -55,14 +56,14 @@ const CanvasDisplay = ({ data }) => {
      * @see{@link draw}
      */
     field_background.addEventListener("load", () => {
-      console.log(data);
+      // console.log(data);
       draw(data);
     });
-  }, []);
+  });
 
   return (
     <div>
-      <canvas ref={canvasRef}></canvas>
+      <canvas height="180" width="360" ref={canvasRef}></canvas>
     </div>
   );
 };

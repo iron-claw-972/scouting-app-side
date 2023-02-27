@@ -36,7 +36,7 @@ import {
   graphOptions,
 } from "./AllOptions";
 
-var initcoords = [];
+
 
 function exampleReducer(state, action) {
   switch (action.type) {
@@ -84,6 +84,8 @@ const TeamLookup = () => {
   const [realDriver, setRealDriver] = useState("");
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
+
+  let initcoords = [];
 
   function handleChart(graph) {
     try {
@@ -449,17 +451,15 @@ const TeamLookup = () => {
     setTotalScore(out);
   }
 
-  console.log("matchData: ");
-  console.log(matchData);
 
   matchData.forEach((match) => {
-    initcoords.push({x: match.mousePos.x, y: match.mousePos.y});  
-    console.log("Match: ");
-    console.log(match);
+    if (match.mousePos != null) {
+      initcoords.push({x: match.mousePos.x, y: match.mousePos.y});  
+    } else {
+      initcoords.push({x: match.mouseX, y: match.mouseY});
+    }
   });
   
-  console.log("initcoords:");
-  console.log(initcoords);
 
   return (
     <Container>
