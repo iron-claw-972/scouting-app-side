@@ -61,7 +61,7 @@ const CanvasChooser = ({ setMouseCoord, getMouseCoord }) => {
 
   return (
     <div>
-      <canvas ref={canvasRef}></canvas>
+      <canvas height="180" width="360" ref={canvasRef}></canvas>
     </div>
   );
 };

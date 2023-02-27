@@ -25,7 +25,6 @@ import {
 import { LineChart, BarChart } from "react-chartkick";
 import "chartkick/chart.js";
 import Textbox from "./Textbox.js";
-import CanvasChooser from "./CanvasChooser";
 import CanvasDisplay from "./CanvasDisplay";
 
 import {
@@ -36,6 +35,7 @@ import {
   yesNoOptions,
   graphOptions,
 } from "./AllOptions";
+
 function exampleReducer(state, action) {
   switch (action.type) {
     case "CHANGE_SORT":
@@ -83,6 +83,7 @@ const TeamLookup = () => {
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
 
+  let initcoords = [];
   const [namesList, setNamesList] = useState([]);
 
 
@@ -118,13 +119,16 @@ const TeamLookup = () => {
     setChartData(output);
     setGraph(q);
   }
+
   const queryParameters = new URLSearchParams(window.location.search);
 
   useEffect(() => {
     const team = queryParameters.get("team");
     setTeamNumber(team);
   }, []);
+
   useEffect(async () => {
+    console.log("UseEffect called")
     if (queryTeam === "") return;
     matchDataArr = [];
     const db = getFirestore();
@@ -141,7 +145,9 @@ const TeamLookup = () => {
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
+
     setMatchData(matchDataArr);
+
 
     
     var names = [];
@@ -508,6 +514,16 @@ const TeamLookup = () => {
     setTotalScore((out / data.length).toFixed(1));
   }
 
+
+  matchData.forEach((match) => {
+    if (match.mousePos != null) {
+      initcoords.push({x: match.mousePos.x, y: match.mousePos.y});  
+    } else {
+      initcoords.push({x: match.mouseX, y: match.mouseY});
+    }
+  });
+  
+
   return (
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
@@ -630,10 +646,10 @@ const TeamLookup = () => {
           </Header>
           <Segment style={{ marginLeft: 20 }}>{realDriver}</Segment>
         </Container>
-        <Form.Group style={{ marginLeft: 20 }}>
-          <Header style={{ marginLeft: 20 }}>Auto Starts</Header>
-          <CanvasDisplay data={coords}></CanvasDisplay>
-        </Form.Group>
+        <Container>
+          <Header style={{ marginLeft: 10 }}>Auto Starts</Header>
+          <CanvasDisplay data={initcoords}></CanvasDisplay>
+        </Container>
       </Container>
       <Container>
         <Header as="h3">Matches:</Header>
