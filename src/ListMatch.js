@@ -38,16 +38,17 @@ import {
 } from "./AllOptions";
 
 const MatchList = () => {
-  const compcode = "casj2022";
+  const compcode = "2023week0";
   const controller = new AbortController();
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const controller = new AbortController();
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2022casj/matches"
+      "https://www.thebluealliance.com/api/v3/event/2023week0/matches"
     ).then((data) => {
       let rdata = [];
+      console.log(data);
       for (let i = 0; i < data.length; i++) {
         if (data[i]["comp_level"] === "qm") {
           rdata.push(data[i]);

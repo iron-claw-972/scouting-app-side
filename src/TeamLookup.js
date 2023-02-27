@@ -594,6 +594,8 @@ const TeamLookup = () => {
 
                 <Table.Cell>Drivetrain</Table.Cell>
                 <Table.Cell>{pitData.drive}</Table.Cell>
+                <Table.Cell>Avg Total Score</Table.Cell>
+                <Table.Cell>{totalScore}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>

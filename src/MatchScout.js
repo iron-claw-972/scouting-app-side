@@ -658,23 +658,24 @@ const MatchScout = () => {
           ) : (
             <Form.Field></Form.Field>
           )}
-          {canvas ? (
-            <Container>
-              <Form.Group>
-                <Form.Field>
-                  <CanvasChooser
-                    setMouseCoord={setMousePos}
-                    getMouseCoord={mousePos}
-                  />
-                </Form.Field>
-              </Form.Group>
-              <Divider></Divider>
-            </Container>
-          ) : (
-            <Container></Container>
-          )}
+
           {mode ? (
             <Container>
+              {canvas ? (
+                <Container>
+                  <Form.Group>
+                    <Form.Field>
+                      <CanvasChooser
+                        setMouseCoord={setMousePos}
+                        getMouseCoord={mousePos}
+                      />
+                    </Form.Field>
+                  </Form.Group>
+                  <Divider></Divider>
+                </Container>
+              ) : (
+                <Container></Container>
+              )}
               <Header style={{ color: "white" }} as="h3">
                 Auto
               </Header>
