@@ -12,7 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      The Demonic Demo
+      The Demonic Demo v2
     </Header>
     <Card.Group
       centered

@@ -226,23 +226,6 @@ const MatchScout = () => {
         console.error("Error adding document: ", e);
         setShowError(true);
       });
-    const adocRef = doc(
-      db,
-      "test-a",
-      String(teamNumber) + "_" + String(MatchNo)
-    );
-    var done = true;
-    var subjective = true;
-    var scoutTeam = teamNumber;
-    var scoutMatch = MatchNo;
-    setName(name.toLowerCase());
-    setDoc(
-      adocRef,
-      { done, scoutMatch, scoutTeam, subjective, name },
-      { merge: true }
-    );
-    resetForm();
-    setName(name.toUpperCase());
   }, [docRefId]);
 
   let climbInterval = null;
@@ -289,6 +272,29 @@ const MatchScout = () => {
   const save = async () => {
     if (!validate()) return;
     setDocRefId(teamNumber + "_" + MatchNo);
+  };
+
+  const handleClose = () => {
+    console.log("attempt");
+    const db = getFirestore();
+    setShowQrCode(false);
+    const adocRef = doc(
+      db,
+      "test-a",
+      String(teamNumber) + "_" + String(MatchNo)
+    );
+    var done = true;
+    var subjective = true;
+    var scoutTeam = teamNumber;
+    var scoutMatch = MatchNo;
+    setName(name.toLowerCase());
+    setDoc(
+      adocRef,
+      { done, scoutMatch, scoutTeam, subjective, name },
+      { merge: true }
+    );
+    resetForm();
+    setName(name.toUpperCase());
   };
 
   /*Search these tags on semantic ui website for info
@@ -342,7 +348,7 @@ const MatchScout = () => {
   const ToTele = () => {
     setMode(false);
     setCanvas(false);
-  }
+  };
 
   const ShowCanvas = () => {
     setCanvas(true);
@@ -863,7 +869,7 @@ const MatchScout = () => {
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />
 
-                    <h5 style={{ color: "white" }}>Ground Intakes</h5>
+                    <h5 style={{ color: "white" }}>Intakes</h5>
                     {groundIntakes}
                   </Form.Field>
 
@@ -1069,15 +1075,13 @@ const MatchScout = () => {
           </Form.Group>
           <Divider hidden></Divider>
         </Form>
-        <Modal open={showModal} onClose={() => setShowModal(false)}>
+        <Modal open={showModal}>
           <Modal.Header>Some fields are blank</Modal.Header>
           <Modal.Content>
             <p>Please check some required fields with (*) are not entered</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button positive onClick={() => setShowModal(false)}>
-              OK
-            </Button>
+            <Button positive>OK</Button>
           </Modal.Actions>
         </Modal>
         {showSuccess && <Message success header="Data saved successfully" />}
@@ -1091,11 +1095,7 @@ const MatchScout = () => {
           </Link>
         )}
 
-        <Modal
-          open={showQrCode}
-          size="fullscreen"
-          onClose={() => setShowQrCode(false)}
-        >
+        <Modal open={showQrCode} size="fullscreen" onClose={handleClose}>
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
             <h3 style={{ margin: "0px" }}>
