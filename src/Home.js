@@ -12,7 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      The Demonic Demo v2
+      Hueneme Part 1: The Beginning v2
     </Header>
     <Card.Group
       centered
@@ -118,9 +118,9 @@ const Home = () => (
         </Card>
       </Link>
 
-      <Link to="/pitdisplay" style={{ margin: 10 }}>
+      <Link to="/rawmatch" style={{ margin: 10 }}>
         <Card>
-          <Card.Content header="Pit Display" description="-" />
+          <Card.Content header="Export to CSV" description="click on it" />
         </Card>
       </Link>
       <Link to="/datadisplay" style={{ margin: 10 }}>

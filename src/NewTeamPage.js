@@ -195,7 +195,7 @@ const NewTeamPages = () => {
     const controller = new AbortController();
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023week0/matches"
+      "https://www.thebluealliance.com/api/v3/event/2023caph/matches"
     ).then((data) => {
       let rdata = [];
       for (let i = 0; i < data.length; i++) {
@@ -291,9 +291,7 @@ const NewTeamPages = () => {
         Search
       </Button>
       <a
-        href={
-          "https://www.thebluealliance.com/match/2023week0_qm" + matchNumber
-        }
+        href={"https://www.thebluealliance.com/match/2023caph_qm" + matchNumber}
       >
         <Button>To TBA</Button>
       </a>

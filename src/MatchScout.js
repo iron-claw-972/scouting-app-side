@@ -242,6 +242,8 @@ const MatchScout = () => {
     );
 
     const assSnapshot = await getDocs(assq);
+    console.log(assSnapshot);
+
     var assList = [];
     assSnapshot.forEach((match) => {
       assList.push(match.data());
@@ -275,13 +277,15 @@ const MatchScout = () => {
   };
 
   const handleClose = () => {
-    console.log("attempt");
     const db = getFirestore();
     setShowQrCode(false);
+    console.log(
+      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
+    );
     const adocRef = doc(
       db,
       "test-a",
-      String(teamNumber) + "_" + String(MatchNo)
+      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
     );
     var done = true;
     var subjective = true;
@@ -293,6 +297,7 @@ const MatchScout = () => {
       { done, scoutMatch, scoutTeam, subjective, name },
       { merge: true }
     );
+    console.log({ done, scoutMatch, scoutTeam, subjective, name });
     resetForm();
     setName(name.toUpperCase());
   };
@@ -625,13 +630,13 @@ const MatchScout = () => {
             </Form.Field>
 
             <Form.Field>
-              <label style={{ color: "white" }}>-Team #*-</label>
+              <label style={{ color: "white", width: "80px" }}>-Team #*-</label>
               <Input
                 fluid
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => setTeamNumber(e.target.value)}
+                onChange={(e) => save(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
@@ -1028,7 +1033,7 @@ const MatchScout = () => {
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />
 
-                    <h5 style={{ color: "white" }}>Ground Intakes</h5>
+                    <h5 style={{ color: "white" }}>Intakes</h5>
                     {groundIntakes}
                   </Form.Field>
 

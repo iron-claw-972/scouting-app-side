@@ -42,7 +42,7 @@ const App = () => {
       <Route path="/teamlist" element={<TeamList />} />
       <Route path="/teamlookup/" element={<TeamLookup />} />
 
-      <Route path="/pitdisplay" element={<PitDisplay />} />
+      <Route path="/rawmatch" element={<RawMatchTable />} />
 
       <Route path="datadisplay" element={<DataDisplay />} />
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
