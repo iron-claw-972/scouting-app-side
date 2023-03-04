@@ -230,41 +230,14 @@ const MatchScout = () => {
 
   let climbInterval = null;
 
-  useEffect(async () => {
-    const db = getFirestore();
-    const assq = query(
-      collection(db, "test-a"),
-
-      where("name", "==", name.toLowerCase()),
-      where("done", "==", false),
-      where("subjective", "==", true),
-      orderBy("scoutMatch")
-    );
-
-    const assSnapshot = await getDocs(assq);
-    console.log(assSnapshot);
-
-    var assList = [];
-    assSnapshot.forEach((match) => {
-      assList.push(match.data());
-    });
-    console.log(assList);
-    if (assList.length > 0) {
-      const assData = assList[0];
-      setMatchNo(assData.scoutMatch);
-      setTeamNumber(assData.scoutTeam);
-    }
-  });
+  useEffect(async () => {});
 
   //This function has an array called requiredFields
   //And it checks whether they've been filled out
   //It's empty now, but could be useful in coming years
   const validate = () => {
     const requiredFields = [MatchNo, teamNumber];
-    if (requiredFields.some((f) => f === "")) {
-      setShowModal(true);
-      return false;
-    }
+
     return true;
   };
 
@@ -277,29 +250,9 @@ const MatchScout = () => {
   };
 
   const handleClose = () => {
-    const db = getFirestore();
     setShowQrCode(false);
-    console.log(
-      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
-    );
-    const adocRef = doc(
-      db,
-      "test-a",
-      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
-    );
-    var done = true;
-    var subjective = true;
-    var scoutTeam = teamNumber;
-    var scoutMatch = MatchNo;
-    setName(name.toLowerCase());
-    setDoc(
-      adocRef,
-      { done, scoutMatch, scoutTeam, subjective, name },
-      { merge: true }
-    );
-    console.log({ done, scoutMatch, scoutTeam, subjective, name });
+
     resetForm();
-    setName(name.toUpperCase());
   };
 
   /*Search these tags on semantic ui website for info
@@ -636,7 +589,7 @@ const MatchScout = () => {
                 size="medium"
                 placeholder=""
                 value={teamNumber}
-                onChange={(e) => save(e.target.value)}
+                onChange={(e) => setTeamNumber(e.target.value)}
               />
             </Form.Field>
             <Form.Field>
