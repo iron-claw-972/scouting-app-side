@@ -204,6 +204,42 @@ const MatchScout = () => {
     setTeleLowConeCount(0);
   };
 
+  useEffect(async () => {
+    const db = getFirestore();
+    const assq = query(
+      collection(db, "test-a"),
+
+      where("name", "==", name.toLowerCase()),
+      where("done", "==", false),
+      where("subjective", "==", true),
+      orderBy("scoutMatch")
+    );
+
+    const assSnapshot = await getDocs(assq);
+    console.log(assSnapshot);
+
+    var assList = [];
+    var check = 100000;
+    assSnapshot.forEach((match) => {
+      var temp = match.data();
+      console.log(temp);
+
+      if (temp.scoutMatch < check) {
+        console.log("push");
+        assList.push(temp);
+        check = temp.scoutMatch;
+      }
+    });
+
+    console.log(assList);
+    if (assList.length > 0) {
+      const assData = assList[assList.length - 1];
+      console.log(assData);
+      setMatchNo(assData.scoutMatch);
+      setTeamNumber(assData.scoutTeam);
+    }
+  });
+
   //This gets called on page load and whenever docRefId changes
   //You can see docRefId in an array at the bottom
   //Anything in that array being changed triggers this function.
@@ -250,9 +286,30 @@ const MatchScout = () => {
   };
 
   const handleClose = () => {
+    const db = getFirestore();
     setShowQrCode(false);
+    console.log(
+      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
+    );
+    const adocRef = doc(
+      db,
+      "test-a",
+      String(teamNumber) + "_" + String(MatchNo) + "_" + name.toLowerCase()
+    );
+    var done = true;
+    var subjective = true;
+    var scoutTeam = teamNumber;
+    var scoutMatch = MatchNo;
+    setName(name.toLowerCase());
+    setDoc(
+      adocRef,
+      { done, scoutMatch, scoutTeam, subjective, name },
+      { merge: true }
+    );
+    console.log({ done, scoutMatch, scoutTeam, subjective, name });
 
     resetForm();
+    setName(name.toUpperCase());
   };
 
   /*Search these tags on semantic ui website for info
@@ -619,6 +676,7 @@ const MatchScout = () => {
           </Form.Group>
 
           <Divider></Divider>
+
           {mode ? (
             <Form.Field style={{ marginTop: "10px" }}>
               <Button icon="map" onClick={ShowCanvas}></Button>

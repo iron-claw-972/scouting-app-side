@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { v4 as uuidv4 } from "uuid";
-import Camera from "react-html5-camera-photo";
+import Camera, { FACING_MODES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
 //Like match scout, this is very meaty
@@ -255,6 +255,7 @@ const PitScout = () => {
               {showCamera ? (
                 <Camera
                   sizeFactor={0.4}
+                  idealFacingMode={FACING_MODES.ENVIRONMENT}
                   onTakePhoto={(dataUri) => {
                     handleTakePhoto(dataUri);
                   }}

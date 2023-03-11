@@ -87,7 +87,7 @@ const MatchScoutSubjective = () => {
   //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = (asynbility) => {
     if (!validate()) return;
-    setDocRefId(MatchNo);
+    setDocRefId(String(MatchNo) + String(color));
   };
 
   const matchData = {
