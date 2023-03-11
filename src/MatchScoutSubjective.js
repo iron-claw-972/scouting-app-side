@@ -161,6 +161,7 @@ const MatchScoutSubjective = () => {
                   size="small"
                   margin="4px"
                   color="blue"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(false)}
                 >
                   Blue
@@ -171,6 +172,7 @@ const MatchScoutSubjective = () => {
                   size="small"
                   margin="4px"
                   color="red"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(true)}
                 >
                   Red
@@ -194,7 +196,7 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "10px" }}>
+              <Form.Field style={{ marginLeft: "15px" }}>
                 <label style={{ color: "white" }}>Defense</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
@@ -228,7 +230,7 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "10px" }}>
+              <Form.Field style={{ marginLeft: "15px" }}>
                 <label style={{ color: "white" }}>Defense</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
@@ -262,7 +264,7 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "10px" }}>
+              <Form.Field style={{ marginLeft: "15px" }}>
                 <label style={{ color: "white" }}>Defense</label>
                 <Form.TextArea
                   style={{ width: "150px" }}

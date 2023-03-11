@@ -65,6 +65,7 @@ function exampleReducer(state, action) {
 
 const TeamLookup = () => {
   var matchDataArr = [];
+  
   const [mousePos, setMousePos] = useState({});
 
   const [teamNumber, setTeamNumber] = useState("");
@@ -85,7 +86,6 @@ const TeamLookup = () => {
 
   let initcoords = [];
   const [namesList, setNamesList] = useState([]);
-
 
   function handleChart(graph) {
     try {
@@ -126,6 +126,14 @@ const TeamLookup = () => {
     const team = queryParameters.get("team");
     setTeamNumber(team);
   }, []);
+
+  // const db = getFirestore();
+  //   const matchSnapshot = await getDocs(collection(db, "test"));
+  //   var matchArr = [];
+  //   var y;
+  //   matchSnapshot.forEach((match) => {
+  //     matchArr.push(match.data());
+  //   });
 
   useEffect(async () => {
     console.log("UseEffect called")
@@ -219,7 +227,7 @@ const TeamLookup = () => {
     console.log(initcoords);
     setCoords(initcoords);
 
-    setAvgData((prevData) => {
+    {/* setAvgData((prevData) => {
       return {
         ...prevData,
         Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount"),
@@ -291,7 +299,7 @@ const TeamLookup = () => {
         ...prevData,
         Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
       };
-    });
+    }); */}
 
     const pitq = query(
       collection(db, "test-p"),
@@ -379,85 +387,85 @@ const TeamLookup = () => {
 
     setRealDefense(defenseStr);
     setRealDriver(driverStr);
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Ground_Intake: search(matchDataArr, "groundIntakes"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount"),
-      };
-    });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Auto_H: search(matchDataArr, "autoHighCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Auto_M: search(matchDataArr, "autoMidCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Ground_Intake: search(matchDataArr, "groundIntakes"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Auto_L: search(matchDataArr, "autoLowCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Auto_H: search(matchDataArr, "autoHighConeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Auto_M: search(matchDataArr, "autoMidConeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Auto_L: search(matchDataArr, "autoLowConeCount"),
+    //   };
+    // });
 
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount"),
-      };
-    });
-    setAvgData((prevData) => {
-      return {
-        ...prevData,
-        Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
-      };
-    });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cubes_Tele_L: search(matchDataArr, "teleLowCubeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Tele_H: search(matchDataArr, "teleHighConeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Tele_M: search(matchDataArr, "teleMidConeCount"),
+    //   };
+    // });
+    // setAvgData((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     Avg_Cones_Tele_L: search(matchDataArr, "teleLowConeCount"),
+    //   };
+    // });
     // setAvgData(prevData => {return {...prevData, Ground_Intakes: search(matchDataArr, "groundIntakes") }})
     setTotalScore(total(matchDataArr));
     dispatch({ type: "ADD_DATA", data: matchDataArr });
@@ -549,7 +557,7 @@ const TeamLookup = () => {
           </Form.Field>
         </Form.Group>
       </Form>
-      <Container style={{ display: "flex" }}>
+      {/* <Container style={{ display: "flex" }}> */}
         <Container>
           <Header  as="h3">
             stats
@@ -557,8 +565,58 @@ const TeamLookup = () => {
           <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
           </label>
           <Table celled small collapsing basic stackable>
-            <Table.Body>
+          <Table.Body>
               <Table.Row>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cube</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cube</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cube</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cube</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cube</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cone</Table.HeaderCell>
+                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cube</Table.HeaderCell>
+                
+              </Table.Row>
+                {data.map(
+                  ({
+                    MatchNo,
+                    autoHighConeCount,
+                    autoHighCubeCount,
+                    autoMidConeCount,
+                    autoMidCubeCount,
+                    autoLowConeCount,
+                    autoLowCubeCount,
+                    teleHighConeCount,
+                    teleHighCubeCount,
+                    teleMidConeCount,
+                    teleMidCubeCount,
+                    teleLowConeCount,
+                    teleLowCubeCount,
+                  }) => (
+                    <Table.Row key={String(MatchNo)}>
+                      <Table.Cell>{MatchNo}</Table.Cell>
+                      <Table.Cell>{autoHighConeCount}</Table.Cell>
+                      <Table.Cell>{autoHighCubeCount}</Table.Cell>
+                      <Table.Cell>{autoMidConeCount}</Table.Cell>
+                      <Table.Cell>{autoMidCubeCount}</Table.Cell>
+                      <Table.Cell>{autoLowConeCount}</Table.Cell>
+                      <Table.Cell>{autoLowCubeCount}</Table.Cell>
+                      <Table.Cell>{teleHighConeCount}</Table.Cell>
+                      <Table.Cell>{teleHighCubeCount}</Table.Cell>
+                      <Table.Cell>{teleMidConeCount}</Table.Cell>
+                      <Table.Cell>{teleMidCubeCount}</Table.Cell>
+                      <Table.Cell>{teleLowConeCount}</Table.Cell>
+                      <Table.Cell>{teleLowCubeCount}</Table.Cell>
+                    </Table.Row>
+                  )
+                )}
+            </Table.Body>
+              {/* <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
                 <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
 
@@ -634,35 +692,33 @@ const TeamLookup = () => {
                 <Table.Cell>Avg Total Score</Table.Cell>
                 <Table.Cell>{totalScore}</Table.Cell>
               </Table.Row>
-            </Table.Body>
+            </Table.Body> */}
           </Table>
         </Container>
-        <Container style={{ minWidth: 300}}>
-          <Header style={{ marginLeft: 20 }} as="h3">
-            comments
-          </Header>
-          <Header style={{ marginLeft: 20 }} as="h5">
-            defense
-          </Header>
-          <Form.Group><Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment></Form.Group>
-          
-          <Header style={{ marginLeft: 20 }} as="h5">
-            driver skills
-          </Header>
-          <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
-        </Container>
-        <Container >
-          <Form.Group style={{ marginLeft: 60 }}>
-             <Header >Auto Starts</Header>
-              <CanvasDisplay 
-                data={initcoords}>
-              </CanvasDisplay>
-            </Form.Group>
-            <Form.Group style={{ margin: 60 }}><Container ><img src={pitData.dataUri}></img></Container></Form.Group>
+        <Container style={{ display: "flex" }}>
+          <Form.Group style={{ minWidth: 300}}>
+            <Header style={{ marginLeft: 20, marginTop: "30px"}} as="h3">
+              Comments
+            </Header>
+            <Header style={{ marginLeft: 20, marginTop: 0 }} as="h5">
+              defense
+            </Header>
+            <Form.Group><Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment></Form.Group>
             
+            <Header style={{ marginLeft: 20 }} as="h5">
+              driver skills
+            </Header>
+            <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
+          </Form.Group>
+          <Form.Group style = {{ marginLeft: 40 }}>
+            <Header style={{ marginTop: "30px"}}>Auto Starts</Header>
+            <CanvasDisplay data={coords}></CanvasDisplay>
+          </Form.Group>
         </Container>
-        
-          
+      {/* </Container> */}
+      <Container>
+        <Header style={{ marginTop:"20px" }} as="h3">Matches:</Header>
+
       </Container>
      
       <Divider></Divider>

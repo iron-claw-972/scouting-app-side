@@ -85,8 +85,11 @@ const MatchScout = () => {
 
   const [color, setColor] = useState(false);
 
-  const [docked, setDocked] = useState(false);
-  const [engaged, setEngaged] = useState(false);
+  const [autoDocked, setAutoDocked] = useState(false);
+  const [autoEngaged, setAutoEngaged] = useState(false);
+
+  const [teleDocked, setTeleDocked] = useState(false);
+  const [teleEngaged, setTeleEngaged] = useState(false);
 
   const [autolevelSelected, setautolevelSelected] = useState(false);
   const [telelevelSelected, settelelevelSelected] = useState(false);
@@ -152,8 +155,10 @@ const MatchScout = () => {
     teleHighConeCount,
     teleMidConeCount,
     teleLowConeCount,
-    docked,
-    engaged,
+    autoDocked,
+    autoEngaged,
+    teleDocked,
+    teleEngaged,
     groundIntakes,
   };
 
@@ -174,8 +179,10 @@ const MatchScout = () => {
     setTeamName("");
     setColor("");
     setGroundIntakes(0);
-    setDocked(false);
-    setEngaged(false);
+    setAutoDocked(false);
+    setAutoEngaged(false);
+    setTeleDocked(false);
+    setTeleEngaged(false);
     setautoPiece(false);
     settelePiece(false);
     setAutoLRSelected(false);
@@ -549,6 +556,7 @@ const MatchScout = () => {
     "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
   ];
   console.log(mousePos);
+  
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
@@ -600,6 +608,7 @@ const MatchScout = () => {
                   size="small"
                   margin="4px"
                   color="blue"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(false)}
                 >
                   Blue
@@ -610,6 +619,7 @@ const MatchScout = () => {
                   size="small"
                   margin="4px"
                   color="red"
+                  style={{ width: "68px" }}
                   onClick={() => setColor(true)}
                 >
                   Red
@@ -786,12 +796,12 @@ const MatchScout = () => {
                     margin: "auto",
                   }}
                 >
-                  {docked ? (
+                  {autoDocked ? (
                     <Button
                       size="medium"
                       color="green"
                       style={{ marginRight: "20px", width: "125px" }}
-                      onClick={() => setDocked(false)}
+                      onClick={() => setAutoDocked(false)}
                     >
                       Dock
                     </Button>
@@ -799,17 +809,17 @@ const MatchScout = () => {
                     <button
                       class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
-                      onClick={() => setDocked(true)}
+                      onClick={() => setAutoDocked(true)}
                     >
                       Dock
                     </button>
                   )}
-                  {engaged ? (
+                  {autoEngaged ? (
                     <Button
                       size="medium"
                       color="green"
                       style={{ marginRight: "20px", width: "125px" }}
-                      onClick={() => setEngaged(false)}
+                      onClick={() => setAutoEngaged(false)}
                     >
                       Engage
                     </Button>
@@ -817,7 +827,7 @@ const MatchScout = () => {
                     <button
                       class="ui inverted mid white button"
                       style={{ marginRight: "20px", width: "125px" }}
-                      onClick={() => setEngaged(true)}
+                      onClick={() => setAutoEngaged(true)}
                     >
                       Engage
                     </button>
@@ -981,7 +991,50 @@ const MatchScout = () => {
                     ></LowEnterRemoveButtons>
                   </Form.Field>
                 </Form.Group>
-
+                <Form.Group
+                  style={{
+                    alignSelf: "center",
+                    paddingTop: "25px",
+                    margin: "auto",
+                  }}
+                >
+                  {teleDocked ? (
+                      <Button
+                        size="medium"
+                        color="green"
+                        style={{ marginRight: "20px", width: "125px" }}
+                        onClick={() => setTeleDocked(false)}
+                      >
+                        Dock
+                      </Button>
+                    ) : (
+                      <button
+                        class="ui inverted mid white button"
+                        style={{ marginRight: "20px", width: "125px" }}
+                        onClick={() => setTeleDocked(true)}
+                      >
+                        Dock
+                      </button>
+                    )}
+                    {teleEngaged ? (
+                      <Button
+                        size="medium"
+                        color="green"
+                        style={{ marginRight: "20px", width: "125px" }}
+                        onClick={() => setTeleEngaged(false)}
+                      >
+                        Engage
+                      </Button>
+                    ) : (
+                      <button
+                        class="ui inverted mid white button"
+                        style={{ marginRight: "20px", width: "125px" }}
+                        onClick={() => setTeleEngaged(true)}
+                      >
+                        Engage
+                      </button>
+                    )}
+                  </Form.Group>
                 <Form.Group style={{ marginTop: 20 }}>
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />

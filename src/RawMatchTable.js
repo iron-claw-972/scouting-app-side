@@ -133,11 +133,7 @@ const RawMatchTable = () => {
       csvDataArr.push(tempData);
     }
     console.log(csvDataArr);
-    let csvContent =
-      "data:text/csv;charset=utf-8," +
-      csvDataArr.map((e) => e.join(",")).join("\n");
-    var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+  
     console.log(matchDataArr);
     dispatch({ type: "ADD_DATA", data: matchDataArr });
   }, []);
