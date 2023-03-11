@@ -272,6 +272,7 @@ const PitScout = () => {
                 <Button
                   size="huge"
                   color="green"
+                  style={{width: "167px"}}
                   fluid
                   onClick={() => setgintake(false)}
                 >
@@ -280,6 +281,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
+                  style={{width: "167px"}}
                   fluid
                   onClick={() => setgintake(true)}
                 >
@@ -294,7 +296,7 @@ const PitScout = () => {
                   size="huge"
                   fluid
                   color="green"
-                  style={{ alignSelf: "right" }}
+                  style={{ alignSelf: "right", width: "116px" }}
                   onClick={() => setVision(false)}
                 >
                   Vision
@@ -303,7 +305,7 @@ const PitScout = () => {
                 <button
                   class="ui inverted huge white button"
                   fluid
-                  style={{ alignSelf: "right" }}
+                  style={{ alignSelf: "right", width: "116px" }}
                   onClick={() => setVision(true)}
                 >
                   Vision
@@ -318,6 +320,7 @@ const PitScout = () => {
                 <Button
                   size="huge"
                   color="green"
+                  style={{width: "144px"}}
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
@@ -326,6 +329,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
+                  style={{width: "144px"}}
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
@@ -338,8 +342,9 @@ const PitScout = () => {
               {balance ? (
                 <Button
                   size="huge"
-                  fluid
+                  style={{width: "131px"}}
                   color="green"
+                  fluid
                   onClick={() => setBalance(false)}
                 >
                   Balance
@@ -347,6 +352,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
+                  style={{width: "131px"}}
                   fluid
                   onClick={() => setBalance(true)}
                 >
