@@ -22,8 +22,9 @@ const ScanMatchScoutDataQR = (props) => {
   const save = async () => {
     const db = getFirestore();
     const matchData = JSON.parse(data);
-    const { docRefId } = matchData;
-    const docRef = doc(db, "match_svr", docRefId);
+    const docRefId = matchData.teamNumber + "_" + matchData.MatchNo;
+    console.log(matchData);
+    const docRef = doc(db, "test", docRefId);
     setDoc(docRef, matchData, { merge: true });
   };
 

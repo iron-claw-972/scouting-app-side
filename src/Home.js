@@ -12,8 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      BULLETIN: *clickity click click click* the scouting app is under
-      construction!
+      Hueneme Part 1: The Beginning v2
     </Header>
     <Card.Group
       centered
@@ -90,8 +89,8 @@ const Home = () => (
       <Link to="/teamlist" style={{ margin: 10 }}>
         <Card>
           <Card.Content
-            header="Picklist + Teams List"
-            description="current ranking + link to teams list"
+            header="Picklist & Teams List"
+            description="Picklist and current rankings"
           />
         </Card>
       </Link>
@@ -99,16 +98,7 @@ const Home = () => (
         <Card>
           <Card.Content
             header="Match Display"
-            description="All you want to know about a match"
-          />
-        </Card>
-      </Link>
-
-      <Link to="/rawmatchtable" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content
-            header="Raw Matches Table"
-            description="View Match data table "
+            description="All about a ... match"
           />
         </Card>
       </Link>
@@ -117,30 +107,27 @@ const Home = () => (
         <Card>
           <Card.Content
             header="Team Lookup"
-            description="Data Visualization by team "
+            description="All about a ... team"
           />
         </Card>
       </Link>
 
       <Link to="/matchlist" style={{ margin: 10 }}>
         <Card>
-          <Card.Content header="Match List" description="TBD" />
+          <Card.Content header="Match List" description="List of matches" />
         </Card>
       </Link>
 
-      <Link to="/pitdisplay" style={{ margin: 10 }}>
+      <Link to="/rawmatch" style={{ margin: 10 }}>
         <Card>
-          <Card.Content
-            header="Pit Display"
-            description="Show other teams that our robot is better than their's"
-          />
+          <Card.Content header="Export to CSV" description="click on it" />
         </Card>
       </Link>
-      <Link to="/teamlookup?team=972" style={{ margin: 10 }}>
+      <Link to="/datadisplay" style={{ margin: 10 }}>
         <Card>
           <Card.Content
             header="Credits and Notes"
-            description="Rest here, oh scouter dear to my heart!"
+            description="And to all the scouters: Congratulations!"
           />
         </Card>
       </Link>
@@ -149,7 +136,7 @@ const Home = () => (
         <Card href={"https://www.thebluealliance.com/event/2023caph#rankings"}>
           <Card.Content
             header="Rankings and Averages"
-            description="The Blue Alliance has lots of useful data, dont miss it"
+            description="Quick link to blue alliance"
           />
         </Card>
       </Link>

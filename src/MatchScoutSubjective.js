@@ -204,7 +204,9 @@ const MatchScoutSubjective = () => {
                 ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capability</label>
+                <label style={{ color: "white" }}>
+                  Driver Capability (LINKS)
+                </label>
                 <Form.TextArea
                   style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity1(e.target.value)}
@@ -231,14 +233,16 @@ const MatchScoutSubjective = () => {
               <Form.Field style={{ marginLeft: "15px" }}>
                 <label style={{ color: "white" }}>Defense</label>
                 <Form.TextArea
-                  style={{width: "150px"}}
+                  style={{ width: "150px" }}
                   onChange={(e) => setDefense2(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capability</label>
+                <label style={{ color: "white" }}>
+                  Driver Capability (LINKS)
+                </label>
                 <Form.TextArea
-                  style={{width: "150px"}}
+                  style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity2(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
@@ -263,14 +267,16 @@ const MatchScoutSubjective = () => {
               <Form.Field style={{ marginLeft: "15px" }}>
                 <label style={{ color: "white" }}>Defense</label>
                 <Form.TextArea
-                  style={{width: "150px"}}
+                  style={{ width: "150px" }}
                   onChange={(e) => setDefense3(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>Driver Capability</label>
+                <label style={{ color: "white" }}>
+                  Driver Capability (LINKS)
+                </label>
                 <Form.TextArea
-                  style={{width: "150px"}}
+                  style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity3(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>

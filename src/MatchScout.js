@@ -233,60 +233,18 @@ const MatchScout = () => {
         console.error("Error adding document: ", e);
         setShowError(true);
       });
-    const adocRef = doc(
-      db,
-      "test-a",
-      String(teamNumber) + "_" + String(MatchNo)
-    );
-    var done = true;
-    var subjective = true;
-    var scoutTeam = teamNumber;
-    var scoutMatch = MatchNo;
-    setName(name.toLowerCase());
-    setDoc(
-      adocRef,
-      { done, scoutMatch, scoutTeam, subjective, name },
-      { merge: true }
-    );
-    resetForm();
-    setName(name.toUpperCase());
   }, [docRefId]);
 
   let climbInterval = null;
 
-  useEffect(async () => {
-    const db = getFirestore();
-    const assq = query(
-      collection(db, "test-a"),
-
-      where("name", "==", name.toLowerCase()),
-      where("done", "==", false),
-      where("subjective", "==", true),
-      orderBy("scoutMatch")
-    );
-
-    const assSnapshot = await getDocs(assq);
-    var assList = [];
-    assSnapshot.forEach((match) => {
-      assList.push(match.data());
-    });
-    console.log(assList);
-    if (assList.length > 0) {
-      const assData = assList[0];
-      setMatchNo(assData.scoutMatch);
-      setTeamNumber(assData.scoutTeam);
-    }
-  });
+  useEffect(async () => {});
 
   //This function has an array called requiredFields
   //And it checks whether they've been filled out
   //It's empty now, but could be useful in coming years
   const validate = () => {
     const requiredFields = [MatchNo, teamNumber];
-    if (requiredFields.some((f) => f === "")) {
-      setShowModal(true);
-      return false;
-    }
+
     return true;
   };
 
@@ -296,6 +254,12 @@ const MatchScout = () => {
   const save = async () => {
     if (!validate()) return;
     setDocRefId(teamNumber + "_" + MatchNo);
+  };
+
+  const handleClose = () => {
+    setShowQrCode(false);
+
+    resetForm();
   };
 
   /*Search these tags on semantic ui website for info
@@ -349,7 +313,7 @@ const MatchScout = () => {
   const ToTele = () => {
     setMode(false);
     setCanvas(false);
-  }
+  };
 
   const ShowCanvas = () => {
     setCanvas(true);
@@ -627,7 +591,7 @@ const MatchScout = () => {
             </Form.Field>
 
             <Form.Field>
-              <label style={{ color: "white" }}>-Team #*-</label>
+              <label style={{ color: "white", width: "80px" }}>-Team #*-</label>
               <Input
                 fluid
                 size="medium"
@@ -673,23 +637,24 @@ const MatchScout = () => {
           ) : (
             <Form.Field></Form.Field>
           )}
-          {canvas ? (
-            <Container>
-              <Form.Group>
-                <Form.Field>
-                  <CanvasChooser
-                    setMouseCoord={setMousePos}
-                    getMouseCoord={mousePos}
-                  />
-                </Form.Field>
-              </Form.Group>
-              <Divider></Divider>
-            </Container>
-          ) : (
-            <Container></Container>
-          )}
+
           {mode ? (
             <Container>
+              {canvas ? (
+                <Container>
+                  <Form.Group>
+                    <Form.Field>
+                      <CanvasChooser
+                        setMouseCoord={setMousePos}
+                        getMouseCoord={mousePos}
+                      />
+                    </Form.Field>
+                  </Form.Group>
+                  <Divider></Divider>
+                </Container>
+              ) : (
+                <Container></Container>
+              )}
               <Header style={{ color: "white" }} as="h3">
                 Auto
               </Header>
@@ -872,7 +837,7 @@ const MatchScout = () => {
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />
 
-                    <h5 style={{ color: "white" }}>Ground Intakes</h5>
+                    <h5 style={{ color: "white" }}>Intakes</h5>
                     {groundIntakes}
                   </Form.Field>
 
@@ -1074,7 +1039,7 @@ const MatchScout = () => {
                   <Form.Field style={{ color: "white" }}>
                     <Divider hidden />
 
-                    <h5 style={{ color: "white" }}>Ground Intakes</h5>
+                    <h5 style={{ color: "white" }}>Intakes</h5>
                     {groundIntakes}
                   </Form.Field>
 
@@ -1121,15 +1086,13 @@ const MatchScout = () => {
           </Form.Group>
           <Divider hidden></Divider>
         </Form>
-        <Modal open={showModal} onClose={() => setShowModal(false)}>
+        <Modal open={showModal}>
           <Modal.Header>Some fields are blank</Modal.Header>
           <Modal.Content>
             <p>Please check some required fields with (*) are not entered</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button positive onClick={() => setShowModal(false)}>
-              OK
-            </Button>
+            <Button positive>OK</Button>
           </Modal.Actions>
         </Modal>
         {showSuccess && <Message success header="Data saved successfully" />}
@@ -1143,11 +1106,7 @@ const MatchScout = () => {
           </Link>
         )}
 
-        <Modal
-          open={showQrCode}
-          size="fullscreen"
-          onClose={() => setShowQrCode(false)}
-        >
+        <Modal open={showQrCode} size="fullscreen" onClose={handleClose}>
           <Modal.Content>
             <QRCode value={JSON.stringify(matchData)} />
             <h3 style={{ margin: "0px" }}>

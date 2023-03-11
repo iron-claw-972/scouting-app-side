@@ -1,6 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import Home from "./Home";
 import MatchScout from "./MatchScout";
 import MatchScoutSubjective from "./MatchScoutSubjective";
@@ -34,7 +42,7 @@ const App = () => {
       <Route path="/teamlist" element={<TeamList />} />
       <Route path="/teamlookup/" element={<TeamLookup />} />
 
-      <Route path="/pitdisplay" element={<PitDisplay />} />
+      <Route path="/rawmatch" element={<RawMatchTable />} />
 
       <Route path="datadisplay" element={<DataDisplay />} />
       <Route path="scanmatchscoutdata" element={<ScanMatchScoutDataQR />} />
