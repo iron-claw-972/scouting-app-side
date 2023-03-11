@@ -599,19 +599,19 @@ const TeamLookup = () => {
                     teleLowCubeCount,
                   }) => (
                     <Table.Row key={String(MatchNo)}>
-                      <Table.Cell>{MatchNo}</Table.Cell>
-                      <Table.Cell>{autoHighConeCount}</Table.Cell>
-                      <Table.Cell>{autoHighCubeCount}</Table.Cell>
-                      <Table.Cell>{autoMidConeCount}</Table.Cell>
-                      <Table.Cell>{autoMidCubeCount}</Table.Cell>
-                      <Table.Cell>{autoLowConeCount}</Table.Cell>
-                      <Table.Cell>{autoLowCubeCount}</Table.Cell>
-                      <Table.Cell>{teleHighConeCount}</Table.Cell>
-                      <Table.Cell>{teleHighCubeCount}</Table.Cell>
-                      <Table.Cell>{teleMidConeCount}</Table.Cell>
-                      <Table.Cell>{teleMidCubeCount}</Table.Cell>
-                      <Table.Cell>{teleLowConeCount}</Table.Cell>
-                      <Table.Cell>{teleLowCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{MatchNo}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoHighConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoHighCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoMidConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoMidCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoLowConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{autoLowCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleHighConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleHighCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleMidConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleMidCubeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleLowConeCount}</Table.Cell>
+                      <Table.Cell style={{ textAlign: "center" }}>{teleLowCubeCount}</Table.Cell>
                     </Table.Row>
                   )
                 )}
