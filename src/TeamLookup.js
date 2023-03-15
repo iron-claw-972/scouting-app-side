@@ -564,58 +564,58 @@ const TeamLookup = () => {
           </Header>
           <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
           </label>
-          <Table celled small collapsing basic stackable>
+          <Table celled small collapsing basic stackable striped>
           <Table.Body>
-              <Table.Row>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cube</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cube</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cube</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cube</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cube</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cone</Table.HeaderCell>
-                <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cube</Table.HeaderCell>
-                
-              </Table.Row>
-                {data.map(
-                  ({
-                    MatchNo,
-                    autoHighConeCount,
-                    autoHighCubeCount,
-                    autoMidConeCount,
-                    autoMidCubeCount,
-                    autoLowConeCount,
-                    autoLowCubeCount,
-                    teleHighConeCount,
-                    teleHighCubeCount,
-                    teleMidConeCount,
-                    teleMidCubeCount,
-                    teleLowConeCount,
-                    teleLowCubeCount,
-                  }) => (
-                    <Table.Row key={String(MatchNo)}>
-                      <Table.Cell>{MatchNo}</Table.Cell>
-                      <Table.Cell>{autoHighConeCount}</Table.Cell>
-                      <Table.Cell>{autoHighCubeCount}</Table.Cell>
-                      <Table.Cell>{autoMidConeCount}</Table.Cell>
-                      <Table.Cell>{autoMidCubeCount}</Table.Cell>
-                      <Table.Cell>{autoLowConeCount}</Table.Cell>
-                      <Table.Cell>{autoLowCubeCount}</Table.Cell>
-                      <Table.Cell>{teleHighConeCount}</Table.Cell>
-                      <Table.Cell>{teleHighCubeCount}</Table.Cell>
-                      <Table.Cell>{teleMidConeCount}</Table.Cell>
-                      <Table.Cell>{teleMidCubeCount}</Table.Cell>
-                      <Table.Cell>{teleLowConeCount}</Table.Cell>
-                      <Table.Cell>{teleLowCubeCount}</Table.Cell>
-                    </Table.Row>
-                  )
-                )}
-            </Table.Body>
+            <Table.Row>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cone</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cube</Table.HeaderCell>
+              
+            </Table.Row>
+            {data.map(
+              ({
+                MatchNo,
+                autoHighConeCount,
+                autoHighCubeCount,
+                autoMidConeCount,
+                autoMidCubeCount,
+                autoLowConeCount,
+                autoLowCubeCount,
+                teleHighConeCount,
+                teleHighCubeCount,
+                teleMidConeCount,
+                teleMidCubeCount,
+                teleLowConeCount,
+                teleLowCubeCount,
+              }) => (
+                <Table.Row key={String(MatchNo)}>
+                  <Table.Cell style={{ textAlign: "center" }}>{MatchNo}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoHighConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoHighCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoMidConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoMidCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoLowConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{autoLowCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleHighConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleHighCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleMidConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleMidCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleLowConeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{teleLowCubeCount}</Table.Cell>
+                </Table.Row>
+              )
+            )}
+          </Table.Body>
               {/* <Table.Row>
                 <Table.Cell>Can Shelf Intake</Table.Cell>
                 <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
