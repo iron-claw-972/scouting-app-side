@@ -474,19 +474,13 @@ const MatchScout = () => {
 
   const ButtonGroup = ({ up, down }) => {
     return (
-      <Container fluid>
-        <Form.Group style={{ flexDirection: "column" }}>
-          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
-            <Button size="big" color="linkedin" onClick={up}>
-              +
-            </Button>
-          </Form.Field>
-          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
-            <Button size="big" onClick={down}>
-              -
-            </Button>
-          </Form.Field>
-        </Form.Group>
+      <Container>
+        <Button size="medium" color="linkedin" style = {{ marginRight: "20px"}} onClick={up}>
+          +
+        </Button>
+        <Button size="medium" onClick={down}>
+          -
+        </Button>
       </Container>
     );
   };
@@ -659,9 +653,20 @@ const MatchScout = () => {
                 Auto
               </Header>
               <Form.Field>
-                <Header style={{ color: "white" }} as="h4">
-                  Piece Scoring:
-                </Header>
+                <Form.Group inline>
+                  <Form.Field>
+                    <Header style={{ color: "white" }} as="h4">Intakes</Header>
+                  </Form.Field>
+                  <Form.Field>
+                    <Header style={{ marginLeft: "15px", marginRight: "10px", color: "white" }} as="h4">{groundIntakes}</Header>
+                  </Form.Field>
+                  <Form.Field>
+                    <ButtonGroup
+                      up={groundIntakesUp}
+                      down={groundIntakesDown}
+                    ></ButtonGroup>
+                  </Form.Field>
+                </Form.Group>
               </Form.Field>
 
               <Form.Field>
@@ -833,30 +838,21 @@ const MatchScout = () => {
                     </button>
                   )}
                 </Form.Group>
-                <Form.Group style={{ marginTop: 20 }}>
-                  <Form.Field style={{ color: "white" }}>
-                    <Divider hidden />
-
-                    <h5 style={{ color: "white" }}>Intakes</h5>
-                    {groundIntakes}
-                  </Form.Field>
-
-                  <Form.Field>
-                    <ButtonGroup
-                      up={groundIntakesUp}
-                      down={groundIntakesDown}
-                    ></ButtonGroup>
-                  </Form.Field>
+              </Form.Group>
+                <Form.Field style ={{ marginTop: "15px" }}>
                   <Button
-                    size="medium"
+                    size="large"
                     color="blue"
-                    style={{ margin: "10px" }}
+                    style={{
+                      alignSelf: "center",
+                      width: "300px",
+                      margin: "auto",
+                    }}
                     onClick={ToTele}
                   >
                     To tele
                   </Button>
-                </Form.Group>
-              </Form.Group>
+                </Form.Field>
             </Container>
           ) : (
             <Container>
@@ -864,9 +860,20 @@ const MatchScout = () => {
                 Tele/End
               </Header>
               <Form.Field>
-                <Header style={{ color: "white" }} as="h4">
-                  Piece Scoring:
-                </Header>
+              <Form.Group inline>
+                  <Form.Field>
+                    <Header style={{ color: "white" }} as="h4">Intakes</Header>
+                  </Form.Field>
+                  <Form.Field>
+                    <Header style={{ marginLeft: "15px", marginRight: "10px", color: "white" }} as="h4">{groundIntakes}</Header>
+                  </Form.Field>
+                  <Form.Field>
+                    <ButtonGroup
+                      up={groundIntakesUp}
+                      down={groundIntakesDown}
+                    ></ButtonGroup>
+                  </Form.Field>
+                </Form.Group>
               </Form.Field>
               <Form.Field>
                 {cubeButton ? (
@@ -1035,30 +1042,21 @@ const MatchScout = () => {
                       </button>
                     )}
                   </Form.Group>
-                <Form.Group style={{ marginTop: 20 }}>
-                  <Form.Field style={{ color: "white" }}>
-                    <Divider hidden />
-
-                    <h5 style={{ color: "white" }}>Intakes</h5>
-                    {groundIntakes}
-                  </Form.Field>
-
-                  <Form.Field>
-                    <ButtonGroup
-                      up={groundIntakesUp}
-                      down={groundIntakesDown}
-                    ></ButtonGroup>
-                  </Form.Field>
+              </Form.Group>
+              <Form.Field style ={{ marginTop: "15px" }}>
                   <Button
-                    size="medium"
+                    size="large"
                     color="blue"
-                    style={{ margin: "10px" }}
+                    style={{
+                      alignSelf: "center",
+                      width: "300px",
+                      margin: "auto",
+                    }}
                     onClick={() => setMode(true)}
                   >
                     To auto
                   </Button>
-                </Form.Group>
-              </Form.Group>
+              </Form.Field>
             </Container>
           )}
 
