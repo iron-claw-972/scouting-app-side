@@ -8,11 +8,11 @@ tags I've used below.
 const Home = () => (
   <Container fluid>
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
-      Scouting App 2023
+      Scouting App 2023 - Iron Claw 972
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      Hueneme Part 1: The Beginning v2
+      "Louis, I think this is the beginning of a beautiful competition."
     </Header>
     <Card.Group
       centered

@@ -197,6 +197,7 @@ const NewTeamPages = () => {
       controller,
       "https://www.thebluealliance.com/api/v3/event/2023caph/matches"
     ).then((data) => {
+      console.log(data);
       let rdata = [];
       for (let i = 0; i < data.length; i++) {
         console.log(data[i]["match_number"]);
@@ -212,7 +213,8 @@ const NewTeamPages = () => {
           break;
         }
       }
-      if (rdata.length == 0) {
+      console.log(rdata);
+      if (rdata.length == 0 || rdata[0].length === 2) {
         rdata = [
           {
             red: {
@@ -231,7 +233,7 @@ const NewTeamPages = () => {
       console.log(rdata);
 
       setUsers(rdata);
-      if (users.length === 0) {
+      if (users.length === 0 || rdata[0].length === 2) {
         setUsers([
           {
             score_breakdown: {
@@ -366,34 +368,47 @@ const NewTeamPages = () => {
               <Table.Row>
                 <Table.Cell></Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="red">
-                    {redlist[0].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + redlist[0].teamNumber}>
+                    <Button size="large" color="red">
+                      {redlist[0].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="red">
-                    {redlist[1].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + redlist[1].teamNumber}>
+                    <Button size="large" color="red">
+                      {redlist[1].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="red">
-                    {redlist[2].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + redlist[2].teamNumber}>
+                    {" "}
+                    <Button size="large" color="red">
+                      {redlist[2].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="blue">
-                    {bluelist[0].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + bluelist[0].teamNumber}>
+                    <Button size="large" color="blue">
+                      {bluelist[0].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="blue">
-                    {bluelist[1].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + bluelist[1].teamNumber}>
+                    <Button size="large" color="blue">
+                      {bluelist[1].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button size="large" color="blue">
-                    {bluelist[2].teamNumber}
-                  </Button>
+                  <Link to={"/teamlookup?team=" + bluelist[2].teamNumber}>
+                    <Button size="large" color="blue">
+                      {bluelist[2].teamNumber}
+                    </Button>
+                  </Link>
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
@@ -520,21 +535,21 @@ const NewTeamPages = () => {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>DOCKED??</Table.Cell>
-                <Table.Cell>{String(redlist[0].docked)}</Table.Cell>
-                <Table.Cell>{String(redlist[1].docked)}</Table.Cell>
-                <Table.Cell>{String(redlist[2].docked)}</Table.Cell>
-                <Table.Cell>{String(bluelist[0].docked)}</Table.Cell>
-                <Table.Cell>{String(bluelist[1].docked)}</Table.Cell>
-                <Table.Cell>{String(bluelist[2].docked)}</Table.Cell>
+                <Table.Cell>{String(redlist[0].autoDocked)}</Table.Cell>
+                <Table.Cell>{String(redlist[1].autoDocked)}</Table.Cell>
+                <Table.Cell>{String(redlist[2].autoDocked)}</Table.Cell>
+                <Table.Cell>{String(bluelist[0].autoDocked)}</Table.Cell>
+                <Table.Cell>{String(bluelist[1].autoDocked)}</Table.Cell>
+                <Table.Cell>{String(bluelist[2].autoDocked)}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>ENGAGED??</Table.Cell>
-                <Table.Cell>{String(redlist[0].engaged)}</Table.Cell>
-                <Table.Cell>{String(redlist[1].engaged)}</Table.Cell>
-                <Table.Cell>{String(redlist[2].engaged)}</Table.Cell>
-                <Table.Cell>{String(bluelist[0].engaged)}</Table.Cell>
-                <Table.Cell>{String(bluelist[1].engaged)}</Table.Cell>
-                <Table.Cell>{String(bluelist[2].engaged)}</Table.Cell>
+                <Table.Cell>{String(redlist[0].autoEngaged)}</Table.Cell>
+                <Table.Cell>{String(redlist[1].autoEngaged)}</Table.Cell>
+                <Table.Cell>{String(redlist[2].autoEngaged)}</Table.Cell>
+                <Table.Cell>{String(bluelist[0].autoEngaged)}</Table.Cell>
+                <Table.Cell>{String(bluelist[1].autoEngaged)}</Table.Cell>
+                <Table.Cell>{String(bluelist[2].autoEngaged)}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>{}</Table.Cell>
@@ -626,9 +641,21 @@ const NewTeamPages = () => {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>DOCKED??</Table.Cell>
+                <Table.Cell>{redlist[0].teleDocked}</Table.Cell>
+                <Table.Cell>{redlist[1].teleDocked}</Table.Cell>
+                <Table.Cell>{redlist[2].teleDocked}</Table.Cell>
+                <Table.Cell>{bluelist[0].teleDocked}</Table.Cell>
+                <Table.Cell>{bluelist[1].teleDocked}</Table.Cell>
+                <Table.Cell>{bluelist[2].teleDocked}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>ENGAGED??</Table.Cell>
+                <Table.Cell>{redlist[0].teleEngaged}</Table.Cell>
+                <Table.Cell>{redlist[1].teleEngaged}</Table.Cell>
+                <Table.Cell>{redlist[2].teleEngaged}</Table.Cell>
+                <Table.Cell>{bluelist[0].teleEngaged}</Table.Cell>
+                <Table.Cell>{bluelist[1].teleEngaged}</Table.Cell>
+                <Table.Cell>{bluelist[2].teleEngaged}</Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>

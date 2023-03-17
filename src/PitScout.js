@@ -56,7 +56,7 @@ const PitScout = () => {
   const [motors, setMotors] = useState(0);
   const [vision, setVision] = useState(false);
   const [balance, setBalance] = useState(false);
-
+  const [dim, setDim] = useState("");
   const [dataUri, setDataUri] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -99,6 +99,8 @@ const PitScout = () => {
     shelfIntake,
     motors,
     dataUri,
+    dim,
+    ability,
   };
 
   //checks if we at least filled out team number
@@ -125,6 +127,7 @@ const PitScout = () => {
       setOrg(organization || "");
       setDrive(drive || "");
       setVision(vision || false);
+      setDim(dim || "");
     });
   };
 
@@ -272,7 +275,7 @@ const PitScout = () => {
                 <Button
                   size="huge"
                   color="green"
-                  style={{width: "167px"}}
+                  style={{ width: "167px" }}
                   fluid
                   onClick={() => setgintake(false)}
                 >
@@ -281,7 +284,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
-                  style={{width: "167px"}}
+                  style={{ width: "167px" }}
                   fluid
                   onClick={() => setgintake(true)}
                 >
@@ -320,7 +323,7 @@ const PitScout = () => {
                 <Button
                   size="huge"
                   color="green"
-                  style={{width: "144px"}}
+                  style={{ width: "144px" }}
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
@@ -329,7 +332,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
-                  style={{width: "144px"}}
+                  style={{ width: "144px" }}
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
@@ -342,7 +345,7 @@ const PitScout = () => {
               {balance ? (
                 <Button
                   size="huge"
-                  style={{width: "131px"}}
+                  style={{ width: "131px" }}
                   color="green"
                   fluid
                   onClick={() => setBalance(false)}
@@ -352,7 +355,7 @@ const PitScout = () => {
               ) : (
                 <button
                   class="ui inverted huge white button"
-                  style={{width: "131px"}}
+                  style={{ width: "131px" }}
                   fluid
                   onClick={() => setBalance(true)}
                 >
@@ -364,11 +367,18 @@ const PitScout = () => {
           <Divider hidden></Divider>
           <Form.Group style={{ margin: "auto" }}>
             <Form.Field width="8">
-              <label style={{ color: "white" }}>Drivetrain Type</label>
-              <Form.Select
+              <label style={{ color: "white" }}>Dimensions</label>
+              <input
                 fluid
+                value={dim}
+                onChange={(e) => setDim(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field width="8">
+              <label style={{ color: "white" }}>Drivetrain</label>
+              <Form.Select
                 options={driveOptions}
-                placeholder="Drivetrain"
+                fluid
                 value={drive}
                 onChange={(e, data) => setDrive(data.value)}
               />
@@ -376,9 +386,8 @@ const PitScout = () => {
             <Form.Field width="8">
               <label style={{ color: "white" }}>Abilities</label>
               <Form.Select
-                fluid
                 options={abilityOptions}
-                placeholder="Ability"
+                fluid
                 value={ability}
                 onChange={(e, data) => setAbility(data.value)}
               />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 import {
   Table,
@@ -149,7 +150,7 @@ const TeamLookup = () => {
     matchSnapshot.forEach((match) => {
       matchDataArr.push(match.data());
     });
-
+    console.log(matchDataArr)
     if (matchDataArr.length === 0) {
       setShowModal(true);
     }
@@ -211,6 +212,7 @@ const TeamLookup = () => {
       "sp": "Saara",
       "mes": "Mehaan",
       "kt": "Kaushik",
+      "tt": "day 0 practice"
     };
     var names = [];
 
@@ -562,29 +564,73 @@ const TeamLookup = () => {
           <Header  as="h3">
             stats
           </Header>
+          <Table>
+            <Table.Row>
+            <Table.HeaderCell>Drivetrain</Table.HeaderCell>
+            <Table.HeaderCell>Dimensions</Table.HeaderCell>
+            <Table.HeaderCell>Ability</Table.HeaderCell>
+            <Table.HeaderCell>Balance</Table.HeaderCell>
+
+            <Table.HeaderCell>Ground Intake</Table.HeaderCell>
+            <Table.HeaderCell>Shelf Intake</Table.HeaderCell>
+            <Table.HeaderCell>Vision</Table.HeaderCell>
+            <Table.HeaderCell>Motors</Table.HeaderCell>
+
+            </Table.Row>
+            
+            <Table.Row><Table.Cell>{String(pitData.drive)}</Table.Cell>
+            <Table.Cell>{String(pitData.dim)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.ability)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.balance)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.gintake)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.vision)}</Table.Cell>
+
+            <Table.Cell>{String(pitData.motors)}</Table.Cell>
+</Table.Row>
+            
+
+
+
+          </Table>
           <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
           </label>
           <Table celled small collapsing basic stackable striped>
           <Table.Body>
             <Table.Row>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cone</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto High Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Intakes</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Accuracy*</Table.HeaderCell>
+
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Auto High Cone*</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Auto High Cube*</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cone</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cube</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cone</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Low Cube</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cone</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele High Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Auto Low Cube*</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Tele High Cone*</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Tele High Cube*</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cone</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cube</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cone</Table.HeaderCell>
-              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cube</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Tele Low Cube*</Table.HeaderCell>
+
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Dock</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Engage</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Dock</Table.HeaderCell>
+              <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Engage</Table.HeaderCell>
+
               
             </Table.Row>
             {data.map(
               ({
                 MatchNo,
+                groundIntakes,
                 autoHighConeCount,
                 autoHighCubeCount,
                 autoMidConeCount,
@@ -597,9 +643,15 @@ const TeamLookup = () => {
                 teleMidCubeCount,
                 teleLowConeCount,
                 teleLowCubeCount,
+                autoDocked,
+                autoEngaged,
+                teleDocked,
+                teleEngaged
               }) => (
                 <Table.Row key={String(MatchNo)}>
-                  <Table.Cell style={{ textAlign: "center" }}>{MatchNo}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}><Link to={"/teampages?match=" + String(MatchNo)}><Button>{MatchNo}</Button></Link></Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{groundIntakes}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{String(Math.round(100*((autoHighConeCount+autoHighCubeCount+autoMidConeCount+autoMidCubeCount+autoLowConeCount+autoLowCubeCount+teleHighConeCount+teleHighCubeCount+teleMidConeCount+teleMidCubeCount+teleLowConeCount+teleLowCubeCount)/groundIntakes))) + "%"}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{autoHighConeCount}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{autoHighCubeCount}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{autoMidConeCount}</Table.Cell>
@@ -612,6 +664,14 @@ const TeamLookup = () => {
                   <Table.Cell style={{ textAlign: "center" }}>{teleMidCubeCount}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{teleLowConeCount}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{teleLowCubeCount}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{String(autoDocked)}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{String(autoEngaged)}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{String(teleDocked)}</Table.Cell>
+                  <Table.Cell style={{ textAlign: "center" }}>{String(teleEngaged)}</Table.Cell>
+
+
+
+
                 </Table.Row>
               )
             )}
@@ -700,19 +760,18 @@ const TeamLookup = () => {
             <Header style={{ marginLeft: 20, marginTop: "30px"}} as="h3">
               Comments
             </Header>
-            <Header style={{ marginLeft: 20, marginTop: 0 }} as="h5">
-              defense
-            </Header>
-            <Form.Group><Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment></Form.Group>
+            
             
             <Header style={{ marginLeft: 20 }} as="h5">
-              driver skills
+              SUBJECTIVE
             </Header>
             <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
           </Form.Group>
           <Form.Group style = {{ marginLeft: 40 }}>
             <Header style={{ marginTop: "30px"}}>Auto Starts</Header>
             <CanvasDisplay data={coords}></CanvasDisplay>
+            <Header>pic</Header>
+            <img src={pitData.dataUri}></img>
           </Form.Group>
         </Container>
       {/* </Container> */}

@@ -532,7 +532,12 @@ const MatchScout = () => {
   const ButtonGroup = ({ up, down }) => {
     return (
       <Container>
-        <Button size="medium" color="linkedin" style = {{ marginRight: "20px"}} onClick={up}>
+        <Button
+          size="medium"
+          color="linkedin"
+          style={{ marginRight: "20px" }}
+          onClick={up}
+        >
           +
         </Button>
         <Button size="medium" onClick={down}>
@@ -607,7 +612,7 @@ const MatchScout = () => {
     "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
   ];
   console.log(mousePos);
-  
+
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
       <Container>
@@ -617,6 +622,12 @@ const MatchScout = () => {
         >
           Match Scout (Objective)
         </Header>
+        <Header style={{ color: "white" }} as="h6">
+          (note: Emi - EMH, Julia - JUD, Ellery - ELH, Johann - JOJ, Mehaan -
+          MES for initials) (note two - assignments could take up to 20 seconds
+          to load in bad wifi)
+        </Header>
+        <Header style={{ color: "white" }} as="h6"></Header>
         <Form style={{ marginTop: 5 }}>
           <Form.Group style={{ margin: 2 }}>
             <Form.Field>
@@ -682,10 +693,19 @@ const MatchScout = () => {
           <Divider></Divider>
 
           {mode ? (
-            <Form.Field style={{ marginTop: "10px" }}>
-              <Button icon="map" onClick={ShowCanvas}></Button>
-              <Button icon="compress" onClick={HideCanvas}></Button>
-            </Form.Field>
+            <Container>
+              <Form.Group>
+                <Form.Field style={{ marginTop: "10px" }}>
+                  <Button icon="map" onClick={ShowCanvas}></Button>
+                  <Button icon="compress" onClick={HideCanvas}></Button>
+                </Form.Field>
+                <Form.Field>
+                  <Header style={{ color: "white" }} as="h5">
+                    &lt;--- Put where they start auto
+                  </Header>
+                </Form.Field>
+              </Form.Group>
+            </Container>
           ) : (
             <Form.Field></Form.Field>
           )}
@@ -707,22 +727,38 @@ const MatchScout = () => {
               ) : (
                 <Container></Container>
               )}
-              <Header style={{ color: "white" }} as="h3">
-                Auto
+              <Header style={{ color: "white" }} as="h5">
+                AUTO - click "To Tele" below when auto ends
               </Header>
               <Form.Field>
                 <Form.Group inline>
                   <Form.Field>
-                    <Header style={{ color: "white" }} as="h4">Intakes</Header>
+                    <Header style={{ color: "white" }} as="h4">
+                      Intakes
+                    </Header>
                   </Form.Field>
                   <Form.Field>
-                    <Header style={{ marginLeft: "15px", marginRight: "10px", color: "white" }} as="h4">{groundIntakes}</Header>
+                    <Header
+                      style={{
+                        marginLeft: "25px",
+                        marginRight: "10px",
+                        color: "white",
+                      }}
+                      as="h4"
+                    >
+                      {groundIntakes}
+                    </Header>
                   </Form.Field>
                   <Form.Field>
                     <ButtonGroup
                       up={groundIntakesUp}
                       down={groundIntakesDown}
                     ></ButtonGroup>
+                  </Form.Field>
+                  <Form.Field>
+                    <Header style={{ color: "white" }} as="h6">
+                      be sure to watch for all intakes
+                    </Header>
                   </Form.Field>
                 </Form.Group>
               </Form.Field>
@@ -897,20 +933,20 @@ const MatchScout = () => {
                   )}
                 </Form.Group>
               </Form.Group>
-                <Form.Field style ={{ marginTop: "15px" }}>
-                  <Button
-                    size="large"
-                    color="blue"
-                    style={{
-                      alignSelf: "center",
-                      width: "300px",
-                      margin: "auto",
-                    }}
-                    onClick={ToTele}
-                  >
-                    To tele
-                  </Button>
-                </Form.Field>
+              <Form.Field style={{ marginTop: "15px" }}>
+                <Button
+                  size="large"
+                  color="blue"
+                  style={{
+                    alignSelf: "center",
+                    width: "300px",
+                    margin: "auto",
+                  }}
+                  onClick={ToTele}
+                >
+                  To tele
+                </Button>
+              </Form.Field>
             </Container>
           ) : (
             <Container>
@@ -918,12 +954,23 @@ const MatchScout = () => {
                 Tele/End
               </Header>
               <Form.Field>
-              <Form.Group inline>
+                <Form.Group inline>
                   <Form.Field>
-                    <Header style={{ color: "white" }} as="h4">Intakes</Header>
+                    <Header style={{ color: "white" }} as="h4">
+                      Intakes
+                    </Header>
                   </Form.Field>
                   <Form.Field>
-                    <Header style={{ marginLeft: "15px", marginRight: "10px", color: "white" }} as="h4">{groundIntakes}</Header>
+                    <Header
+                      style={{
+                        marginLeft: "15px",
+                        marginRight: "10px",
+                        color: "white",
+                      }}
+                      as="h4"
+                    >
+                      {groundIntakes}
+                    </Header>
                   </Form.Field>
                   <Form.Field>
                     <ButtonGroup
@@ -1064,56 +1111,56 @@ const MatchScout = () => {
                   }}
                 >
                   {teleDocked ? (
-                      <Button
-                        size="medium"
-                        color="green"
-                        style={{ marginRight: "20px", width: "125px" }}
-                        onClick={() => setTeleDocked(false)}
-                      >
-                        Dock
-                      </Button>
-                    ) : (
-                      <button
-                        class="ui inverted mid white button"
-                        style={{ marginRight: "20px", width: "125px" }}
-                        onClick={() => setTeleDocked(true)}
-                      >
-                        Dock
-                      </button>
-                    )}
-                    {teleEngaged ? (
-                      <Button
-                        size="medium"
-                        color="green"
-                        style={{ marginRight: "20px", width: "125px" }}
-                        onClick={() => setTeleEngaged(false)}
-                      >
-                        Engage
-                      </Button>
-                    ) : (
-                      <button
-                        class="ui inverted mid white button"
-                        style={{ marginRight: "20px", width: "125px" }}
-                        onClick={() => setTeleEngaged(true)}
-                      >
-                        Engage
-                      </button>
-                    )}
-                  </Form.Group>
+                    <Button
+                      size="medium"
+                      color="green"
+                      style={{ marginRight: "20px", width: "125px" }}
+                      onClick={() => setTeleDocked(false)}
+                    >
+                      Dock
+                    </Button>
+                  ) : (
+                    <button
+                      class="ui inverted mid white button"
+                      style={{ marginRight: "20px", width: "125px" }}
+                      onClick={() => setTeleDocked(true)}
+                    >
+                      Dock
+                    </button>
+                  )}
+                  {teleEngaged ? (
+                    <Button
+                      size="medium"
+                      color="green"
+                      style={{ marginRight: "20px", width: "125px" }}
+                      onClick={() => setTeleEngaged(false)}
+                    >
+                      Engage
+                    </Button>
+                  ) : (
+                    <button
+                      class="ui inverted mid white button"
+                      style={{ marginRight: "20px", width: "125px" }}
+                      onClick={() => setTeleEngaged(true)}
+                    >
+                      Engage
+                    </button>
+                  )}
+                </Form.Group>
               </Form.Group>
-              <Form.Field style ={{ marginTop: "15px" }}>
-                  <Button
-                    size="large"
-                    color="blue"
-                    style={{
-                      alignSelf: "center",
-                      width: "300px",
-                      margin: "auto",
-                    }}
-                    onClick={() => setMode(true)}
-                  >
-                    To auto
-                  </Button>
+              <Form.Field style={{ marginTop: "15px" }}>
+                <Button
+                  size="large"
+                  color="blue"
+                  style={{
+                    alignSelf: "center",
+                    width: "300px",
+                    margin: "auto",
+                  }}
+                  onClick={() => setMode(true)}
+                >
+                  To auto
+                </Button>
               </Form.Field>
             </Container>
           )}

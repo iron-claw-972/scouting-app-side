@@ -130,7 +130,12 @@ const MatchScoutSubjective = () => {
           Match Scout (Subjective)
         </Header>
         <Form style={{ marginTop: 5 }}>
-          <Form.Group style={{ margin: 2 }}>
+          <Form.Group
+            style={{
+              marginLeft: "55px",
+              margin: 2,
+            }}
+          >
             <Form.Field>
               <label style={{ color: "white" }}>Your Initials</label>
               <Input
@@ -182,7 +187,23 @@ const MatchScoutSubjective = () => {
           </Form.Group>
 
           <Divider></Divider>
-
+          <Header
+            style={{ color: "white", textAlign: "center", marginLeft: "" }}
+            as="h3"
+          >
+            Guidelines
+          </Header>
+          <Header
+            style={{
+              color: "white",
+              textAlign: "center",
+              marginLeft: "",
+            }}
+            as="h4"
+          >
+            Take notes on cycles, paths, cubes/cones, which row, intake areas
+            (substations etc)
+          </Header>
           <Form.Group>
             <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 1 #*</label>
@@ -196,17 +217,8 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "15px" }}>
-                <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea
-                  style={{ width: "150px" }}
-                  onChange={(e) => setDefense1(e.target.value)}
-                ></Form.TextArea>
-              </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>
-                  Driver Capability (LINKS)
-                </label>
+                <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity1(e.target.value)}
@@ -230,17 +242,8 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "15px" }}>
-                <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea
-                  style={{ width: "150px" }}
-                  onChange={(e) => setDefense2(e.target.value)}
-                ></Form.TextArea>
-              </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>
-                  Driver Capability (LINKS)
-                </label>
+                <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity2(e.target.value)}
@@ -264,17 +267,8 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
-              <Form.Field style={{ marginLeft: "15px" }}>
-                <label style={{ color: "white" }}>Defense</label>
-                <Form.TextArea
-                  style={{ width: "150px" }}
-                  onChange={(e) => setDefense3(e.target.value)}
-                ></Form.TextArea>
-              </Form.Field>
               <Form.Field>
-                <label style={{ color: "white" }}>
-                  Driver Capability (LINKS)
-                </label>
+                <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
                   onChange={(e) => setDriverCapacity3(e.target.value)}

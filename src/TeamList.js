@@ -288,6 +288,19 @@ const TeamList = () => {
       <Divider></Divider>
       <Header as="h3">Picklist:</Header>
       <Divider></Divider>
+      <Link>
+        <Button
+          onClick={() =>
+            window
+              .open(
+                "https://www.thebluealliance.com/event/2023caph#event-insights"
+              )
+              .focus()
+          }
+        >
+          To OPRS
+        </Button>
+      </Link>
       <Table basic compact small sortable unstackable singleLine>
         <Table.Header>
           <Table.Row>
@@ -346,7 +359,6 @@ const TeamList = () => {
             >
               Ties
             </Table.HeaderCell>
-            <Table.HeaderCell>Add 2 Picklist</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -363,7 +375,12 @@ const TeamList = () => {
             }) => (
               <Table.Row key={Math.random()}>
                 <Table.Cell>{rank}</Table.Cell>
-                <Table.Cell>{team}</Table.Cell>
+                <Table.Cell>
+                  <Link to={"/teamlookup?team=" + team}>
+                    {" "}
+                    <Button size="medium">{team}</Button>
+                  </Link>
+                </Table.Cell>
                 <Table.Cell>{match_avg}</Table.Cell>
                 <Table.Cell>{charge_avg}</Table.Cell>
                 <Table.Cell>{auto_avg}</Table.Cell>
