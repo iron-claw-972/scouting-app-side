@@ -279,7 +279,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setgintake(false)}
                 >
-                  Ground itke
+                  Ground Intake
                 </Button>
               ) : (
                 <button
@@ -288,7 +288,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setgintake(true)}
                 >
-                  Ground itke
+                  Ground Intake
                 </button>
               )}
             </Form.Field>
@@ -302,7 +302,7 @@ const PitScout = () => {
                   style={{ alignSelf: "right", width: "116px" }}
                   onClick={() => setVision(false)}
                 >
-                  Vision
+                  {"Vision\n -"}
                 </Button>
               ) : (
                 <button
@@ -311,7 +311,7 @@ const PitScout = () => {
                   style={{ alignSelf: "right", width: "116px" }}
                   onClick={() => setVision(true)}
                 >
-                  Vision
+                  {"Vision\n -"}
                 </button>
               )}
             </Form.Field>
@@ -327,7 +327,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(false)}
                 >
-                  Shelf itke
+                  Shelf Intake
                 </Button>
               ) : (
                 <button
@@ -336,7 +336,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setShelfIntake(true)}
                 >
-                  Shelf itke
+                  Shelf Intake
                 </button>
               )}
             </Form.Field>
@@ -350,7 +350,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setBalance(false)}
                 >
-                  Balance
+                  Auto Engage
                 </Button>
               ) : (
                 <button
@@ -359,7 +359,7 @@ const PitScout = () => {
                   fluid
                   onClick={() => setBalance(true)}
                 >
-                  Balance
+                  Auto Engage
                 </button>
               )}
             </Form.Field>
@@ -385,11 +385,10 @@ const PitScout = () => {
             </Form.Field>
             <Form.Field width="8">
               <label style={{ color: "white" }}>Abilities</label>
-              <Form.Select
-                options={abilityOptions}
+              <input
                 fluid
                 value={ability}
-                onChange={(e, data) => setAbility(data.value)}
+                onChange={(e) => setAbility(e.target.value)}
               />
             </Form.Field>
           </Form.Group>

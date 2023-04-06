@@ -293,7 +293,7 @@ const NewTeamPages = () => {
         Search
       </Button>
       <a
-        href={"https://www.thebluealliance.com/match/2023caph_qm" + matchNumber}
+        href={"https://www.thebluealliance.com/match/2023casf_qm" + matchNumber}
       >
         <Button>To TBA</Button>
       </a>

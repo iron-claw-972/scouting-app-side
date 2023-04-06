@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import _ from "lodash";
-import { Table, Button, Container } from "semantic-ui-react";
+import { Card, Header, Container, Divider } from "semantic-ui-react";
+
 import {
   getFirestore,
   collection,
@@ -133,7 +134,7 @@ const RawMatchTable = () => {
       csvDataArr.push(tempData);
     }
     console.log(csvDataArr);
-  
+
     console.log(matchDataArr);
     dispatch({ type: "ADD_DATA", data: matchDataArr });
   }, []);
@@ -148,173 +149,9 @@ const RawMatchTable = () => {
 
   return (
     <Container>
-      <Table sortable celled striped unstackable compact="very" size="small">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell
-              sorted={column === "MatchNo" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "MatchNo" })
-              }
-            >
-              MatchNo
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teamNumber" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teamNumber" })
-              }
-            >
-              teamNumber
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoHighConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoHighConeCount" })
-              }
-            >
-              Auto High Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoHighCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoHighCubeCount" })
-              }
-            >
-              Auto High Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoMidConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoMidConeCount" })
-              }
-            >
-              Auto Mid Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoMidCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoMidCubeCount" })
-              }
-            >
-              Auto Mid Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoLowConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoLowConeCount" })
-              }
-            >
-              Auto Low Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "autoLowCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "autoLowCubeCount" })
-              }
-            >
-              Auto Low Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleHighConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teleHighConeCount" })
-              }
-            >
-              Tele High Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleHighCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teleHighCubeCount" })
-              }
-            >
-              Tele High Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleMidConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teleMidConeCount" })
-              }
-            >
-              Tele Mid Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleMidCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({
-                  type: "CHANGE_SORT",
-                  column: "ClimbteleMidCubeCountTime",
-                })
-              }
-            >
-              Tele Mid Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleLowConeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teleLowConeCount" })
-              }
-            >
-              Tele Low Cone
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "teleLowCubeCount" ? direction : null}
-              onClick={() =>
-                dispatch({ type: "CHANGE_SORT", column: "teleLowCubeCount" })
-              }
-            >
-              Tele Low Cube
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              sorted={column === "name" ? direction : null}
-              onClick={() => dispatch({ type: "CHANGE_SORT", column: "name" })}
-            >
-              Name
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {data.map(
-            ({
-              MatchNo,
-              teamNumber,
-              autoHighConeCount,
-              autoHighCubeCount,
-              autoMidConeCount,
-              autoMidCubeCount,
-              autoLowConeCount,
-              autoLowCubeCount,
-              teleHighConeCount,
-              teleHighCubeCount,
-              teleMidConeCount,
-              teleMidCubeCount,
-              teleLowConeCount,
-              teleLowCubeCount,
-              name,
-            }) => (
-              <Table.Row key={String(teamNumber) + "_" + String(MatchNo)}>
-                <Table.Cell>{MatchNo}</Table.Cell>
-                <Table.Cell>{teamNumber}</Table.Cell>
-                <Table.Cell>{autoHighConeCount}</Table.Cell>
-                <Table.Cell>{autoHighCubeCount}</Table.Cell>
-                <Table.Cell>{autoMidConeCount}</Table.Cell>
-                <Table.Cell>{autoMidCubeCount}</Table.Cell>
-                <Table.Cell>{autoLowConeCount}</Table.Cell>
-                <Table.Cell>{autoLowCubeCount}</Table.Cell>
-                <Table.Cell>{teleHighConeCount}</Table.Cell>
-                <Table.Cell>{teleHighCubeCount}</Table.Cell>
-                <Table.Cell>{teleMidConeCount}</Table.Cell>
-                <Table.Cell>{teleMidCubeCount}</Table.Cell>
-                <Table.Cell>{teleLowConeCount}</Table.Cell>
-                <Table.Cell>{teleLowCubeCount}</Table.Cell>
-                <Table.Cell>{name}</Table.Cell>
-              </Table.Row>
-            )
-          )}
-        </Table.Body>
-      </Table>
-      <Button> export </Button>
+      <Header>
+        Averages Calculated! (Could take a while if the wifi's bad)
+      </Header>
     </Container>
   );
 };

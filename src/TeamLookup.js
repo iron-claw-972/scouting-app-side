@@ -12,6 +12,8 @@ import {
   Divider,
   Radio,
   Segment,
+  Label,
+  Checkbox
 } from "semantic-ui-react";
 import {
   getFirestore,
@@ -84,41 +86,79 @@ const TeamLookup = () => {
   const [realDriver, setRealDriver] = useState("");
   const [realDefense, setRealDefense] = useState("");
   const [chartData, setChartData] = useState({});
-
+  const [driveravg, setdriveravg] = useState(0)
   let initcoords = [];
   const [namesList, setNamesList] = useState([]);
 
-  function handleChart(graph) {
-    try {
-      var q = graph.querySelector("span").textContent;
-    } catch (error) {
-      var q = graph.textContent;
-    }
-    var output = {};
+  const [low, setLow] = useState(true);
+  const [mid, setMid] = useState(true);
+  const [high, setHigh] = useState(true);
+  const [all, setAll] = useState(true);
+  const [points, setPoints] = useState();
+
+
+
+  function handleChart(g, d) {
+    console.log(d)
+    setGraph(d)
+    
+    var q = d;
+    console.log(q)
+    var output = [{name: "Tele Mid", data: {}}, {name: "Tele Low", data: {}}, {name: "Tele High", data: {}}, {name: "Tele Total", data: {}}, {name: "Auto Mid", data: {}}, {name: "Auto Low", data: {}}, {name: "Auto High", data: {}}, {name: "Auto Total", data: {}}];
     // console.log(q)
     // console.log(JSON.stringify(matchData))
     // console.log(q)
     // console.log(matchData)
-    for (let i = 0; i < matchData.length; i++) {
-      let type =
-        q.split(/(\s+)/)[2].toLowerCase() +
-        q.split(/(\s+)/)[4] +
-        q.split(/(\s+)/)[0] +
-        "Count";
-      function replaceLast(x, y, z) {
-        var a = x.split("");
-        a[x.lastIndexOf(y)] = z;
-        return a.join("");
-      }
-      if (type.includes("Cone")) {
-        type = replaceLast(type, "s", "");
+    for (let i = 0; i < matchData.length; i++){
+      console.log(all)
+      if(all){
+        if(q == "Tele"){
+          output[3]["data"][matchData[i]["MatchNo"]] = matchData[i]["teleHighConeCount"] + matchData[i]["teleHighCubeCount"] + matchData[i]["teleMidCubeCount"] + matchData[i]["teleMidConeCount"] + matchData[i]["teleLowConeCount"] + matchData[i]["teleLowCubeCount"]
+        }
+        
+
+        if(q == "Auto"){
+          output[7]["data"][matchData[i]["MatchNo"]] = matchData[i]["autoHighConeCount"] + matchData[i]["autoHighCubeCount"] + matchData[i]["autoMidCubeCount"] + matchData[i]["autoMidConeCount"] + matchData[i]["autoLowConeCount"] + matchData[i]["autoLowCubeCount"]
+        }
+
       }
 
-      output[matchData[i]["MatchNo"]] = matchData[i][type];
+      if(high){
+        if(q == "Tele"){
+          output[2]["data"][matchData[i]["MatchNo"]] = matchData[i]["teleHighConeCount"] + matchData[i]["teleHighCubeCount"]
+        }
+
+        if(q == "Auto"){
+          output[6]["data"][matchData[i]["MatchNo"]] = matchData[i]["autoHighConeCount"] + matchData[i]["autoHighCubeCount"]
+        }
+      }
+
+      if (mid){
+        if(q == "Tele"){
+          output[0]["data"][matchData[i]["MatchNo"]] = matchData[i]["teleHighConeCount"] + matchData[i]["teleMidCubeCount"]
+        }
+        if(q == "Auto"){
+          output[4]["data"][matchData[i]["MatchNo"]] = matchData[i]["autoMidConeCount"] + matchData[i]["autoMidCubeCount"]
+        }
+      }
+
+
+      if (low){
+        if(q == "Tele"){
+          output[1]["data"][matchData[i]["MatchNo"]] = matchData[i]["teleLowConeCount"] + matchData[i]["teleLowCubeCount"]
+        }
+        if(q == "Auto"){
+          output[5]["data"][matchData[i]["MatchNo"]] = matchData[i]["autoLowConeCount"] + matchData[i]["autoLowCubeCount"]
+        }
+      }
+      console.log(matchData.length)
     }
+    
+    
+      //output[matchData[i]["MatchNo"]] = matchData[i][type];
     // return output
+    console.log(output)
     setChartData(output);
-    setGraph(q);
   }
 
   const queryParameters = new URLSearchParams(window.location.search);
@@ -127,6 +167,10 @@ const TeamLookup = () => {
     const team = queryParameters.get("team");
     setTeamNumber(team);
   }, []);
+
+  useEffect(() => {
+    handleChart("", graph)
+  }, [low, mid, high, all]);
 
   // const db = getFirestore();
   //   const matchSnapshot = await getDocs(collection(db, "test"));
@@ -148,6 +192,7 @@ const TeamLookup = () => {
 
     const matchSnapshot = await getDocs(q);
     matchSnapshot.forEach((match) => {
+      console.log(matchSnapshot.length)
       matchDataArr.push(match.data());
     });
     console.log(matchDataArr)
@@ -204,7 +249,7 @@ const TeamLookup = () => {
       "hl": "Henry",
       "cn": "Cameron",
       "ap": "Arnav",
-      "cs": "Cici",
+      "cs": "Leison",
       "rs": "Cici",
       "ay": "Adam",
       "ac": "Alex",
@@ -362,21 +407,28 @@ const TeamLookup = () => {
     var defenseStr = "";
     var driverStr = "";
     
-
+    var matches = 0;
+    var tot = 0;
     for (let i = 0; i < subq1.length; i++) {
       defenseStr = defenseStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
       defenseStr = defenseStr + subq1[i].defense1 + " \n ";
 
       driverStr = driverStr + initials[subq1[i].name.toLowerCase()] + " (" + subq1[i].MatchNo + "): ";
-      driverStr = driverStr + subq1[i].driverCapacity1 + " \n ";
+      driverStr = driverStr + subq1[i].driverCapacity1 +"/10 (Driver)" + "\n ";
+      tot = tot + Number(subq1[i].driverCapacity1)
+      matches=matches + 1
+
     }
 
     for (let i = 0; i < subq2.length; i++) {
       defenseStr = defenseStr + initials[subq2[i].name.toLowerCase()]  + " (" + subq2[i].MatchNo + "): ";
-      defenseStr = defenseStr + subq2[i].defense2 + "\n";
+      defenseStr = defenseStr + subq2[i].defense2  + "\n";
 
       driverStr = driverStr + initials[subq2[i].name.toLowerCase()] +  " (" + subq2[i].MatchNo + "): ";
-      driverStr = driverStr + subq2[i].driverCapacity2 + "\n";
+      driverStr = driverStr + subq2[i].driverCapacity2 +"/10 (Driver)" + "\n";
+      tot = tot + Number(subq2[i].driverCapacity2)
+      matches=matches + 1
+
     }
 
     for (let i = 0; i < subq3.length; i++) {
@@ -384,8 +436,14 @@ const TeamLookup = () => {
       defenseStr = defenseStr + subq3[i].defense3 + "\n";
 
       driverStr = driverStr + initials[subq3[i].name.toLowerCase()]  + " (" + subq3[i].MatchNo + "): ";
-      driverStr = driverStr + subq3[i].driverCapacity3 + "\n";
+      driverStr = driverStr + subq3[i].driverCapacity3 +"/10 (Driver)" + "\n";
+      tot = tot + Number(subq3[i].driverCapacity3)
+      matches=matches + 1
+
+
     }
+
+    setdriveravg(Math.round((tot/matches)*100, 2)/100)
 
     setRealDefense(defenseStr);
     setRealDriver(driverStr);
@@ -542,7 +600,17 @@ const TeamLookup = () => {
     <Container>
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
         Team Lookup
-      </Header>
+      </Header >
+      <a href={"https://docs.google.com/spreadsheets/d/1hIwbvNvCNZZNF2LKdj3UoUGqPunohFZpZ6EItQRJVvU/edit#gid=0"}>     
+       <Header as="h4" style={{ textUnderline:"underline #f9dd94", color:"blue", textAlign: "center", margin: "1px" }}>
+        Prescout data - subjective (the homework)
+       </Header>
+    </a>
+    <a href={"https://docs.google.com/spreadsheets/d/1nENFc7wUSSK75jH7wOvW3KpL09tOJoauwmjS2tBvf-U/edit#gid=1069226125"}>     
+       <Header as="h4" style={{ textUnderline:"underline #f9dd94", color:"blue", textAlign: "center", margin: "1px" }}>
+        Prescout data - objective (past results)
+       </Header>
+    </a>
       <Form style={{ marginTop: 15 }}>
         <Form.Group unstackable>
           <Form.Input
@@ -564,12 +632,12 @@ const TeamLookup = () => {
           <Header  as="h3">
             stats
           </Header>
-          <Table>
+          <Table unstackable>
             <Table.Row>
             <Table.HeaderCell>Drivetrain</Table.HeaderCell>
             <Table.HeaderCell>Dimensions</Table.HeaderCell>
             <Table.HeaderCell>Ability</Table.HeaderCell>
-            <Table.HeaderCell>Balance</Table.HeaderCell>
+            <Table.HeaderCell>Auto Engage</Table.HeaderCell>
 
             <Table.HeaderCell>Ground Intake</Table.HeaderCell>
             <Table.HeaderCell>Shelf Intake</Table.HeaderCell>
@@ -592,15 +660,44 @@ const TeamLookup = () => {
             <Table.Cell>{String(pitData.vision)}</Table.Cell>
 
             <Table.Cell>{String(pitData.motors)}</Table.Cell>
-</Table.Row>
+      </Table.Row>
             
 
 
 
           </Table>
+          <Divider></Divider>
+
+          <Label size="large" color="red">Auto Points Avg <Label.Detail>10</Label.Detail></Label>
+          <Label size="large" color="blue">Tele Points Avg <Label.Detail>{driveravg}</Label.Detail></Label>
+          <Label size="large" color="pink">Endgame Points Avg</Label>
+          <Label size="large" color="black">Total Points Avg</Label>
+          <Label size="large" color="violet">Intakes Avg</Label>
+          <Label size="large" color="teal">Driver Rating Avg <Label.Detail>{driveravg}</Label.Detail></Label>
+          <Label size="large" color="grey">Accuracy Avg</Label>
+
+
+
+          <Divider></Divider>
+          <label>what to graph</label>
+          <Form.Select
+            value={graph}
+            options={graphOptions}
+            onChange={(e, data) => handleChart(e, data.value)}
+          ></Form.Select>
+         
+
+      <LineChart data={chartData} curve={false} />
+      <Checkbox label={"Low"} checked={low} onClick={() => setLow(!low)}></Checkbox>
+          <Checkbox label={"Mid"} checked={mid} onClick={() => setMid(!mid)}></Checkbox>
+
+          <Checkbox label={"High "} checked={high} onClick={() => setHigh(!high)}></Checkbox>
+
+          <Checkbox label={"All"} checked={all} onClick={() => setAll(!all)}></Checkbox>
+          <Divider></Divider>
           <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
           </label>
-          <Table celled small collapsing basic stackable striped>
+          <Table celled small collapsing basic unstackable striped compact>
           <Table.Body>
             <Table.Row>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
@@ -762,32 +859,26 @@ const TeamLookup = () => {
             </Header>
             
             
-            <Header style={{ marginLeft: 20 }} as="h5">
-              SUBJECTIVE
-            </Header>
+          
+            <Header style={{ marginLeft: 20 }} as="h5">Substations/Reliability</Header>
+            <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment>
+            <Header style={{ marginLeft: 20 }} as="h5">Driver rating</Header>
+
             <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
+
           </Form.Group>
           <Form.Group style = {{ marginLeft: 40 }}>
             <Header style={{ marginTop: "30px"}}>Auto Starts</Header>
             <CanvasDisplay data={coords}></CanvasDisplay>
-            <Header>pic</Header>
-            <img src={pitData.dataUri}></img>
+            
           </Form.Group>
         </Container>
       {/* </Container> */}
-      <Container>
-        <Header style={{ marginTop:"20px" }} as="h3">Matches:</Header>
 
-      </Container>
      
-      <Divider></Divider>
-      <label>what to graph</label>
-      <Form.Select
-        value={graph}
-        options={graphOptions}
-        onChange={(e) => handleChart(e.target)}
-      ></Form.Select>
-      <LineChart data={chartData} curve={false} />
+      
+      <Header>pic</Header>
+            <img src={pitData.dataUri}></img>
       <Modal
         size="mini"
         centered={false}

@@ -31,6 +31,8 @@ import CanvasChooser from "./CanvasChooser";
 //setting up main page
 //The element= causes all the content of the pages to show
 const App = () => {
+  
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />

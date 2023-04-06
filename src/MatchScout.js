@@ -47,6 +47,8 @@ const MatchScout = () => {
   const [teamNumber, setTeamNumber] = useState("");
   const [teamName, setTeamName] = useState("");
   const [mode, setMode] = useState(true);
+  const [skips, setSkips] = useState(0);
+  const [avgDocRef, setavgDocRef] = useState("initRef");
 
   const [AutoLH, setAutoLH] = useState(0);
   const [AutoUH, setAutoUH] = useState(0);
@@ -64,6 +66,14 @@ const MatchScout = () => {
   const [TeleULR, setTeleULR] = useState(0);
   const [TeleUMR, setTeleUMR] = useState(0);
   const [TeleUHR, setTeleUHR] = useState(0);
+
+  const [autoavg, setautoavg] = useState(0);
+  const [teleavg, setteleavg] = useState(0);
+  const [endgameavg, setendgameavg] = useState(0);
+  const [intakeavg, setintakeavg] = useState(0);
+  const [accavg, setaccavg] = useState(0);
+  const [totalavg, settotavg] = useState(0);
+  const [matches, setmatches] = useState(0);
 
   const [AutoLRSelected, setAutoLRSelected] = useState(false);
   const [AutoMRSelected, setAutoMRSelected] = useState(false);
@@ -102,6 +112,7 @@ const MatchScout = () => {
   const [showQrCode, setShowQrCode] = useState(false);
 
   const [timerRunning, setTimerRunning] = useState(false);
+  const [docRefId, setDocRefId] = useState("initRef");
 
   const [groundIntakes, setGroundIntakes] = useState(0);
   const [mousePos, setMousePos] = useState({});
@@ -109,6 +120,7 @@ const MatchScout = () => {
   const [mouseY, setMouseY] = useState(0);
 
   const [canvas, setCanvas] = useState(false);
+  const [regard, setRegard] = useState(true);
 
   const [cubeButton, setCubeButton] = useState(true);
   const [coneButton, setConeButton] = useState(false);
@@ -130,7 +142,6 @@ const MatchScout = () => {
   const [teleLowConeCount, setTeleLowConeCount] = useState(0);
   //docRef is a unique id that we will store the match under
   //we will use the default value "initRef", and set the id later.
-  const [docRefId, setDocRefId] = useState("initRef");
 
   //We put all the variables declared previously into an array, this is our full match data
   const buttonStyle = {
@@ -160,6 +171,7 @@ const MatchScout = () => {
     teleDocked,
     teleEngaged,
     groundIntakes,
+    regard,
   };
 
   //This function sets everything back to the default values
@@ -209,6 +221,14 @@ const MatchScout = () => {
     setTeleHighConeCount(0);
     setTeleMidConeCount(0);
     setTeleLowConeCount(0);
+    setRegard(true);
+    setmatches(0);
+    setaccavg(0);
+    setautoavg(0);
+    setteleavg(0);
+    setendgameavg(0);
+    settotavg(0);
+    setintakeavg(0);
   };
 
   useEffect(async () => {
@@ -223,13 +243,11 @@ const MatchScout = () => {
     );
 
     const assSnapshot = await getDocs(assq);
-    console.log(assSnapshot);
 
     var assList = [];
     var check = 100000;
     assSnapshot.forEach((match) => {
       var temp = match.data();
-      console.log(temp);
 
       if (temp.scoutMatch < check) {
         console.log("push");
@@ -238,10 +256,8 @@ const MatchScout = () => {
       }
     });
 
-    console.log(assList);
     if (assList.length > 0) {
       const assData = assList[assList.length - 1];
-      console.log(assData);
       setMatchNo(assData.scoutMatch);
       setTeamNumber(assData.scoutTeam);
     }
@@ -250,25 +266,182 @@ const MatchScout = () => {
   //This gets called on page load and whenever docRefId changes
   //You can see docRefId in an array at the bottom
   //Anything in that array being changed triggers this function.
-  useEffect(() => {
+  useEffect(async () => {
     //Checks if we're trying to save a match
     if (docRefId === "initRef") return;
 
     //Shows qr code for non-wifi data transfer
     //And then saves into the database
     setShowQrCode(true);
-    const db = getFirestore();
-    const docRef = doc(db, "test", docRefId);
-    setMouseX(mousePos.x);
-    setMouseY(mousePos.y);
-    setDoc(docRef, matchData, { merge: true })
-      .then(() => {
-        setShowSuccess(true);
-      })
-      .catch((e) => {
-        console.error("Error adding document: ", e);
-        setShowError(true);
+    if (!regard) {
+      setSkips(skips + 1);
+    }
+
+    if (regard) {
+      const db = getFirestore();
+      const docRef = doc(db, "test", docRefId);
+      const avgRef = doc(db, "averages", String(teamNumber));
+
+      const avgq0 = query(
+        collection(db, "averages"),
+        where("teamNumber", "==", teamNumber)
+      );
+
+      const avgsnap0 = await getDocs(avgq0);
+
+      if (avgsnap0.size === 0) {
+        setDoc(
+          avgRef,
+          {
+            teamNumber: teamNumber,
+            autoavg: 0,
+            teleavg: 0,
+            endgameavg: 0,
+            totalavg: 0,
+            intakeavg: 0,
+            accavg: 0,
+            matches: 0,
+            url:
+              "https://scoutingapp-e4a98.web.app/teamlookup?team=" +
+              String(teamNumber),
+          },
+          { merge: true }
+        ).then(() => {
+          console.log("create init doc");
+        });
+      }
+      const avgq = query(
+        collection(db, "averages"),
+        where("teamNumber", "==", teamNumber)
+      );
+      const avgsnap = await getDocs(avgq);
+
+      avgsnap.forEach((team) => {
+        //console.log(matches);
+
+        console.log("this happened");
+        var temp = team.data();
+        console.log(temp);
+        //var matches = temp.matches + 1;
+        //console.log(matches);
+
+        if (autoDocked) {
+          var aendpts = 8;
+        }
+        if (autoEngaged) {
+          var aendpts = 12;
+        }
+        if (!autoDocked && !autoEngaged) {
+          var aendpts = 0;
+        }
+        const autoavg1 =
+          (temp.autoavg * temp.matches +
+            (autoHighCubeCount * 6 +
+              autoMidCubeCount * 4 +
+              autoLowCubeCount * 3 +
+              autoHighConeCount * 6 +
+              autoMidConeCount * 4 +
+              autoLowConeCount * 3) +
+            aendpts) /
+          (temp.matches + 1);
+        console.log(autoavg1);
+
+        console.log(temp.autoavg);
+        setautoavg(autoavg1);
+
+        const teleavg1 =
+          (temp.teleavg * temp.matches +
+            (teleHighCubeCount * 5 +
+              teleMidCubeCount * 3 +
+              teleLowCubeCount * 2 +
+              teleHighConeCount * 5 +
+              teleMidConeCount * 3 +
+              teleLowConeCount * 2)) /
+          (temp.matches + 1);
+        setteleavg(teleavg1);
+        console.log(matches);
+
+        if (teleDocked) {
+          var endpts = 6;
+        }
+        if (teleEngaged) {
+          var endpts = 10;
+        }
+        if (!teleDocked && !teleEngaged) {
+          var endpts = 0;
+        }
+        console.log(matches);
+        const endgameavg1 =
+          (temp.endgameavg * temp.matches + endpts) / (temp.matches + 1);
+        setendgameavg(endgameavg1);
+        console.log(matches);
+
+        const totalavg1 = autoavg1 + teleavg1 + endgameavg1;
+        settotavg(totalavg1);
+        console.log(matches);
+
+        const intakeavg1 =
+          (temp.intakeavg * temp.matches + groundIntakes) / (temp.matches + 1);
+        setintakeavg(intakeavg1);
+        console.log(matches);
+
+        const accavg1 =
+          (temp.accavg * temp.matches +
+            Math.round(
+              100 *
+                ((autoHighConeCount +
+                  autoHighCubeCount +
+                  autoMidConeCount +
+                  autoMidCubeCount +
+                  autoLowConeCount +
+                  autoLowCubeCount +
+                  teleHighConeCount +
+                  teleHighCubeCount +
+                  teleMidConeCount +
+                  teleMidCubeCount +
+                  teleLowConeCount +
+                  teleLowCubeCount) /
+                  groundIntakes)
+            )) /
+          (temp.matches + 1);
+        console.log(matches);
+
+        setaccavg(accavg1);
+        console.log(matches);
+        setmatches(temp.matches + 1);
+        console.log(matches);
+        setDoc(
+          avgRef,
+          {
+            teamNumber: teamNumber,
+            autoavg: autoavg1.toFixed(2),
+            teleavg: teleavg1.toFixed(2),
+            endgameavg: endgameavg1.toFixed(2),
+            totalavg: totalavg1.toFixed(2),
+            intakeavg: intakeavg1.toFixed(2),
+            accavg: accavg1.toFixed(2),
+            matches: temp.matches + 1,
+            url:
+              "https://scoutingapp-e4a98.web.app/teamlookup?team=" +
+              String(teamNumber),
+          },
+          { merge: true }
+        ).then(() => {
+          console.log("an above average app that calculates averages");
+        });
       });
+
+      setMouseX(mousePos.x);
+      setMouseY(mousePos.y);
+      setDoc(docRef, matchData, { merge: true })
+        .then(() => {
+          setShowSuccess(true);
+        })
+        .catch((e) => {
+          console.error("Error adding document: ", e);
+          setShowError(true);
+        });
+    }
   }, [docRefId]);
 
   let climbInterval = null;
@@ -288,6 +461,13 @@ const MatchScout = () => {
   //setDocRefId is using a library that generates a unique ID
   //REMEMBER, docRefId being changed triggers the useEffect() function!
   const save = async () => {
+    if (!validate()) return;
+    setDocRefId(teamNumber + "_" + MatchNo);
+    setavgDocRef(teamNumber);
+  };
+
+  const skip = async () => {
+    setRegard(false);
     if (!validate()) return;
     setDocRefId(teamNumber + "_" + MatchNo);
   };
@@ -546,7 +726,25 @@ const MatchScout = () => {
       </Container>
     );
   };
-
+  const mald = () => {
+    const maldphrases = [
+      "You skipped. That's fine, I guess",
+      "Two skips in row. Very long bathroom break>",
+      "Triple Engage.. of you not scouting. (unless the app broke)",
+      "Really long bathroom break, huh. I have have laxatives you know (disregard this if the app broke)",
+      "That's a nice, round, 5 skips in a row. Are you proud of yourself? (disregard this if the app broke)",
+      "Six is an unlucky number (disregard this if the app broke)",
+      "Ok. At this point, skip another match. It's ok. (disregard this if the app broke)",
+      "It's like a magic 8 ball but its 8 skips and its not magic. (disregard this if the app broke)",
+      "Cats have 9 lives. You have 9 skips and 1 life, and you're wasting it. (disregard this if the app broke)",
+      "You're a 10! Out of 10,000 (disregard this if the app broke)",
+      "Not worth my time to mald over you (disregard this if the app broke)",
+      "12 skips isn't really unlucky for you, but you're unlucky for me. (disregard this if the app broke)",
+      "Skip the next one too, I mean it. ",
+      "There are so many people who could have been on this team and contributed more than you. Perhaps they would have actually learned something. (disregard this if the app broke)",
+    ];
+    return <p>{maldphrases[skips - 1]}</p>;
+  };
   const HighEnterRemoveButtons = ({ enter, remove }) => {
     return (
       <Container>
@@ -610,8 +808,9 @@ const MatchScout = () => {
     "Nice fit, scouter!... (im not jealous)",
     "I can't think of a better person to get data from!",
     "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
+    "My heavens, you're the best!",
+    "I'm speechless at you're beauty",
   ];
-  console.log(mousePos);
 
   return (
     <body style={{ backgroundColor: "rgb(64,56,58)" }}>
@@ -1171,8 +1370,8 @@ const MatchScout = () => {
               Submit / Save
             </Button>
 
-            <Button type="submit" color="grey" onClick={resetForm}>
-              Clear
+            <Button type="submit" color="red" onClick={skip}>
+              Skip
             </Button>
             <Link to="/">
               {" "}
@@ -1210,19 +1409,21 @@ const MatchScout = () => {
         )}
 
         <Modal open={showQrCode} size="fullscreen" onClose={handleClose}>
-          <Modal.Content>
-            <QRCode value={JSON.stringify(matchData)} />
-            <h3 style={{ margin: "0px" }}>
-              Thank you for submitting! Here's a compliment:
-            </h3>
-            <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
-              {
-                randomCompliments[
-                  Math.floor(Math.random() * randomCompliments.length)
-                ]
-              }
-            </h4>
-          </Modal.Content>
+          {regard ? (
+            <Modal.Content>
+              <QRCode value={JSON.stringify(matchData)} />
+              <h3 style={{ margin: "0px" }}></h3>
+              <h4 style={{ margin: "0px", color: "rgb(105,105,105)" }}>
+                {
+                  randomCompliments[
+                    Math.floor(Math.random() * randomCompliments.length)
+                  ]
+                }
+              </h4>
+            </Modal.Content>
+          ) : (
+            <Modal.Content>{mald()}</Modal.Content>
+          )}
         </Modal>
       </Container>
     </body>

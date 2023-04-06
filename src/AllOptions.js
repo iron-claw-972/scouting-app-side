@@ -23,64 +23,14 @@ const colorOptions = [
 ];
 const graphOptions = [
   {
-    key: "1",
-    text: "Cones Auto High",
-    value: "Cones Auto High",
+    key: 1,
+    text: "Tele",
+    value: "Tele",
   },
   {
-    key: "2",
-    text: "Cones Auto Mid",
-    value: "Cones Auto Mid",
-  },
-  {
-    key: "3",
-    text: "Cones Auto Low",
-    value: "Cones Auto Low",
-  },
-  {
-    key: "4",
-    text: "Cube Auto High",
-    value: "Cube Auto High",
-  },
-  {
-    key: "5",
-    text: "Cube Auto Mid",
-    value: "Cube Auto Mid",
-  },
-  {
-    key: "6",
-    text: "Cube Auto Low",
-    value: "Cube Auto Low",
-  },
-  {
-    key: "7",
-    text: "Cones Tele High",
-    value: "Cones Tele High",
-  },
-  {
-    key: "8",
-    text: "Cones Tele Mid",
-    value: "Cones Tele Mid",
-  },
-  {
-    key: "9",
-    text: "Cones Tele Low",
-    value: "Cones Tele Low",
-  },
-  {
-    key: "10",
-    text: "Cube Tele High",
-    value: "Cube Tele High",
-  },
-  {
-    key: "11",
-    text: "Cube Tele Mid",
-    value: "Cube Tele Mid",
-  },
-  {
-    key: "12",
-    text: "Cones Tele Low",
-    value: "Cones Tele Low",
+    key: 2,
+    text: "Auto",
+    value: "Auto",
   },
 ];
 const driveTrainOptions = [
@@ -147,15 +97,16 @@ const yesNoOptions = [
 const driveOptions = [
   { key: 1, text: "Tank", value: "Tank" },
   { key: 2, text: "Swerve", value: "Swerve" },
+  { key: 6, text: "H-Drive", value: "H-Drive" },
   { key: 3, text: "Mecanum", value: "Mecanum" },
   { key: 4, text: "Slide", value: "Slide" },
   { key: 5, text: "Other", value: "Other" },
 ];
 
 const abilityOptions = [
-  { key: 1, text: "Cubes", value: "Cube" },
-  { key: 2, text: "Cones", value: "Cones" },
-  { key: 3, text: "Cubes AND Cones", value: "Cubes AND Cones" },
+  { key: 1, text: "Cubes High", value: "Cube" },
+  { key: 2, text: "Cones High", value: "Cones" },
+  { key: 3, text: "Cubes AND Cones High", value: "Cubes AND Cones" },
   { key: 4, text: "None", value: "None" },
 ];
 

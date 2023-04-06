@@ -12,7 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      "Louis, I think this is the beginning of a beautiful competition."
+      "Play it again Sam, play Call Me Maybe"
     </Header>
     <Card.Group
       centered
@@ -117,10 +117,12 @@ const Home = () => (
           <Card.Content header="Match List" description="List of matches" />
         </Card>
       </Link>
-
       <Link to="/rawmatch" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content header="Export to CSV" description="click on it" />
+        <Card color="red">
+          <Card.Content
+            header="REFRESH AVERAGES"
+            description="Try not to click this unless we're making our picklist or exporting or sharing data; it's expensive"
+          />
         </Card>
       </Link>
       <Link to="/datadisplay" style={{ margin: 10 }}>

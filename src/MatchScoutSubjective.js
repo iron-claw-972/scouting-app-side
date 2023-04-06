@@ -23,19 +23,20 @@ const MatchScoutSubjective = () => {
   const [MatchNo, setMatchNo] = useState("");
   const [name, setName] = useState("");
 
+  const [skips, setSkips] = useState(0);
   const [teamNumber1, setTeamNumber1] = useState("");
   const [teamNumber2, setTeamNumber2] = useState("");
   const [teamNumber3, setTeamNumber3] = useState("");
 
-  const [defense1, setDefense1] = useState("");
-  const [defense2, setDefense2] = useState("");
-  const [defense3, setDefense3] = useState("");
+  const [defense1, setDefense1] = useState(0);
+  const [defense2, setDefense2] = useState(0);
+  const [defense3, setDefense3] = useState(0);
 
-  const [driverCapacity1, setDriverCapacity1] = useState("");
-  const [driverCapacity2, setDriverCapacity2] = useState("");
-  const [driverCapacity3, setDriverCapacity3] = useState("");
+  const [driverCapacity1, setDriverCapacity1] = useState(3);
+  const [driverCapacity2, setDriverCapacity2] = useState(3);
+  const [driverCapacity3, setDriverCapacity3] = useState(3);
 
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -50,6 +51,57 @@ const MatchScoutSubjective = () => {
   //This gets called on page load and whenever docRefId changes
   //You can see docRefId in an array at the bottom
   //Anything in that array being changed triggers this function.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    var a = get_url(
+      controller,
+      "https://www.thebluealliance.com/api/v3/event/2023casf/matches"
+    ).then((data) => {
+      console.log(data);
+      data.forEach((match) => {
+        if (match["match_number"] == Number(MatchNo)) {
+          if (color) {
+            setTeamNumber1(
+              match["alliances"]["blue"]["team_keys"][0].replace("frc", "")
+            );
+            setTeamNumber2(
+              match["alliances"]["blue"]["team_keys"][1].replace("frc", "")
+            );
+            setTeamNumber3(
+              match["alliances"]["blue"]["team_keys"][2].replace("frc", "")
+            );
+          }
+          if (!color) {
+            setTeamNumber1(
+              match["alliances"]["red"]["team_keys"][0].replace("frc", "")
+            );
+            setTeamNumber2(
+              match["alliances"]["red"]["team_keys"][1].replace("frc", "")
+            );
+            setTeamNumber3(
+              match["alliances"]["red"]["team_keys"][2].replace("frc", "")
+            );
+          }
+        }
+      });
+    });
+    return () => controller.abort();
+  }, [MatchNo, color]);
+
+  async function get_url(controller, url) {
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "X-TBA-Auth-Key":
+          "BPNgGnZjbEKimUE3vZUl4lwQxyVRVvGsTamHIawG5CMQWpM0DzG8wLhxu1BqCPCO",
+      },
+      signal: controller.signal,
+    });
+    return response.json();
+  }
+
   useEffect(() => {
     //Checks if we're trying to save a match
     if (docRefId === "initRef") return;
@@ -70,6 +122,71 @@ const MatchScoutSubjective = () => {
     resetForm();
   }, [docRefId]);
 
+  const upDC2 = () => {
+    if (driverCapacity2 < 5) {
+      setDriverCapacity2(driverCapacity2 + 1);
+    }
+  };
+
+  const downDC2 = () => {
+    if (driverCapacity2 >= 1) {
+      setDriverCapacity2(driverCapacity2 - 1);
+    }
+  };
+
+  const upDC1 = () => {
+    if (driverCapacity1 < 5) {
+      setDriverCapacity1(driverCapacity1 + 1);
+    }
+  };
+
+  const downDC1 = () => {
+    if (driverCapacity1 >= 1) {
+      setDriverCapacity1(driverCapacity1 - 1);
+    }
+  };
+
+  const upDC3 = () => {
+    if (driverCapacity3 < 5) {
+      setDriverCapacity3(driverCapacity3 + 1);
+    }
+  };
+
+  const downDC3 = () => {
+    if (driverCapacity3 >= 1) {
+      setDriverCapacity3(driverCapacity3 - 1);
+    }
+  };
+
+  const upDefC3 = () => {
+    setDefense3(defense3 + 1);
+  };
+
+  const downDefC3 = () => {
+    if (defense3 >= 1) {
+      defense3(defense3 - 1);
+    }
+  };
+
+  const upDefC2 = () => {
+    setDefense2(defense2 + 1);
+  };
+
+  const downDefC2 = () => {
+    if (defense2 >= 1) {
+      defense2(defense2 - 1);
+    }
+  };
+
+  const upDefC1 = () => {
+    setDefense1(defense1 + 1);
+  };
+
+  const downDefC1 = () => {
+    if (defense1 >= 1) {
+      defense1(defense1 - 1);
+    }
+  };
   //This function has an array called requiredFields
   //And it checks whether they've been filled out
   //It's empty now, but could be useful in coming years
@@ -80,6 +197,24 @@ const MatchScoutSubjective = () => {
       return false;
     }
     return true;
+  };
+  const ButtonGroup = ({ up, down }) => {
+    return (
+      <Container fluid>
+        <Form.Group style={{ flexDirection: "column" }}>
+          <Form.Field style={{ alignSelf: "center", margin: 2 }}>
+            <Button size="small" color="orange" onClick={up}>
+              +
+            </Button>
+          </Form.Field>
+          <Form.Field style={{ alignSelf: "center", margin: 5 }}>
+            <Button size="small" onClick={down}>
+              -
+            </Button>
+          </Form.Field>
+        </Form.Group>
+      </Container>
+    );
   };
 
   //This saves the data in the form
@@ -105,11 +240,18 @@ const MatchScoutSubjective = () => {
   };
 
   const resetForm = () => {
-    setMatchNo("");
-    setName("");
+    setMatchNo(Number(MatchNo) + 1);
     setTeamNumber1("");
     setTeamNumber2("");
     setTeamNumber3("");
+    setDriverCapacity2(3);
+    setDriverCapacity3(3);
+
+    setDriverCapacity1(3);
+    setDefense1("");
+    setDefense2("");
+
+    setDefense3("");
   };
 
   const randomCompliments = [
@@ -187,25 +329,23 @@ const MatchScoutSubjective = () => {
           </Form.Group>
 
           <Divider></Divider>
-          <Header
-            style={{ color: "white", textAlign: "center", marginLeft: "" }}
-            as="h3"
-          >
-            Guidelines
+          <Header as="h4" style={{ color: "white" }}>
+            Rate on Driver Skill out of 5,
           </Header>
-          <Header
-            style={{
-              color: "white",
-              textAlign: "center",
-              marginLeft: "",
-            }}
-            as="h4"
-          >
-            Take notes on cycles, paths, cubes/cones, which row, intake areas
-            (substations etc)
+          <Header as="h4" style={{ color: "white" }}>
+            Take Notes on substations and intake and soring reliability
           </Header>
+          <Header style={{ color: "white" }} as="h4">
+            Ex: (Double SS, consistent scoring, fumbled intake 2-3 times)
+          </Header>
+          <Header style={{ color: "white" }} as="h4">
+            5 - almost no mistakes, overcomes D, doesn't hinder allies. 3 -
+            average, competent, recovers from mistakes, 1 - hinders allies,
+            doesn't accomplish task
+          </Header>
+          <Header style={{ color: "white" }} as="h4"></Header>
           <Form.Group>
-            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+            <Form.Field style={{ marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 1 #*</label>
               <Input
                 fluid
@@ -217,11 +357,22 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
+              <Form.Field style={{ color: "white" }}>
+                <Divider hidden />
+
+                <label style={{ color: "white", marginLeft: 3 }}>Dr</label>
+                <p style={{ color: "white", marginLeft: 4 }}>
+                  {driverCapacity1}
+                </p>
+              </Form.Field>
               <Form.Field>
+                <ButtonGroup up={upDC1} down={downDC1}></ButtonGroup>
+              </Form.Field>
+              <Form.Field style={{ color: "white" }}>
                 <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
-                  onChange={(e) => setDriverCapacity1(e.target.value)}
+                  onChange={(e) => setDefense1(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
             </Form.Group>
@@ -230,7 +381,7 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
+            <Form.Field style={{ marginTop: "0px" }}>
               <label style={{ color: "white" }}>Team 2 #*</label>
               <Input
                 fluid
@@ -242,11 +393,22 @@ const MatchScoutSubjective = () => {
               />
             </Form.Field>
             <Form.Group>
+              <Form.Field style={{ color: "white" }}>
+                <Divider hidden />
+
+                <label style={{ color: "white", marginLeft: 3 }}>Dr</label>
+                <p style={{ color: "white", marginLeft: 4 }}>
+                  {driverCapacity2}
+                </p>
+              </Form.Field>
               <Form.Field>
+                <ButtonGroup up={upDC2} down={downDC2}></ButtonGroup>
+              </Form.Field>
+              <Form.Field style={{ color: "white" }}>
                 <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
-                  onChange={(e) => setDriverCapacity2(e.target.value)}
+                  onChange={(e) => setDefense2(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
             </Form.Group>
@@ -255,23 +417,34 @@ const MatchScoutSubjective = () => {
           <Divider></Divider>
 
           <Form.Group>
-            <Form.Field style={{ margin: "10px", marginTop: "0px" }}>
-              <label style={{ color: "white" }}>Team 3 #*</label>
-              <Input
-                fluid
-                size="medium"
-                style={{ minWidth: "65px" }}
-                placeholder=""
-                value={teamNumber3}
-                onChange={(e) => setTeamNumber3(e.target.value)}
-              />
-            </Form.Field>
             <Form.Group>
+              <Form.Field style={{ marginTop: "0px" }}>
+                <label style={{ color: "white" }}>Team 3 #*</label>
+                <Input
+                  fluid
+                  size="medium"
+                  style={{ minWidth: "65px" }}
+                  placeholder=""
+                  value={teamNumber3}
+                  onChange={(e) => setTeamNumber3(e.target.value)}
+                />
+              </Form.Field>
+              <Form.Field style={{ color: "white" }}>
+                <Divider hidden />
+
+                <label style={{ color: "white", marginLeft: 3 }}>Dr</label>
+                <p style={{ color: "white", marginLeft: 4 }}>
+                  {driverCapacity3}
+                </p>
+              </Form.Field>
               <Form.Field>
+                <ButtonGroup up={upDC3} down={downDC3}></ButtonGroup>
+              </Form.Field>
+              <Form.Field style={{ color: "white" }}>
                 <label style={{ color: "white" }}>Notes</label>
                 <Form.TextArea
                   style={{ width: "150px" }}
-                  onChange={(e) => setDriverCapacity3(e.target.value)}
+                  onChange={(e) => setDefense3(e.target.value)}
                 ></Form.TextArea>
               </Form.Field>
             </Form.Group>
