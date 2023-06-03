@@ -81,6 +81,24 @@ const TeamLookup = () => {
   const [realEngaged, setrealEngaged] = useState(0);
   const [pitData, setPitData] = useState([{}]);
   const [matchData, setMatchData] = useState([{}]);
+
+  const [tipped, setTipped] = useState(0);
+  const [ground, setGround] = useState(0);
+  const [single, setSingle] = useState(0);
+  const [double, setDouble] = useState(0);
+  const [avgListData, setAvgListData] = useState({
+    teamNumber: teamNumber,
+    autoavg: 0,
+    teleavg: 0,
+    endgameavg: 0,
+    totalavg: 0,
+    intakeavg: 0,
+    accavg: 0,
+    matches: 0,
+    url:
+      "https://scoutingapp-e4a98.web.app/teamlookup?team=" +
+      String(teamNumber),
+  })
   const [coords, setCoords] = useState([{}]);
 
   const [realDriver, setRealDriver] = useState("");
@@ -90,7 +108,7 @@ const TeamLookup = () => {
   let initcoords = [];
   const [namesList, setNamesList] = useState([]);
 
-  const [low, setLow] = useState(true);
+  const [low, setLow] = useState(true); 
   const [mid, setMid] = useState(true);
   const [high, setHigh] = useState(true);
   const [all, setAll] = useState(true);
@@ -202,6 +220,24 @@ const TeamLookup = () => {
 
     setMatchData(matchDataArr);
 
+    const avgq0 = query(
+      collection(db, "averages"),
+      where("teamNumber", "==", teamNumber)
+    );
+
+    const avgSnapshot = await getDocs(avgq0);
+    console.log(avgListData)
+
+    avgSnapshot.forEach((team) => {
+      console.log(team.data())
+      setAvgListData(team.data())
+      console.log(avgListData)
+    })
+
+    console.log("fml")
+
+
+
 
     var initials = new Object();
     initials = {
@@ -260,13 +296,39 @@ const TeamLookup = () => {
       "tt": "day 0 practice"
     };
     var names = [];
+    
 
+    var defensestr= ""
+    var iground = 0
+    var itipped = 0
+    var isingle = 0
+    var idouble = 0
     for (let i = 0; i < matchDataArr.length; i++) {
+
       if (!names.includes(initials[matchDataArr[i].name.toLowerCase()])){
         names.push(initials[matchDataArr[i].name.toLowerCase()])
       }
-    }
 
+      defensestr = defensestr + initials[matchDataArr[i].name.toLowerCase()] + " (" + String(matchDataArr[i].MatchNo) + "): " + matchDataArr[i].driver + "\n"
+      if (matchDataArr[i].ground){
+        iground = iground+1
+      }
+      if (matchDataArr[i].tipped){
+        itipped = itipped+1
+      }
+      if (matchDataArr[i].single){
+        isingle = isingle+1
+      }
+      if (matchDataArr[i].double){
+        idouble = idouble+1
+      }
+    }
+    setGround(iground)
+    setTipped(itipped)
+    setDouble(idouble)
+    setSingle(isingle)
+
+    setRealDefense(defensestr)
     setNamesList(names);
 
     var initcoords = [];
@@ -317,7 +379,6 @@ const TeamLookup = () => {
         Avg_Cubes_Tele_H: search(matchDataArr, "teleHighCubeCount"),
       };
     });
-    setAvgData((prevData) => {
       return {
         ...prevData,
         Avg_Cubes_Tele_M: search(matchDataArr, "teleMidCubeCount"),
@@ -364,10 +425,8 @@ const TeamLookup = () => {
 
     console.log(pitData)
 
-    if (matchDataArr.length === 0) {
-      setShowModal(true);
-    }
 
+    /*
     var subsnap1 = query(
       collection(db, "test_s"),
       where("teamNumber1", "==", queryTeam)
@@ -442,11 +501,8 @@ const TeamLookup = () => {
 
 
     }
-
-    setdriveravg(Math.round((tot/matches)*100, 2)/100)
-
-    setRealDefense(defenseStr);
-    setRealDriver(driverStr);
+    */
+    
     // setAvgData((prevData) => {
     //   return {
     //     ...prevData,
@@ -601,7 +657,7 @@ const TeamLookup = () => {
       <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
         Team Lookup
       </Header >
-      <a href={"https://docs.google.com/spreadsheets/d/1hIwbvNvCNZZNF2LKdj3UoUGqPunohFZpZ6EItQRJVvU/edit#gid=0"}>     
+      <a href={"https://docs.google.com/document/d/1Sj7vSJHVVQzgD6Oyr5MAMKlX8v2_6_6Og-0I1QfTM8I/edit"}>     
        <Header as="h4" style={{ textUnderline:"underline #f9dd94", color:"blue", textAlign: "center", margin: "1px" }}>
         Prescout data - subjective (the homework)
        </Header>
@@ -668,14 +724,16 @@ const TeamLookup = () => {
           </Table>
           <Divider></Divider>
 
-          <Label size="large" color="red">Auto Points Avg <Label.Detail>10</Label.Detail></Label>
-          <Label size="large" color="blue">Tele Points Avg <Label.Detail>{driveravg}</Label.Detail></Label>
-          <Label size="large" color="pink">Endgame Points Avg</Label>
-          <Label size="large" color="black">Total Points Avg</Label>
-          <Label size="large" color="violet">Intakes Avg</Label>
-          <Label size="large" color="teal">Driver Rating Avg <Label.Detail>{driveravg}</Label.Detail></Label>
-          <Label size="large" color="grey">Accuracy Avg</Label>
-
+          <Label size="large" color="red">Auto Avg <Label.Detail>{avgListData.autoavg}</Label.Detail></Label>
+          <Label size="large" color="blue">Tele Avg <Label.Detail>{avgListData.teleavg}</Label.Detail></Label>
+          <Label size="large" color="pink">Endgame Avg <Label.Detail>{avgListData.endgameavg}</Label.Detail></Label>
+          <Label size="large" color="black">Total Avg <Label.Detail>{avgListData.totalavg}</Label.Detail></Label>
+          <Label size="large" color="violet">Intakes Avg <Label.Detail>{avgListData.intakeavg}</Label.Detail></Label>
+          <Label size="large" color="grey">Accuracy Avg <Label.Detail>{avgListData.accavg}</Label.Detail></Label>
+          <Label size="large" color="black">Single <Label.Detail>{single}</Label.Detail></Label>
+          <Label size="large" color="black">Double <Label.Detail>{double}</Label.Detail></Label>
+          <Label size="large" color="black">Ground<Label.Detail>{tipped}</Label.Detail></Label>
+          <Label size="large" color="black">Tipped<Label.Detail>{ground}</Label.Detail></Label>
 
 
           <Divider></Divider>
@@ -860,12 +918,9 @@ const TeamLookup = () => {
             
             
           
-            <Header style={{ marginLeft: 20 }} as="h5">Substations/Reliability</Header>
+            <Header style={{ marginLeft: 20 }} as="h5">Driver and Defense</Header>
             <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment>
-            <Header style={{ marginLeft: 20 }} as="h5">Driver rating</Header>
-
-            <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDriver}</Segment>
-
+            
           </Form.Group>
           <Form.Group style = {{ marginLeft: 40 }}>
             <Header style={{ marginTop: "30px"}}>Auto Starts</Header>

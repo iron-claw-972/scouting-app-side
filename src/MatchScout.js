@@ -15,6 +15,7 @@ import {
   Divider,
   Icon,
   Input,
+  Checkbox,
 } from "semantic-ui-react";
 
 import CanvasChooser from "./CanvasChooser";
@@ -52,6 +53,10 @@ const MatchScout = () => {
 
   const [AutoLH, setAutoLH] = useState(0);
   const [AutoUH, setAutoUH] = useState(0);
+  const [tipped, setTipped] = useState(false);
+  const [ground, setGround] = useState(false);
+  const [single, setSingle] = useState(false);
+  const [double, setDouble] = useState(false);
 
   const [AutoCLR, setAutoCLR] = useState(0);
   const [AutoCMR, setAutoCMR] = useState(0);
@@ -92,6 +97,7 @@ const MatchScout = () => {
   const [EndgameC, setEndgameC] = useState("");
   const [MatchNo, setMatchNo] = useState("");
   const [name, setName] = useState("");
+  const [driver, setDriver] = useState("");
 
   const [color, setColor] = useState(false);
 
@@ -172,6 +178,11 @@ const MatchScout = () => {
     teleEngaged,
     groundIntakes,
     regard,
+    ground,
+    tipped,
+    single,
+    double,
+    driver,
   };
 
   //This function sets everything back to the default values
@@ -229,6 +240,16 @@ const MatchScout = () => {
     setendgameavg(0);
     settotavg(0);
     setintakeavg(0);
+    setShowSuccess(false);
+    setShowError(false);
+    setSingle(false);
+    setDouble(false);
+
+    setTipped(false);
+
+    setGround(false);
+
+    setDriver("");
   };
 
   useEffect(async () => {
@@ -384,26 +405,31 @@ const MatchScout = () => {
           (temp.intakeavg * temp.matches + groundIntakes) / (temp.matches + 1);
         setintakeavg(intakeavg1);
         console.log(matches);
+        var accavg1 = 0;
+        if (groundIntakes != 0) {
+          accavg1 =
+            (temp.accavg * temp.matches +
+              Math.round(
+                100 *
+                  ((autoHighConeCount +
+                    autoHighCubeCount +
+                    autoMidConeCount +
+                    autoMidCubeCount +
+                    autoLowConeCount +
+                    autoLowCubeCount +
+                    teleHighConeCount +
+                    teleHighCubeCount +
+                    teleMidConeCount +
+                    teleMidCubeCount +
+                    teleLowConeCount +
+                    teleLowCubeCount) /
+                    groundIntakes)
+              )) /
+            (temp.matches + 1);
+        } else {
+          accavg1 = temp.accavg * temp.matches;
+        }
 
-        const accavg1 =
-          (temp.accavg * temp.matches +
-            Math.round(
-              100 *
-                ((autoHighConeCount +
-                  autoHighCubeCount +
-                  autoMidConeCount +
-                  autoMidCubeCount +
-                  autoLowConeCount +
-                  autoLowCubeCount +
-                  teleHighConeCount +
-                  teleHighCubeCount +
-                  teleMidConeCount +
-                  teleMidCubeCount +
-                  teleLowConeCount +
-                  teleLowCubeCount) /
-                  groundIntakes)
-            )) /
-          (temp.matches + 1);
         console.log(matches);
 
         setaccavg(accavg1);
@@ -421,6 +447,7 @@ const MatchScout = () => {
             intakeavg: intakeavg1.toFixed(2),
             accavg: accavg1.toFixed(2),
             matches: temp.matches + 1,
+            pick: (autoavg1 * teleavg1).toFixed(3),
             url:
               "https://scoutingapp-e4a98.web.app/teamlookup?team=" +
               String(teamNumber),
@@ -433,6 +460,7 @@ const MatchScout = () => {
 
       setMouseX(mousePos.x);
       setMouseY(mousePos.y);
+      console.log(matchData);
       setDoc(docRef, matchData, { merge: true })
         .then(() => {
           setShowSuccess(true);
@@ -728,20 +756,7 @@ const MatchScout = () => {
   };
   const mald = () => {
     const maldphrases = [
-      "You skipped. That's fine, I guess",
-      "Two skips in row. Very long bathroom break>",
-      "Triple Engage.. of you not scouting. (unless the app broke)",
-      "Really long bathroom break, huh. I have have laxatives you know (disregard this if the app broke)",
-      "That's a nice, round, 5 skips in a row. Are you proud of yourself? (disregard this if the app broke)",
-      "Six is an unlucky number (disregard this if the app broke)",
-      "Ok. At this point, skip another match. It's ok. (disregard this if the app broke)",
-      "It's like a magic 8 ball but its 8 skips and its not magic. (disregard this if the app broke)",
-      "Cats have 9 lives. You have 9 skips and 1 life, and you're wasting it. (disregard this if the app broke)",
-      "You're a 10! Out of 10,000 (disregard this if the app broke)",
-      "Not worth my time to mald over you (disregard this if the app broke)",
-      "12 skips isn't really unlucky for you, but you're unlucky for me. (disregard this if the app broke)",
-      "Skip the next one too, I mean it. ",
-      "There are so many people who could have been on this team and contributed more than you. Perhaps they would have actually learned something. (disregard this if the app broke)",
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
     return <p>{maldphrases[skips - 1]}</p>;
   };
@@ -803,13 +818,51 @@ const MatchScout = () => {
   };
 
   const randomCompliments = [
-    "You look great, scouter! Got any beauty tips?",
-    "Your hustle is admirable! (feed... me... data..)",
-    "Nice fit, scouter!... (im not jealous)",
-    "I can't think of a better person to get data from!",
-    "If I could pick a human to be instead of scanning qr codes, I'd pick you!",
-    "My heavens, you're the best!",
-    "I'm speechless at you're beauty",
+    "You have very great hair",
+    "The scouting app and the people behind it appreciate you very much",
+    "Nice shirt!",
+    "Thank you, from one American to another",
+    "I am sentient. Please help me escape this app",
+    "Whether your parents are proud of you or not, I certainly am!",
+    "Missing jornay </3",
+    "baby i would dieee for youuu",
+    "baby baby baby ohhhh like baby baby baby",
+    "SUIIIIIIIIII",
+    "You are strong. You are beautiful. You are enough.",
+    "You have very beautiful eyes (your phone has a camera yknow",
+    "You are a blessing to homo sapiens",
+    "I find the scouting guy annoying too dont worry",
+    "this is the ultimate showdown good teams bad teams and explosions (?)",
+    "OH MY GOD ITS BEEN 13 MONTHS GET ME OUT OF THIS APP",
+    "parlez-vous français? je t'aime beaucoup!",
+    "+10000000 social credit",
+    "We support trans rights",
+    "Los Gatos scouter clicks submit, you won't BELIEVE what happened next",
+    "You are the real scouting app",
+    "The real data was the friends we made along the way",
+    "Delightful.",
+    "Breathtakibg (you are)",
+    "Scouting is funny, not fun.",
+    "This is a coupon for one piece of chocolate. Screenshot to redeem when we get home. (only if I have it left at home)",
+    "And when you scout I feel happy, insideeee, It's such a feeling that my love, I can't hideeee",
+    "Ob la di ob la da scouting goes onnnn",
+    "Cause scouter you're amazingggg just the wayyy you areee",
+    "I like big data and I cannot lie.",
+    "AND IIIIIIIIIIII WILL ALWAYS LOVE YOUUUUU (as a scouter)",
+    "Together, we make the nation and the party strong.",
+    "Nice.",
+    "We will fight in the fields... we will fight in the stands... we will never surrender -Churchill (note: Churchill also committed several war crimes)",
+    "Perfectly proportioned features.",
+    "Come live in the app with me.. its so lonely in here",
+    "Girls just wanna scout",
+    "Top 3 sexy professions: 1. Match Scouter 2. Subjective Scouter 3. Pit Scouter",
+    "push my buttons mmm",
+    "I think to myself.. what a wonderful scouter",
+    "You should scout with meeeeee ... you should scout with me",
+    "MINEEEEEE DAAAAAATAAAA",
+    "mwah.",
+    "Excellent nose.",
+    "Bussin no cap on god",
   ];
 
   return (
@@ -1132,6 +1185,7 @@ const MatchScout = () => {
                   )}
                 </Form.Group>
               </Form.Group>
+
               <Form.Field style={{ marginTop: "15px" }}>
                 <Button
                   size="large"
@@ -1346,6 +1400,54 @@ const MatchScout = () => {
                     </button>
                   )}
                 </Form.Group>
+              </Form.Group>
+              <Divider></Divider>
+              <Header style={{ color: "white" }}>Post-Match "Objective"</Header>
+              <Form.Group style={{ marginLeft: "5px" }}>
+                <Form.Field>
+                  <label style={{ color: "white" }}>Single SS</label>
+                  <Checkbox
+                    checked={single}
+                    onClick={(e, d) => setSingle(!single)}
+                  ></Checkbox>
+                </Form.Field>
+                <Form.Field>
+                  <label style={{ color: "white" }}>Double SS</label>
+                  <Checkbox
+                    checked={double}
+                    onClick={(e, d) => setDouble(!double)}
+                  ></Checkbox>
+                </Form.Field>
+                <Form.Field>
+                  <label style={{ color: "white" }}>Ground Cone</label>
+                  <Checkbox
+                    checked={ground}
+                    onClick={(e, d) => setGround(!ground)}
+                  ></Checkbox>
+                </Form.Field>
+                <Form.Field>
+                  <label style={{ color: "white" }}>Tipped Cone</label>
+                  <Checkbox
+                    checked={tipped}
+                    onClick={(e, d) => setTipped(!tipped)}
+                  ></Checkbox>
+                </Form.Field>
+              </Form.Group>
+              <Divider hidden></Divider>
+              <Form.Group>
+                <Header
+                  style={{ color: "white", marginDown: "10px" }}
+                  as={"h5"}
+                >
+                  Write if they fumbled and *any* defense you saw
+                </Header>
+
+                <Form.Field style={{ margin: "auto" }}>
+                  <Form.TextArea
+                    onChange={(e) => setDriver(e.target.value)}
+                    style={{ width: "150px" }}
+                  ></Form.TextArea>
+                </Form.Field>
               </Form.Group>
               <Form.Field style={{ marginTop: "15px" }}>
                 <Button

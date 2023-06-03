@@ -17,7 +17,7 @@ export default function DataDisplay() {
         Worked on by:
       </h2>
       <h5 style={{ textAlign: "center", margin: 10 }}>
-        Ashir Rao, Elisa Pan, Edwin Hou, Johann Jacob (2023)
+        Ashir Rao (Lead), Elisa Pan, Edwin Hou, Johann Jacob (2023)
       </h5>
       <h5 style={{ textAlign: "center", margin: 10 }}>
         Ashir Rao, Richie Tan (2022)
@@ -30,18 +30,18 @@ export default function DataDisplay() {
       <h3 style={{ textAlign: "center", margin: 10 }}>Version Notes:</h3>
       <h5 style={{ textAlign: "center", margin: 15 }}>
         -added match scout subjective, focused on button based design, dark
-        mode, more graphs and charts, integration with API, more readable UI
-        (2023)
+        mode, more graphs and charts, integration with API, more readable UI,
+        auto assignments (2023)
       </h5>
       <h5 style={{ textAlign: "center", margin: 15 }}>
-        Version notes not implemented in 2022. Cope. (2022)
+        Version notes not implemented in 2022. (2022)
       </h5>
       <h2 style={{ textAlign: "center", margin: 10 }}>------</h2>
 
       <h5 style={{ textAlign: "center", margin: 10 }}>
-        Team 972 - Iron Claw at Los Gatos High School :)
+        Team 972 - Iron Claw at Los Gatos High School
       </h5>
-      <h4 style={{ textAlign: "center" }}>W A T E R G A M E ... some day</h4>
+      <h5 style={{ textAlign: "center", margin: 10 }}>Best wishes!</h5>
     </div>
   );
 }

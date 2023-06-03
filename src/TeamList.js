@@ -164,7 +164,7 @@ const TeamList = () => {
     const controller = new AbortController();
     var t = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023caph/teams"
+      "https://www.thebluealliance.com/api/v3/event/2023arc/teams"
     ).then((data) => {
       for (let i = 0; i < data.length; i++) {
         teamlst.push("frc" + data[i]["team_number"]);
@@ -172,7 +172,7 @@ const TeamList = () => {
     });
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023caph/teams/statuses"
+      "https://www.thebluealliance.com/api/v3/event/2023arc/teams/statuses"
     ).then((data) => {
       for (let i = 0; i < teamlst.length; i++) {
         var temptempdata = {};
@@ -293,7 +293,7 @@ const TeamList = () => {
           onClick={() =>
             window
               .open(
-                "https://www.thebluealliance.com/event/2023caph#event-insights"
+                "https://www.thebluealliance.com/event/2023arc#event-insights"
               )
               .focus()
           }

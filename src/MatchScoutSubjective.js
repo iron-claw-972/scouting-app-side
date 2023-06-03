@@ -56,7 +56,7 @@ const MatchScoutSubjective = () => {
 
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023casf/matches"
+      "https://www.thebluealliance.com/api/v3/event/2023arc/matches"
     ).then((data) => {
       console.log(data);
       data.forEach((match) => {
@@ -250,7 +250,6 @@ const MatchScoutSubjective = () => {
     setDriverCapacity1(3);
     setDefense1("");
     setDefense2("");
-
     setDefense3("");
   };
 

@@ -38,14 +38,14 @@ import {
 } from "./AllOptions";
 
 const MatchList = () => {
-  const compcode = "2023caph";
+  const compcode = "2023arc";
   const controller = new AbortController();
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const controller = new AbortController();
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023caph/matches"
+      "https://www.thebluealliance.com/api/v3/event/2023arc/matches"
     ).then((data) => {
       let rdata = [];
       console.log(data);

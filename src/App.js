@@ -32,7 +32,7 @@ import CanvasChooser from "./CanvasChooser";
 //The element= causes all the content of the pages to show
 const App = () => {
   
-
+  
   return (
     <Routes>
       <Route path="/" element={<Home />} />

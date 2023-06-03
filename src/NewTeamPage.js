@@ -195,7 +195,7 @@ const NewTeamPages = () => {
     const controller = new AbortController();
     var a = get_url(
       controller,
-      "https://www.thebluealliance.com/api/v3/event/2023caph/matches"
+      "https://www.thebluealliance.com/api/v3/event/2023arc/matches"
     ).then((data) => {
       console.log(data);
       let rdata = [];
@@ -292,9 +292,7 @@ const NewTeamPages = () => {
       <Button type="submit" onClick={() => setQueryTeam(matchNumber)}>
         Search
       </Button>
-      <a
-        href={"https://www.thebluealliance.com/match/2023casf_qm" + matchNumber}
-      >
+      <a href={"https://www.thebluealliance.com/match/2023arc" + matchNumber}>
         <Button>To TBA</Button>
       </a>
 

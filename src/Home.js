@@ -8,11 +8,12 @@ tags I've used below.
 const Home = () => (
   <Container fluid>
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
-      Scouting App 2023 - Iron Claw 972
+      ScoutingAppSide -- Iron Claw 972
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      "Play it again Sam, play Call Me Maybe"
+      AND FROM LOS GATOS, CALIFORNIA, ITS YOUR ARCHIMEDES DIVISION CHAMPIONS:
+      972 IRON CLAW!!!
     </Header>
     <Card.Group
       centered
@@ -135,7 +136,7 @@ const Home = () => (
       </Link>
 
       <Link style={{ margin: 10 }}>
-        <Card href={"https://www.thebluealliance.com/event/2023caph#rankings"}>
+        <Card href={"https://www.thebluealliance.com/event/2023arc#rankings"}>
           <Card.Content
             header="Rankings and Averages"
             description="Quick link to blue alliance"
