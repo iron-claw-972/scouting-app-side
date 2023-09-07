@@ -13,6 +13,7 @@ const Home = () => (
 
     <Header as="h4" style={{ textAlign: "center" }}>
       New year nouveau me.
+     
     </Header>
     <Card.Group
       centered
