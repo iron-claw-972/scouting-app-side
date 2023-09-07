@@ -12,8 +12,7 @@ const Home = () => (
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      AND FROM LOS GATOS, CALIFORNIA, ITS YOUR ARCHIMEDES DIVISION CHAMPIONS:
-      972 IRON CLAW!!!
+      New year nouveau me.
     </Header>
     <Card.Group
       centered
