@@ -22,6 +22,9 @@ export default function DataDisplay() {
       <h5 style={{ textAlign: "center", margin: 10 }}>
         Ashir Rao, Richie Tan (2022)
       </h5>
+      <h5 style={{ textAlign: "center", margin: 10 }}>
+        Pranav Tadepalli, Alan Sheu (2019)
+      </h5>
       <h2 style={{ textAlign: "center", margin: 10 }}>Thanks to:</h2>
       <h5 style={{ textAlign: "center", margin: 10 }}>
         Scouting/Strategy team, the scouters, and most of all -- the mentors!

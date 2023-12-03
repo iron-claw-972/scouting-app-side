@@ -654,114 +654,95 @@ const TeamLookup = () => {
 
   return (
     <Container>
-      <Header as="h1" style={{ textAlign: "center", margin: "3px" }}>
+      <Header as="h1" style={{ textAlign: "center", margin: "10px", fontSize: "24px" }}>
         Team Lookup
-      </Header >
-      <a href={"https://docs.google.com/document/d/1Sj7vSJHVVQzgD6Oyr5MAMKlX8v2_6_6Og-0I1QfTM8I/edit"}>     
-       <Header as="h4" style={{ textUnderline:"underline #f9dd94", color:"blue", textAlign: "center", margin: "1px" }}>
-        Prescout data - subjective (the homework)
-       </Header>
-    </a>
-    <a href={"https://docs.google.com/spreadsheets/d/1nENFc7wUSSK75jH7wOvW3KpL09tOJoauwmjS2tBvf-U/edit#gid=1069226125"}>     
-       <Header as="h4" style={{ textUnderline:"underline #f9dd94", color:"blue", textAlign: "center", margin: "1px" }}>
-        Prescout data - objective (past results)
-       </Header>
-    </a>
+      </Header>
+      <a href={"https://docs.google.com/document/d/1Sj7vSJHVVQzgD6Oyr5MAMKlX8v2_6_6Og-0I1QfTM8I/edit"} style={{ padding: "10px" }}>
+        <Header as="h4" style={{ textDecoration: "underline", color: "blue", textAlign: "center", margin: "1px", fontSize: "16px" }}>
+          Prescout data - subjective (the homework)
+        </Header>
+      </a>
+      <a href={"https://docs.google.com/spreadsheets/d/1nENFc7wUSSK75jH7wOvW3KpL09tOJoauwmjS2tBvf-U/edit#gid=1069226125"} style={{ padding: "10px" }}>
+        <Header as="h4" style={{ textDecoration: "underline", color: "blue", textAlign: "center", margin: "1px", fontSize: "16px" }}>
+          Prescout data - objective (past results)
+        </Header>
+      </a>
       <Form style={{ marginTop: 15 }}>
         <Form.Group unstackable>
           <Form.Input
             value={teamNumber}
             onChange={(e) => setTeamNumber(e.target.value)}
+            style={{ width: "80%", fontSize: "16px" }}
           />
-          <Form.Field style={{ alignSelf: "flexEnd" }}>
-            <Button type="submit" onClick={() => setQueryTeam(teamNumber)}>
+          <Form.Field style={{ alignSelf: "flexEnd", marginTop: "10px" }}>
+            <Button type="submit" onClick={() => setQueryTeam(teamNumber)} style={{ fontSize: "16px" }}>
               Search
             </Button>
-            <Button type="submit" onClick={() => window.open('https://www.thebluealliance.com/team/'+teamNumber+'/2023', '_blank').focus()}>
+            <Button type="submit" onClick={() => window.open('https://www.thebluealliance.com/team/'+teamNumber+'/2023', '_blank').focus()} style={{ fontSize: "16px" }}>
               To TBA
             </Button>
           </Form.Field>
         </Form.Group>
       </Form>
-      {/* <Container style={{ display: "flex" }}> */}
-        <Container>
-          <Header  as="h3">
-            stats
-          </Header>
-          <Table unstackable>
-            <Table.Row>
+      <Container>
+        <Header as="h3">
+          stats
+        </Header>
+        <Table unstackable>
+          <Table.Row>
             <Table.HeaderCell>Drivetrain</Table.HeaderCell>
             <Table.HeaderCell>Dimensions</Table.HeaderCell>
             <Table.HeaderCell>Ability</Table.HeaderCell>
             <Table.HeaderCell>Auto Engage</Table.HeaderCell>
-
             <Table.HeaderCell>Ground Intake</Table.HeaderCell>
             <Table.HeaderCell>Shelf Intake</Table.HeaderCell>
             <Table.HeaderCell>Vision</Table.HeaderCell>
             <Table.HeaderCell>Motors</Table.HeaderCell>
-
-            </Table.Row>
-            
-            <Table.Row><Table.Cell>{String(pitData.drive)}</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>{String(pitData.drive)}</Table.Cell>
             <Table.Cell>{String(pitData.dim)}</Table.Cell>
-
             <Table.Cell>{String(pitData.ability)}</Table.Cell>
-
             <Table.Cell>{String(pitData.balance)}</Table.Cell>
-
             <Table.Cell>{String(pitData.gintake)}</Table.Cell>
-
             <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
-
             <Table.Cell>{String(pitData.vision)}</Table.Cell>
-
             <Table.Cell>{String(pitData.motors)}</Table.Cell>
-      </Table.Row>
-            
-
-
-
-          </Table>
-          <Divider></Divider>
-
-          <Label size="large" color="red">Auto Avg <Label.Detail>{avgListData.autoavg}</Label.Detail></Label>
-          <Label size="large" color="blue">Tele Avg <Label.Detail>{avgListData.teleavg}</Label.Detail></Label>
-          <Label size="large" color="pink">Endgame Avg <Label.Detail>{avgListData.endgameavg}</Label.Detail></Label>
-          <Label size="large" color="black">Total Avg <Label.Detail>{avgListData.totalavg}</Label.Detail></Label>
-          <Label size="large" color="violet">Intakes Avg <Label.Detail>{avgListData.intakeavg}</Label.Detail></Label>
-          <Label size="large" color="grey">Accuracy Avg <Label.Detail>{avgListData.accavg}</Label.Detail></Label>
-          <Label size="large" color="black">Single <Label.Detail>{single}</Label.Detail></Label>
-          <Label size="large" color="black">Double <Label.Detail>{double}</Label.Detail></Label>
-          <Label size="large" color="black">Ground<Label.Detail>{tipped}</Label.Detail></Label>
-          <Label size="large" color="black">Tipped<Label.Detail>{ground}</Label.Detail></Label>
-
-
-          <Divider></Divider>
-          <label>what to graph</label>
-          <Form.Select
-            value={graph}
-            options={graphOptions}
-            onChange={(e, data) => handleChart(e, data.value)}
-          ></Form.Select>
-         
-
-      <LineChart data={chartData} curve={false} />
-      <Checkbox label={"Low"} checked={low} onClick={() => setLow(!low)}></Checkbox>
-          <Checkbox label={"Mid"} checked={mid} onClick={() => setMid(!mid)}></Checkbox>
-
-          <Checkbox label={"High "} checked={high} onClick={() => setHigh(!high)}></Checkbox>
-
-          <Checkbox label={"All"} checked={all} onClick={() => setAll(!all)}></Checkbox>
-          <Divider></Divider>
-          <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
-          </label>
-          <Table celled small collapsing basic unstackable striped compact>
+          </Table.Row>
+        </Table>
+        <Divider></Divider>
+        <Label size="large" color="red" style={{ fontSize: "16px" }}>Auto Avg <Label.Detail>{avgListData.autoavg}</Label.Detail></Label>
+        <Label size="large" color="blue" style={{ fontSize: "16px" }}>Tele Avg <Label.Detail>{avgListData.teleavg}</Label.Detail></Label>
+        <Label size="large" color="pink" style={{ fontSize: "16px" }}>Endgame Avg <Label.Detail>{avgListData.endgameavg}</Label.Detail></Label>
+        <Label size="large" color="black" style={{ fontSize: "16px" }}>Total Avg <Label.Detail>{avgListData.totalavg}</Label.Detail></Label>
+        <Label size="large" color="violet" style={{ fontSize: "16px" }}>Intakes Avg <Label.Detail>{avgListData.intakeavg}</Label.Detail></Label>
+        <Label size="large" color="grey" style={{ fontSize: "16px" }}>Accuracy Avg <Label.Detail>{avgListData.accavg}</Label.Detail></Label>
+        <Label size="large" color="black" style={{ fontSize: "16px" }}>Single <Label.Detail>{single}</Label.Detail></Label>
+        <Label size="large" color="black" style={{ fontSize: "16px" }}>Double <Label.Detail>{double}</Label.Detail></Label>
+        <Label size="large" color="black" style={{ fontSize: "16px" }}>Ground<Label.Detail>{tipped}</Label.Detail></Label>
+        <Label size="large" color="black" style={{ fontSize: "16px" }}>Tipped<Label.Detail>{ground}</Label.Detail></Label>
+        <Divider></Divider>
+        <label>what to graph</label>
+        <Form.Select
+          value={graph}
+          options={graphOptions}
+          onChange={(e, data) => handleChart(e, data.value)}
+          style={{ fontSize: "16px" }}
+        ></Form.Select>
+        <LineChart data={chartData} curve={false} />
+        <Checkbox label={"Low"} checked={low} onClick={() => setLow(!low)}></Checkbox>
+        <Checkbox label={"Mid"} checked={mid} onClick={() => setMid(!mid)}></Checkbox>
+        <Checkbox label={"High "} checked={high} onClick={() => setHigh(!high)}></Checkbox>
+        <Checkbox label={"All"} checked={all} onClick={() => setAll(!all)}></Checkbox>
+        <Divider></Divider>
+        <label>Scouters: {namesList.map((item, index) => {return<label key={index}>{item} </label>})}
+        </label>
+        <Table celled small collapsing basic unstackable striped compact>
           <Table.Body>
             <Table.Row>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Match</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Intakes</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Accuracy*</Table.HeaderCell>
-
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Auto High Cone*</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Auto High Cube*</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Mid Cone</Table.HeaderCell>
@@ -774,13 +755,10 @@ const TeamLookup = () => {
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Mid Cube</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Low Cone</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>*Tele Low Cube*</Table.HeaderCell>
-
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Dock</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Auto Engage</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Dock</Table.HeaderCell>
               <Table.HeaderCell style={{ textAlign: "center", width: "110px" }}>Tele Engage</Table.HeaderCell>
-
-              
             </Table.Row>
             {data.map(
               ({
@@ -823,117 +801,27 @@ const TeamLookup = () => {
                   <Table.Cell style={{ textAlign: "center" }}>{String(autoEngaged)}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{String(teleDocked)}</Table.Cell>
                   <Table.Cell style={{ textAlign: "center" }}>{String(teleEngaged)}</Table.Cell>
-
-
-
-
                 </Table.Row>
               )
             )}
           </Table.Body>
-              {/* <Table.Row>
-                <Table.Cell>Can Shelf Intake</Table.Cell>
-                <Table.Cell>{String(pitData.shelfIntake)}</Table.Cell>
-
-                <Table.Cell>Has Vision</Table.Cell>
-                <Table.Cell>{String(pitData.vision)}</Table.Cell>
-                <Table.Cell>Can Balance</Table.Cell>
-                <Table.Cell>{String(pitData.balance)}</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Avg Cones Auto</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cones_Auto_H"]} / M{" "}
-                  {avgData["Avg_Cones_Auto_M"]} / L{" "}
-                  {avgData["Avg_Cones_Auto_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cubes Auto</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cubes_Auto_H"]} / M
-                  {avgData["Avg_Cubes_Auto_M"]} / L{" "}
-                  {avgData["Avg_Cubes_Auto_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cones Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
-                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
-                  {avgData["Avg_Cones_Tele_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cones Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
-                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
-                  {avgData["Avg_Cones_Tele_L"]}
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Avg Cones Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cones_Tele_H"]} / M{" "}
-                  {avgData["Avg_Cones_Tele_M"]} / L{" "}
-                  {avgData["Avg_Cones_Tele_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cubes Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cubes_Tele_H"]} / M{" "}
-                  {avgData["Avg_Cubes_Tele_M"]} / L{" "}
-                  {avgData["Avg_Cubes_Tele_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Cubes Tele</Table.Cell>
-                <Table.Cell>
-                  H {avgData["Avg_Cubes_Tele_H"]} / M{" "}
-                  {avgData["Avg_Cubes_Tele_M"]} / L{" "}
-                  {avgData["Avg_Cubes_Tele_L"]}
-                </Table.Cell>
-                <Table.Cell>Avg Ground Intake</Table.Cell>
-                <Table.Cell>{avgData["Ground_Intake"]}</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Avg Dock</Table.Cell>
-                <Table.Cell>{realDocked}</Table.Cell>
-                <Table.Cell>Avg Engage</Table.Cell>
-                <Table.Cell>{realEngaged}</Table.Cell>
-
-                <Table.Cell>Ranking</Table.Cell>
-                <Table.Cell></Table.Cell>
-              </Table.Row>
-
-              <Table.Row>
-                <Table.Cell># of Motors</Table.Cell>
-                <Table.Cell>{String(pitData.motors)}</Table.Cell>
-
-                <Table.Cell>Drivetrain</Table.Cell>
-                <Table.Cell>{pitData.drive}</Table.Cell>
-                <Table.Cell>Avg Total Score</Table.Cell>
-                <Table.Cell>{totalScore}</Table.Cell>
-              </Table.Row>
-            </Table.Body> */}
-          </Table>
-        </Container>
-        <Container style={{ display: "flex" }}>
-          <Form.Group style={{ minWidth: 300}}>
-            <Header style={{ marginLeft: 20, marginTop: "30px"}} as="h3">
-              Comments
-            </Header>
-            
-            
-          
-            <Header style={{ marginLeft: 20 }} as="h5">Driver and Defense</Header>
-            <Segment massive style={{ marginLeft: 20, whiteSpace:"pre-line" }}>{realDefense}</Segment>
-            
-          </Form.Group>
-          <Form.Group style = {{ marginLeft: 40 }}>
-            <Header style={{ marginTop: "30px"}}>Auto Starts</Header>
-            <CanvasDisplay data={coords}></CanvasDisplay>
-            
-          </Form.Group>
-        </Container>
-      {/* </Container> */}
-
-     
-      
+        </Table>
+      </Container>
+      <Container style={{ display: "flex" }}>
+        <Form.Group style={{ minWidth: 300 }}>
+          <Header style={{ marginLeft: 20, marginTop: "30px" }} as="h3">
+            Comments
+          </Header>
+          <Header style={{ marginLeft: 20 }} as="h5">Driver and Defense</Header>
+          <Segment massive style={{ marginLeft: 20, whiteSpace: "pre-line" }}>{realDefense}</Segment>
+        </Form.Group>
+        <Form.Group style={{ marginLeft: 40 }}>
+          <Header style={{ marginTop: "30px" }}>Auto Starts</Header>
+          <CanvasDisplay data={coords}></CanvasDisplay>
+        </Form.Group>
+      </Container>
       <Header>pic</Header>
-            <img src={pitData.dataUri}></img>
+      <img src={pitData.dataUri} alt="Team Pic" />
       <Modal
         size="mini"
         centered={false}
@@ -952,6 +840,7 @@ const TeamLookup = () => {
       </Modal>
     </Container>
   );
+  
 };
 
 export default TeamLookup;

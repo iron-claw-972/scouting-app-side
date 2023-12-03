@@ -8,12 +8,11 @@ tags I've used below.
 const Home = () => (
   <Container fluid>
     <Header textAlign="center" as="h1" style={{ marginTop: 10 }}>
-      ScoutingAppSide -- Iron Claw 972
+      ScoutingApp Min -- Iron Claw 972
     </Header>
 
     <Header as="h4" style={{ textAlign: "center" }}>
-      New year nouveau me.
-     
+      Six weeks of labor hinges on your scouting data. No pressure!
     </Header>
     <Card.Group
       centered
@@ -27,17 +26,6 @@ const Home = () => (
             <Card.Header>Match Scout (Objective)</Card.Header>
             <Card.Description>
               Collect data on a Robot during a match
-            </Card.Description>
-          </Card.Content>
-        </Card>
-      </Link>
-
-      <Link to="/matchscoutsubjective" style={{ margin: 10 }}>
-        <Card color="orange">
-          <Card.Content>
-            <Card.Header>Match Scout (Subjective)</Card.Header>
-            <Card.Description>
-              Collect subjective data on an alliance during a match
             </Card.Description>
           </Card.Content>
         </Card>
@@ -61,72 +49,7 @@ const Home = () => (
       textAlign="center"
       style={{ margin: "10px" }}
     >
-      <Link to="/scanmatchscoutdata" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content>
-            <Card.Header content="Scan Match data" />
-            <Card.Description content="Scan the QR code for Match Data" />
-          </Card.Content>
-        </Card>
-      </Link>
-
-      <Link to="/scanpitscoutdata" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content>
-            <Card.Header content="Scan Pit and Prescout data" />
-            <Card.Description content="Scan the QR code for Pit Data" />
-          </Card.Content>
-        </Card>
-      </Link>
-    </Card.Group>
-    <Divider section />
-
-    <Card.Group
-      centered
-      stackable
-      textAlign="center"
-      style={{ margin: "10px" }}
-    >
-      <Link to="/teamlist" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content
-            header="Picklist & Teams List"
-            description="Picklist and current rankings"
-          />
-        </Card>
-      </Link>
-      <Link to={`/teampages`} style={{ margin: 10 }}>
-        <Card>
-          <Card.Content
-            header="Match Display"
-            description="All about a ... match"
-          />
-        </Card>
-      </Link>
-
-      <Link to={`/teamlookup/`} style={{ margin: 10 }}>
-        <Card>
-          <Card.Content
-            header="Team Lookup"
-            description="All about a ... team"
-          />
-        </Card>
-      </Link>
-
-      <Link to="/matchlist" style={{ margin: 10 }}>
-        <Card>
-          <Card.Content header="Match List" description="List of matches" />
-        </Card>
-      </Link>
-      <Link to="/rawmatch" style={{ margin: 10 }}>
-        <Card color="red">
-          <Card.Content
-            header="REFRESH AVERAGES"
-            description="Try not to click this unless we're making our picklist or exporting or sharing data; it's expensive"
-          />
-        </Card>
-      </Link>
-      <Link to="/datadisplay" style={{ margin: 10 }}>
+      <Link to="/Credits" style={{ margin: 10 }}>
         <Card>
           <Card.Content
             header="Credits and Notes"
@@ -138,7 +61,7 @@ const Home = () => (
       <Link style={{ margin: 10 }}>
         <Card href={"https://www.thebluealliance.com/event/2023arc#rankings"}>
           <Card.Content
-            header="Rankings and Averages"
+            header="Blue Alliance"
             description="Quick link to blue alliance"
           />
         </Card>
